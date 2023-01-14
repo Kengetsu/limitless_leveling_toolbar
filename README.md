@@ -11,4 +11,4 @@ Open the developer console (F12)
 Paste the following into the console: document.cookie = document.cookie + ";path=/;Secure=1;SameSite=None";
 
 
-If you want to use it on a local instance just change the host in functions.js to be localhost instead of shinobichronicles.com.
+If you want to use it on a local instance just change the href in index.html, cp.html, and hotkeys.html then URL_ROOT var in functions.js to be localhost instead of shinobichronicles.com.

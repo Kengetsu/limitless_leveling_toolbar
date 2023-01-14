@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+		color: black;
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+        background: url(/img/shadow_background.png) repeat;
+}
+p {
+		color: black;
+}

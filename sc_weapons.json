@@ -1,0 +1,50 @@
+[
+  {
+    "item_id": 6,
+    "name": "Kunai",
+    "rank": 1,
+    "effect": "residual_damage"
+  },
+  {
+    "item_id": 8,
+    "name": "Bo Staff",
+    "rank": 2,
+    "effect": "daze"
+  },
+  {
+    "item_id": 7,
+    "name": "Ninjato",
+    "rank": 2,
+    "effect": "residual_damage"
+  },
+  {
+    "item_id": 15,
+    "name": "Ancient Fan",
+    "rank": 3,
+    "effect": "diffuse"
+  },
+  {
+    "item_id": 5,
+    "name": "Katana",
+    "rank": 3,
+    "effect": "residual_damage"
+  },
+  {
+    "item_id": 2,
+    "name": "Kusarigama",
+    "rank": 3,
+    "effect": "daze"
+  },
+  {
+    "item_id": 11,
+    "name": "Large Hexagonal Shuriken",
+    "rank": 3,
+    "effect": "cripple"
+  },
+  {
+    "item_id": 16,
+    "name": "Chakra Blade",
+    "rank": 4,
+    "effect": "element"
+  }
+]

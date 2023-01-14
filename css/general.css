@@ -1,0 +1,61 @@
+/* CSS Document */
+@charset "utf-8";
+@font-face {
+	font-family: kunstware;
+	src:url(/img/kunstware.ttf);
+	
+}
+h {
+	overflow:hidden;
+}
+body {
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+        background: url(/img/shadow_background.png) repeat;
+		overflow:hidden;
+		-moz-user-select:none;
+		-webkit-user-select:none;
+		user-select: none;
+}
+P {
+        margin-top: 13px;
+        margin-bottom: 0px;
+        font-size: 16px;
+		overflow:hidden;
+}
+.trainBars {
+	position: fixed;
+	top: 1%;
+	left: 58%;
+	display:none;
+	max-width: 335px;
+}
+#styleChange {
+	position: fixed;
+	top: 34%;
+	left: 15%;
+	display:none;
+}
+#rankControl {
+	float:left;
+	margin-top:35px
+}
+#timerStatus {
+	position: fixed; 
+	float:left; 
+	margin: 35px 0px 0px 10%;
+}
+#trainAdjust {
+	float:right; 
+	font-size:9px;
+	z-index:1;
+}
+#watermark {
+	position:absolute;
+	bottom: 1%; 
+	right: 2%;
+	pointer-events: none;
+}
+#watermark p {
+	font-size:10px;
+	font-family:kunstware;
+}
