@@ -12,3 +12,8 @@ Paste the following into the console: document.cookie = document.cookie + ";path
 
 
 If you want to use it on a local instance just change the href in index.html, cp.html, and hotkeys.html then URL_ROOT var in functions.js to be localhost instead of shinobichronicles.com.
+
+Requirements to run local:
+NodeJS
+
+Run npm install then from the terminal you can npm start to run the local http-server on localhost:8080

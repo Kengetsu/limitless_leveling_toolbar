@@ -2,7 +2,7 @@
 @charset "utf-8";
 @font-face {
 	font-family: kunstware;
-	src:url(/img/kunstware.ttf);
+	src:url(../img/kunstware.ttf);
 	
 }
 h {
@@ -10,7 +10,7 @@ h {
 }
 body {
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
-        background: url(/img/shadow_background.png) repeat;
+        background: url(../img/shadow_background.png) repeat;
 		overflow:hidden;
 		-moz-user-select:none;
 		-webkit-user-select:none;

@@ -4,7 +4,7 @@
 body {
 		color: black;
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
-        background: url(/img/shadow_background.png) repeat;
+        background: url(../../img/shadow_background.png) repeat;
 }
 p {
 		color: black;

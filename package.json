@@ -1,0 +1,20 @@
+{
+  "name": "shinobi_chronicles_toolbar",
+  "version": "0.1.0",
+  "description": "SC Toolbar",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -a localhost -p 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kengetsu/shinobi_chronicles_toolbar.git"
+  },
+  "author": "Kengetsu",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Kengetsu/shinobi_chronicles_toolbar/issues"
+  },
+  "homepage": "https://github.com/Kengetsu/shinobi_chronicles_toolbar#readme"
+}
