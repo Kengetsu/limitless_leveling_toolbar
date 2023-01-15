@@ -425,6 +425,8 @@ function clearJutsu() { // Clear jutsu on array index if passed int else clear a
 		jutsuList.length = 0;
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
+	location.reload();
+	top.frames['toolBar'].location.reload();
 }
 function consumeRamen(selection)// Eat tier of ramen.
 {

@@ -64,7 +64,7 @@
 		$('#listingJutsu').empty();
 		for(let i in jutsuList) { //Prints out visual table of jutsu's in array.
 			var weaponID = (jutsuList[i].weaponID == undefined)? '' : jutsuList[i].weaponID;
-			$('#listingJutsu').append("<tr draggable='true' ondragstart='drag(event)' ondragover='drop(event)' id=" + parseInt(i) + "><td>" + (parseInt(i) + 1) + "</td><td>" + jutsuList[i].jutsuName + "</td><td>" + jutsuList[i].jutsuType + "</td><td>" + jutsuList[i].jutsuSeals + "</td><td>" + weaponID + "</td><td>" + "<button data-id=" + parseInt(i) + " class='removeButton'>Remove</button></td></tr>");
+			$('#listingJutsu').append("<tr draggable='true' ondragstart='drag(event)' ondragover='drop(event)' id=" + parseInt(i) + "><td>" + (parseInt(i) + 1) + "</td><td>" + jutsuList[i].jutsuName + "</td><td>" + jutsuList[i].jutsuType + "</td><td>" + jutsuList[i].jutsuSeals + "</td><td>" + weaponID + "</td><td>" + "<button data-id=" + parseInt(i) + " onClick='clearJutsu()'>Remove</button></td></tr>");
 		};
 	}
 	
@@ -104,11 +104,6 @@ $(document).ready(async function() {
 
 	$('#addButton').click(function() { //When clicked calls addJutsu with input values.
 		addJutsu($('#useType').val(),$('#jutsuName').val(),$('#sealNumbers').val(),$('#weaponID').val());
-		location.reload();
-		top.frames['toolBar'].location.reload();
-	});
-	$('.removeButton').click(function (){
-		clearJutsu();
 		location.reload();
 		top.frames['toolBar'].location.reload();
 	});
