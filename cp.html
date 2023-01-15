@@ -7,6 +7,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script src="./js/functions.js" type="text/javascript"></script>
 <script type="text/javascript">
+	var newPos = null;
 	function drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
 	}
@@ -15,22 +16,26 @@
 		ev.preventDefault();
 		var posId = parseInt(ev.dataTransfer.getData("text"));
 		var data = document.getElementById(posId);
-		var children = Array.from(ev.target.parentNode.parentNode.children);
-  
-		if(children.indexOf(ev.target.parentNode)>children.indexOf(data))
+		var children = Array.from($('#listingJutsu').children());
+		var targetPos = children.indexOf(ev.target.parentNode);
+		newPos = targetPos;
+		if(targetPos>children.indexOf(data))
 		{
-			moveJutsu(posId, posId + 1);
+			
 			ev.target.parentNode.after(data);
 		}
 		else
 		{
-			moveJutsu(posId, posId - 1);
 			ev.target.parentNode.before(data);
 		}
 	}
-	function endDrag(ev)
+	function dragEnd(ev)
 	{
+		var oldPos = parseInt(ev.target.id);
+		moveJutsu(oldPos, newPos);
 		populateJutsu();
+
+		newPos = null;
 	}
 	function setJutsu(jutsu)
 	{
@@ -183,6 +188,8 @@ $(document).ready(async function() {
 <style>
 table {
 	width: 40%;
+	user-select: none;
+	-moz-user-select: none;
 }
 table, tbody, th {
 	border: solid 1px;
@@ -207,7 +214,7 @@ a {
 <span> For bloodline jutsu seal is: 0 - Genin, 1 - Chuunin, 2 - Jonin</span> 
 <br />
 <span> For Taijutsu use Jutsu ID, check link in jutsu page. </span>
-<table ondragend="endDrag()">
+<table ondragend="dragEnd(event)">
 	<thead>
 		<tr>
 			<th>Key Number</th>
