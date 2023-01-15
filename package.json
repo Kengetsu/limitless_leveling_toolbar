@@ -4,7 +4,7 @@
   "description": "SC Toolbar",
   "main": "index.html",
   "scripts": {
-    "start": "npx http-server -a localhost -p 8080",
+    "start": "npx alive-server --host=localhost --port=8080",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Kengetsu/shinobi_chronicles_toolbar/issues"
   },
-  "homepage": "https://github.com/Kengetsu/shinobi_chronicles_toolbar#readme"
+  "homepage": "https://github.com/Kengetsu/shinobi_chronicles_toolbar#readme",
+  "dependencies": {
+    "alive-server": "^1.2.9"
+  }
 }
