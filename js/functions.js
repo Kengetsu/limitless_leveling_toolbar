@@ -404,9 +404,21 @@ function addJutsu(type, name, value, weapon) { //Append jutsu to array
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
 }
-function clearJutsu(pos) { // Clear jutsu on array index if passed int else clear all.
-	if(pos) {
-		jutsuList.splice(pos, 1);
+function moveJutsu(currentPos, newPos)
+{
+	if (newPos < 0)
+	{
+		newPos = 0;
+	}
+	var element = jutsuList.splice(currentPos, 1)[0];
+	jutsuList.splice(newPos, 0, element);
+	Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	top.frames['toolBar'].location.reload();
+}
+function clearJutsu() { // Clear jutsu on array index if passed int else clear all.
+	var id = event.target.dataset.id;
+	if(id) {
+		jutsuList.splice(id, 1);
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
 	else {
