@@ -166,7 +166,7 @@ function goAction(evt){ //Check key used and do labeled function.
 				top.mainFrame.location=URL_ROOT + "?id=23";
 				break;
 			case 68: // D - Missions
-				top.mainFrame.location=URL_ROOT + "?id=14";
+				top.mainFrame.location=URL_ROOT + "?id=14&continue=1";
 				break;
 			case 90: // Z - Special Missions
 				top.mainFrame.location=URL_ROOT + "?id=15";
