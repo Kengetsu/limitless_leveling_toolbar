@@ -2,6 +2,57 @@
 var traveling = false; running = false; jutsuList = []; timeoutID = [];
 var previousTraining = null;
 var previousMission = null;
+var pageMap =
+{
+	"Profile": 1,
+	"Chat": 7,
+	"Travel": 11,
+	"Arena": 12,
+	"Train": 13,
+	"Mission": 14,
+	"Special": 15,
+	"Scout": 22,
+	"Ramen": 23,
+};
+
+var keyMap =
+{
+	travelKeys: {
+		"ArrowLeft": "west",
+		"ArrowUp": "north",
+		"ArrowRight": "east",
+		"ArrowDown": "south",
+	},
+	jutsuKeys: {
+		"Digit1": 0,
+		"Digit2": 1,
+		"Digit3": 2,
+		"Digit4": 3,
+		"Digit5": 4,
+		"Digit6": 5,
+	},
+	ramenKeys: {
+		"Digit7": 0,
+		"Digit8": 1,
+		"Digit9": 2,
+	},
+	pageKeys: {
+		"KeyQ": "Scout",
+		"KeyW": "Train",
+		"KeyE": "Travel",
+		"KeyA": "Arena",
+		"KeyS": "Ramen",
+		"KeyD": "Mission",
+		"KeyZ": "Special",
+		"KeyX": "Profile",
+		"KeyC": "Chat",
+	},
+	actionKeys: {
+		"Space": "Fight",
+		"R": "RepeatTrain",
+		"F": "RepeatMission",
+	},
+};
 
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
@@ -83,116 +134,56 @@ $(document).ready(function () {
 });
 
 function goAction(evt){ //Check key used and do labeled function.
-	var key = (evt) ? evt.which : e.keyCode;
-	//console.log(key);
-		switch(key){
-			case 37: // Left - Travel West
-				if(!traveling) {
-					top.mainFrame.location=URL_ROOT + "?id=11&travel=west";
-					traveling = true;
-					timer.travel();
-					break;
-				};
-			case 38: // Up - Travel North
-				if(!traveling) {
-					top.mainFrame.location=URL_ROOT + "?id=11&travel=north";
-					traveling = true;
-					timer.travel();
-					break;
-				};
-			case 39: // Right - Travel East
-				if(!traveling) {
-					top.mainFrame.location=URL_ROOT + "?id=11&travel=east";
-					traveling = true;
-					timer.travel();
-					break;
-				};
-			case 40: // Down - Travel South
-				if(!traveling) {
-					top.mainFrame.location=URL_ROOT + "?id=11&travel=south";
-					traveling = true;
-					timer.travel();
-					break;
-				};
-			case 49:
-			case 97: //Number pad 1 - use jutsu in array position 0
-				arenaJutsu(jutsuList[0]);
-				break;
-			case 50:
-			case 98: //Number pad 2 - use jutsu in array position 1
-				arenaJutsu(jutsuList[1]);
-				break;
-			case 51:
-			case 99: //Number pad 3 - use jutsu in array position 2
-				arenaJutsu(jutsuList[2]);
-				break;
-			case 52:
-			case 100: //Number pad 4 - use jutsu in array position 3
-				arenaJutsu(jutsuList[3]);
-				break;
-			case 53:
-			case 101: //Number pad 5 - use jutsu in array position 4
-				arenaJutsu(jutsuList[4]);
-				break;
-			case 54:
-			case 102: //Number pad 6 - use jutsu in array position 5
-				arenaJutsu(jutsuList[5]);
-				break;
-			case 55:
-			case 103:
-				consumeRamen(0);
-				break;
-			case 56:
-			case 104:
-				consumeRamen(1);
-				break;
-			case 57:
-			case 105:
-				consumeRamen(2);
-				break;
-			case 81: // Q - Scout Area
-				top.mainFrame.location=URL_ROOT + "?id=22";
-				break;
-			case 87: // W - Training
-				top.mainFrame.location=URL_ROOT + "?id=13";
-				break;
-			case 69: // E - Travel Map
-				top.mainFrame.location=URL_ROOT + "?id=11";
-				break;
-			case 65: // A - Arena
-				top.mainFrame.location=URL_ROOT + "?id=12";
-				break;
-			case 83: // S - Ramen Shop
-				top.mainFrame.location=URL_ROOT + "?id=23";
-				break;
-			case 68: // D - Missions
-				top.mainFrame.location=URL_ROOT + "?id=14&continue=1";
-				break;
-			case 90: // Z - Special Missions
-				top.mainFrame.location=URL_ROOT + "?id=15";
-				break;
-			case 88: // X - View Profile
-				top.mainFrame.location=URL_ROOT + "?id=1";
-				break;
-			case 67: // C - Chat
-				top.mainFrame.location=URL_ROOT + "?id=7";
-				break;
-			case 32: //Space Bar - Fight Selected
+	var key = evt.code
+	switch(true){
+		case key in keyMap.travelKeys:
+			if(!traveling) {
+				top.mainFrame.location=URL_ROOT + "?id=11&travel=" + keyMap.travelKeys[key];
+				traveling = true;
+				timer.travel();
+			};
+			break;
+		case key in keyMap.jutsuKeys:
+			var jutsu = jutsuList[keyMap.jutsuKeys[key]]
+			arenaJutsu(jutsu);
+			break;
+		case key in keyMap.ramenKeys:
+			var ramen = keyMap.ramenKeys[key];
+			consumeRamen(ramen);
+			break;
+		case key in keyMap.pageKeys:
+			var page = keyMap.pageKeys[key];
+			if(page == "Mission")
+			{
+				top.mainFrame.location=URL_ROOT + "?id=" + pageMap[page] + "&continue=1";
+			}
+			else
+			{
+				top.mainFrame.location=URL_ROOT + "?id=" + pageMap[page];
+			}			
+			break;
+		case key in keyMap.actionKeys:
+			var action = keyMap.actionKeys[key];
+			if (action === "Fight")
+			{
 				$('#arenaFight select').submit();
-				break;
-			case 82: // R - Repeat Training
+			}
+			else if (action === "RepeatTrain")
+			{
 				if (previousTraining == null) break;
 				var selectElement = $('select[name=' + previousTraining[0] + ']');
 				selectElement.selectedIndex = previousTraining[0];
 				selectElement.siblings('input[value=' + previousTraining[2] +']')[0].click()
-				//$('select[name=skill]').siblings('input[value=Short]')[0].click()
-				break;
-			case 70: // F - Repeat Mission
+			}
+			else if (action === "RepeatMission")
+			{
 				if (previousMission == null) break;
 				missions.set(previousMission);
-			default:
-				break;
-		}
+			}
+			break;
+		default:
+			break;	
+	}
 }
 var timer = {
 	travel: function() { //Add delay when traveling across the map.
@@ -365,7 +356,9 @@ var toggle = { //Toggle menu bars for skills, attributes, skin, and missions.
 	}
 }
 function arenaJutsu(array) { // Using jutsu information from cookie array, fill out form information.
-	//$('#useJutsu').get(0).setAttribute('action', top.mainFrame.location);
+	//var location = top.mainFrame.location.href;
+	if (array === undefined) return false;
+
 	if((array.jutsuType == "bloodline_jutsu") || (array.jutsuType == "taijutsu")) {
 		$('#hand_seal_input').val("");
 		$('#jutsuType').val(array.jutsuType);
@@ -415,7 +408,7 @@ function moveJutsu(currentPos, newPos)
 	Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	top.frames['toolBar'].location.reload();
 }
-function clearJutsu() { // Clear jutsu on array index if passed int else clear all.
+function clearJutsu(event) { // Clear jutsu on array index if passed int else clear all.
 	var id = event.target.dataset.id;
 	if(id) {
 		jutsuList.splice(id, 1);
