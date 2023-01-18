@@ -11,6 +11,8 @@ var pageMap =
 	"Train": 13,
 	"Mission": 14,
 	"Special": 15,
+	"Pvp": 19,
+	"Clan": 20,
 	"Scout": 22,
 	"Ramen": 23,
 };
@@ -30,11 +32,20 @@ var keyMap =
 		"Digit4": 3,
 		"Digit5": 4,
 		"Digit6": 5,
+		"Numpad1": 0,
+		"Numpad2": 1,
+		"Numpad3": 2,
+		"Numpad4": 3,
+		"Numpad5": 4,
+		"Numpad6": 5,
 	},
 	ramenKeys: {
 		"Digit7": 0,
 		"Digit8": 1,
 		"Digit9": 2,
+		"Numpad7": 7,
+		"Numpad8": 8,
+		"Numpad9": 9,
 	},
 	pageKeys: {
 		"KeyQ": "Scout",
@@ -100,30 +111,30 @@ $(document).ready(function () {
 		if(sparringCheckbox.checked) {
 			pvpCheckbox.checked = false;
 			missionsCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=22");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Scout}`);
 		}
 		else {
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=12");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
 		}
 	});
 	$('#pvpCheckbox').click(function () {
 		if(pvpCheckbox.checked) {
 			sparringCheckbox.checked = false;
 			missionsCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=19");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Pvp}`);
 		}
 		else {
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=12");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
 		}
 	});
 	$('#missionsCheckbox').click(function () {
 		if(missionsCheckbox.checked) {
 			sparringCheckbox.checked = false;
 			pvpCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=14");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Mission}`);
 		}
 		else {
-			$('#useJutsu').get(0).setAttribute('action', URL_ROOT + "?id=12");
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
 		}
 	});
 	
@@ -138,7 +149,7 @@ function goAction(evt){ //Check key used and do labeled function.
 	switch(true){
 		case key in keyMap.travelKeys:
 			if(!traveling) {
-				top.mainFrame.location=URL_ROOT + "?id=11&travel=" + keyMap.travelKeys[key];
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travelKeys[key]}`;
 				traveling = true;
 				timer.travel();
 			};
@@ -155,11 +166,11 @@ function goAction(evt){ //Check key used and do labeled function.
 			var page = keyMap.pageKeys[key];
 			if(page == "Mission")
 			{
-				top.mainFrame.location=URL_ROOT + "?id=" + pageMap[page] + "&continue=1";
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}&continue=1`;
 			}
 			else
 			{
-				top.mainFrame.location=URL_ROOT + "?id=" + pageMap[page];
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}`;
 			}			
 			break;
 		case key in keyMap.actionKeys:
@@ -287,11 +298,11 @@ var missions = {
 		
 		if (mission[0] == 'clan')
 		{
-			top.mainFrame.location=URL_ROOT + "?id=20&" + mission[1];
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Clan}&${mission[1]}`;
 		}
 		else
 		{
-			top.mainFrame.location=URL_ROOT + "?id=14&" + mission[0];
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&${mission[0]}`;
 		}
 		
 	}
@@ -338,7 +349,7 @@ var enemy = {
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
-		top.mainFrame.location=URL_ROOT + "?id=12&" + fight;
+		top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Arena}&fight`;
 	}
 	
 }
@@ -428,9 +439,9 @@ function consumeRamen(selection)// Eat tier of ramen.
 	if (FOOD_OPTIONS[selection] == undefined) return false;
 	var food = FOOD_OPTIONS[selection];
 	
-	top.mainFrame.location=URL_ROOT + "?id=23&heal=" + food;
+	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.ramen}&heal=${food}`;
 }
-function recordTraining(training)
+function recordTraining(training, event)
 {
 	//console.log(training, event.submitter.value);
 	if (training.length > 1) return false;
