@@ -349,7 +349,7 @@ var enemy = {
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
-		top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Arena}&fight`;
+		top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Arena}&${fight}`;
 	}
 	
 }
