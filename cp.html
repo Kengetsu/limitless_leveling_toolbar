@@ -67,6 +67,38 @@
 			$('#listingJutsu').append("<tr draggable='true' ondragstart='drag(event)' ondragover='drop(event)' id=" + parseInt(i) + "><td>" + (parseInt(i) + 1) + "</td><td>" + jutsuList[i].jutsuName + "</td><td>" + jutsuList[i].jutsuType + "</td><td>" + jutsuList[i].jutsuSeals + "</td><td>" + weaponID + "</td><td>" + "<button data-id=" + parseInt(i) + " onClick='clearJutsu()'>Remove</button></td></tr>");
 		};
 	}
+	function populateKeys()
+	{
+		keyMap = $.parseJSON(Cookies.get("customKeys"));
+		$('#keysTable').empty();
+
+		for (const keySet in keyMap)
+		{
+			$('#keysTable').append(`
+				<tr>
+					<th colspan="3">
+						${keySet}
+					</th>
+				</tr>
+			`);
+			for (const key in keyMap[keySet])
+			{
+				$('#keysTable').append(`
+				<tr style='width: 6rem'>
+					<td style='width: 2rem'>
+						<p>${key}</p>
+					</td>
+					<td style='width: 2rem'>
+						<p>${keyMap[keySet][key]}</p>
+					</td>
+					<td style='width: 2rem'>
+						<input type="text" onKeyUp='remapKey(event);' data-set="${keySet}" data-key="${key}">
+					</td>
+				</tr>
+				`);
+			}
+		}
+	}
 	
 </script>
 <script type="module">
@@ -177,6 +209,9 @@ $(document).ready(async function() {
 	if(Cookies.get("jutsu")) { // If cookie already exists pulls information into array.	
 		populateJutsu();
 	};
+	if(Cookies.get("customKeys")) { // If cookie already exists pulls information into array.	
+		populateKeys();
+	};
 	
 });
 </script>
@@ -271,68 +306,9 @@ a {
 	</div>
 </div>
 <div>
-<table>
-	<tr>
-    	<td><p>Arrow Keys</p></td>
-        <td><p>Travel</p></td>
-    </tr>
-	<tr>
-		<td><p>Q</p></td>
-		<td><p>Scout Area</p></td>
-	</tr>
-    <tr>
-    	<td><p>W</p></td>
-        <td><p>Training</p></td>
-    </tr>
-    <tr>
-    	<td><p>E</p></td>
-        <td><p>Travel Map</p></td>
-    </tr>
-    <tr>
-    	<td><p>A</p></td>
-        <td><p>Arena</p></td>
-    </tr>
-    <tr>
-    	<td><p>S</p></td>
-        <td><p>Ramen Shop</p></td>
-    </tr>
-    <tr>
-    	<td><p>D</p></td>
-        <td><p>Missions</p></td>
-    </tr>
-    <tr>
-    	<td><p>Z</p></td>
-        <td><p>Special Missions</p></td>
-    </tr>
-    <tr>
-    	<td><p>X</p></td>
-        <td><p>Profile</p></td>
-    </tr>
-	 <tr>
-    	<td><p>C</p></td>
-        <td><p>Chat</p></td>
-    </tr>
-	<tr>
-    	<td><p>Space Bar</p></td>
-        <td><p>Fight Selected AI</p></td>
-    </tr>
-	<tr>
-    	<td><p>R</p></td>
-		<td><p>Repeat Previous Training</p></td>
-    </tr>
-	<tr>
-    	<td><p>F</p></td>
-		<td><p>Repeat Previous Mission</p></td>
-    </tr>
-    <tr>
-    	<td><p>Standard 1-6 or Number pad 1-6</p></td>
-        <td><p>Use Set Jutsu In Order From Top To Bottom. Make sure to check the Spar/PVP boxes if that's what you are fighting.</p></td>
-    </tr>
-	<tr>
-    	<td><p>Standard 7-9 or Number pad 7-9</p></td>
-        <td><p>Consume food from the ramen shop. 7 - Vegetable ¥20, 8 - Pork ¥80, 9 - Deluxe ¥160</p></td>
-    </tr>
+<table id="keysTable" style='width: 6rem'>
 </table>
+<button onClick="resetKeyMapping()">Restore default key bindings</button>
 <br/>
 <a href="https://shinobichronicles.com/" target="mainFrame"> Return to SC</a>
 </div>
