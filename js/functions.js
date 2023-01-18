@@ -439,7 +439,7 @@ function consumeRamen(selection)// Eat tier of ramen.
 	if (FOOD_OPTIONS[selection] == undefined) return false;
 	var food = FOOD_OPTIONS[selection];
 	
-	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.ramen}&heal=${food}`;
+	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
 }
 function recordTraining(training, event)
 {
