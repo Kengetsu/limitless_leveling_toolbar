@@ -43,9 +43,9 @@ var keyMap =
 		"Digit7": 0,
 		"Digit8": 1,
 		"Digit9": 2,
-		"Numpad7": 7,
-		"Numpad8": 8,
-		"Numpad9": 9,
+		"Numpad7": 0,
+		"Numpad8": 1,
+		"Numpad9": 2,
 	},
 	pageKeys: {
 		"KeyQ": "Scout",
