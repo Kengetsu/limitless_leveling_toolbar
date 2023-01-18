@@ -419,7 +419,7 @@ function moveJutsu(currentPos, newPos)
 	Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	top.frames['toolBar'].location.reload();
 }
-function clearJutsu(event) { // Clear jutsu on array index if passed int else clear all.
+function clearJutsu() { // Clear jutsu on array index if passed int else clear all.
 	var id = event.target.dataset.id;
 	if(id) {
 		jutsuList.splice(id, 1);
@@ -441,7 +441,7 @@ function consumeRamen(selection)// Eat tier of ramen.
 	
 	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
 }
-function recordTraining(training, event)
+function recordTraining(training)
 {
 	//console.log(training, event.submitter.value);
 	if (training.length > 1) return false;
