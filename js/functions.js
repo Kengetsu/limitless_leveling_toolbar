@@ -348,6 +348,7 @@ var enemy = {
 					select[select.length] = new Option("Village Outlaw", "fight=15");
 					select[select.length] = new Option("Rogue Samurai", "fight=16");
 					select[select.length] = new Option("Enemy ANBU", "fight=17");
+					select[select.length] = new Option("Muscle-bound Jonin", "fight=21");
 					select[select.length] = new Option("ANBU Captain", "fight=18");
 					break;
 				default:
