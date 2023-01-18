@@ -60,8 +60,8 @@ var keyMap =
 	},
 	actionKeys: {
 		"Space": "Fight",
-		"R": "RepeatTrain",
-		"F": "RepeatMission",
+		"KeyR": "RepeatTrain",
+		"KeyF": "RepeatMission",
 	},
 };
 
