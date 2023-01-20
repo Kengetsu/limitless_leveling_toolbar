@@ -24,6 +24,7 @@ var keyMap =
 		"ArrowUp": "north",
 		"ArrowRight": "east",
 		"ArrowDown": "south",
+		"unmapped": [],
 		
 	},
 	jutsu: {
@@ -39,6 +40,7 @@ var keyMap =
 		"Numpad4": 3,
 		"Numpad5": 4,
 		"Numpad6": 5,
+		"unmapped": [],
 	},
 	ramen: {
 		"Digit7": 0,
@@ -47,6 +49,7 @@ var keyMap =
 		"Numpad7": 0,
 		"Numpad8": 1,
 		"Numpad9": 2,
+		"unmapped": [],
 	},
 	page: {
 		"KeyQ": "Scout",
@@ -58,11 +61,13 @@ var keyMap =
 		"KeyZ": "Special",
 		"KeyX": "Profile",
 		"KeyC": "Chat",
+		"unmapped": [],
 	},
 	action: {
 		"Space": "Fight",
 		"KeyR": "RepeatTrain",
 		"KeyF": "RepeatMission",
+		"unmapped": [],
 	},
 };
 
@@ -438,8 +443,7 @@ function clearJutsu() { // Clear jutsu on array index if passed int else clear a
 		jutsuList.length = 0;
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
-	location.reload();
-	top.frames['toolBar'].location.reload();
+	reloadToolbar();
 }
 function consumeRamen(selection)// Eat tier of ramen.
 {
@@ -467,29 +471,65 @@ function remapKey(ev)
 	var set = ev.target.dataset.set;
 	var newKey = ev.code;
 
+	ev.target.value = null;
+
 	console.log(key, set);
-
-	var accept = confirm(`Are you sure you want to map ${set} : ${keyMap[set][key]} to ${ev.code}`);
-
-	if (!accept)
+	if (!key in keyMap[set])
 	{
-		return false;
+		var accept = confirm(`Are you sure you want to map ${set} : ${keyMap[set][key]} to ${newKey}`);
+
+		if (!accept)
+		{
+			return false;
+		}
+
+		var keyConflict = checkKey(newKey);
+		if(keyConflict) 
+		{
+			if (!confirm(`Key is already bound to ${keyConflict[2]}, are you sure you want to clear the binding for ${keyConflict[2]}`))
+			{
+				return false;
+			}
+			clearBinding(...keyConflict);
+			
+		};
+		keyMap[set][newKey] = keyMap[set][key];
+		delete keyMap[set][key];
 	}
-
-	if(checkKey(newKey)) 
+	else
 	{
-		alert("Key already mapped!");
-		return false;
-	};
-
+		keyMap[set][newKey] = key;
+		var index = keyMap[set]["unmapped"].indexOf(key);
+		keyMap[set]["unmapped"].splice(index,1);
+	}
 	
-	keyMap[set][newKey] = keyMap[set][key];
-	delete keyMap[set][key];
+	
 
 	Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	
-	location.reload();
-	top.frames['toolBar'].location.reload();
+	reloadToolbar();
+}
+function clearBinding(keySet, key, action, reload = false)
+{
+	if (keySet == undefined || key == undefined || action == undefined) return false;
+	delete keyMap[keySet][key];
+	if("unmapped" in keyMap[keySet])
+	{
+		if (keyMap[keySet]["unmapped"].indexOf(action) === -1)
+		{
+			keyMap[keySet]["unmapped"].push(action);
+		}	
+	}
+	else
+	{
+		keyMap[keySet]["unmapped"] = [action];
+	}
+	if (reload) {
+		Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+		reloadToolbar();
+	}
+
+	
 }
 function resetKeyMapping()
 {
@@ -500,6 +540,7 @@ function resetKeyMapping()
 			"ArrowUp": "north",
 			"ArrowRight": "east",
 			"ArrowDown": "south",
+			"unmapped": [],
 			
 		},
 		jutsu: {
@@ -515,6 +556,7 @@ function resetKeyMapping()
 			"Numpad4": 3,
 			"Numpad5": 4,
 			"Numpad6": 5,
+			"unmapped": [],
 		},
 		ramen: {
 			"Digit7": 0,
@@ -523,6 +565,7 @@ function resetKeyMapping()
 			"Numpad7": 0,
 			"Numpad8": 1,
 			"Numpad9": 2,
+			"unmapped": [],
 		},
 		page: {
 			"KeyQ": "Scout",
@@ -534,16 +577,17 @@ function resetKeyMapping()
 			"KeyZ": "Special",
 			"KeyX": "Profile",
 			"KeyC": "Chat",
+			"unmapped": [],
 		},
 		action: {
 			"Space": "Fight",
 			"KeyR": "RepeatTrain",
 			"KeyF": "RepeatMission",
+			"unmapped": [],
 		},
 	};
 	Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-	location.reload();
-	top.frames['toolBar'].location.reload();
+	reloadToolbar();
 }
 function checkKey(key)
 {
@@ -551,8 +595,14 @@ function checkKey(key)
 	{
 		if (key in keyMap[set])
 		{
-			return true
+			if (key == "unmapped") continue;
+			return [set, key, keyMap[set][key]];
 		}
 	}
 	return false;
+}
+function reloadToolbar()
+{
+	location.reload();
+	top.frames['toolBar'].location.reload();
 }

@@ -76,18 +76,39 @@
 		{
 			keyElement += `
 				<tr>
-					<th colspan="3">${keySet}</th>
+					<th colspan="4">${keySet}</th>
 				</tr>`;
 			for (const key in keyMap[keySet])
 			{
-				keyElement += `
+				if (key === "unmapped")
+				{
+					for (unmappedKey in keyMap[keySet][key])
+					{
+						keyElement += `
+						<tr>
+							<td style="width: 2rem;">${key}</td>
+							<td style="width: 2rem;">${keyMap[keySet][key][unmappedKey]}</td>
+							<td style="width: 2rem;">
+								<input type="text" onKeyUp='remapKey(event);' data-set="${keySet}" data-key="${keyMap[keySet][key][unmappedKey]}" style="width: 3rem; height: 2rem;">
+							</td>
+						</tr>`;
+					}
+				}
+				else
+				{
+					keyElement += `
 						<tr>
 							<td style="width: 2rem;">${key}</td>
 							<td style="width: 2rem;">${keyMap[keySet][key]}</td>
 							<td style="width: 2rem;">
 								<input type="text" onKeyUp='remapKey(event);' data-set="${keySet}" data-key="${key}" style="width: 3rem; height: 2rem;">
 							</td>
+							<td style="width: 2rem;">
+								<button onClick="clearBinding(event.target.dataset.set,event.target.dataset.key,event.target.dataset.action, true)" data-set="${keySet}" data-key="${key}" data-action="${keyMap[keySet][key]}">Clear Mapping</button>
+							</td>
 						</tr>`;
+				}
+				
 			}
 		}
 		$('#keysTable').append(keyElement);
