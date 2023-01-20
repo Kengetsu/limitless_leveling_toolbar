@@ -474,7 +474,7 @@ function remapKey(ev)
 	ev.target.value = null;
 
 	console.log(key, set);
-	if (!key in keyMap[set])
+	if (key in keyMap[set])
 	{
 		var accept = confirm(`Are you sure you want to map ${set} : ${keyMap[set][key]} to ${newKey}`);
 
