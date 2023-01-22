@@ -74,44 +74,36 @@
 		var keyElement = ``;
 		for (const keySet in keyMap)
 		{
-			keyElement += `
-				<tr>
-					<th colspan="4">${keySet}</th>
-				</tr>`;
+			keyElement += `<div class="keyCategory" style="grid-area: ${keySet};"><span>${keySet}</span>`;
 			for (const key in keyMap[keySet])
 			{
 				if (key === "unmapped")
 				{
 					for (unmappedKey in keyMap[keySet][key])
 					{
-						keyElement += `
-						<tr>
-							<td style="width: 2rem;">${key}</td>
-							<td style="width: 2rem;">${keyMap[keySet][key][unmappedKey]}</td>
-							<td style="width: 2rem;">
-								<input type="text" onKeyUp='remapKey(event);' data-set="${keySet}" data-key="${keyMap[keySet][key][unmappedKey]}" style="width: 3rem; height: 2rem;">
-							</td>
-						</tr>`;
+						keyElement += createKeyElement(keySet, key, keyMap[keySet][key][unmappedKey]);
 					}
 				}
 				else
 				{
-					keyElement += `
-						<tr>
-							<td style="width: 2rem;">${key}</td>
-							<td style="width: 2rem;">${keyMap[keySet][key]}</td>
-							<td style="width: 2rem;">
-								<input type="text" onKeyUp='remapKey(event);' data-set="${keySet}" data-key="${key}" style="width: 3rem; height: 2rem;">
-							</td>
-							<td style="width: 2rem;">
-								<button onClick="clearBinding(event.target.dataset.set,event.target.dataset.key,event.target.dataset.action, true)" data-set="${keySet}" data-key="${key}" data-action="${keyMap[keySet][key]}">Clear Mapping</button>
-							</td>
-						</tr>`;
-				}
-				
+					keyElement += createKeyElement(keySet, key, keyMap[keySet][key]);
+				}			
 			}
+			keyElement += '</div>';
 		}
 		$('#keysTable').append(keyElement);
+	}
+	function createKeyElement(title, key, action)
+	{
+		return `
+		<div class="keyEntry">
+			<p>${key}</p>
+			<p>${action}</p>
+			<p>
+				<input type="text" onKeyUp='remapKey(event);' data-set="${title}" data-key="${action}" style="width: 3rem; height: 2rem;">
+			</p>
+			${key == "unmapped"? '' : `<p><button onClick="clearBinding(event.target.dataset.set,event.target.dataset.key,event.target.dataset.action, true)" data-set="${title}" data-key="${key}" data-action="${action}">Clear Mapping</button></p>`}
+		</div>`;
 	}
 	
 </script>
@@ -222,7 +214,7 @@ $(document).ready(async function() {
 		}
 		else if (this.value == 3)
 		{
-			if (rebindingDiv.css('display') == 'table')
+			if (rebindingDiv.css('display') == 'grid')
 			{
 				rebindingDiv.hide();
 			}
@@ -262,6 +254,39 @@ td {
 a {
 	padding: 5px;
 	text-decoration: none;
+}
+
+.keyTable {
+	display: grid;
+	grid-template-areas: 
+	"jutsu page ramen" 
+	"jutsu page action" 
+	"jutsu page travel";
+	width: 40%;
+}
+.keyCategory {
+	display: grid;
+	border: 1px solid black;
+	text-align: center;
+}
+.keyCategory span {
+	font-weight: bold;
+}
+.keyEntry {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	border: 1px dashed black;
+}
+.keyEntry p {
+	margin: 0px;
+	padding: 0.5rem;
+}
+.keyEntry p:not(:last-child) {
+	border-right: 1px dashed black;
+}
+.keyEntry:nth-child(odd)
+{
+	background-color: rgb(221, 221, 221);
 }
 </style>
 </head>
@@ -336,8 +361,8 @@ a {
 	</table>
 	</div>
 </div>
-<table id="keysTable" style="width: auto;display: none;">
-</table>
+<div id="keysTable" class="keyTable">
+</div>
 <button onClick="resetKeyMapping()">Restore default key bindings</button>
 <br/>
 <a href="https://shinobichronicles.com/" target="mainFrame"> Return to SC</a>
