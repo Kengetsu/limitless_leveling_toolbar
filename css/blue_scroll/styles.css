@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+		color: #b99e47;
+		font-family: "Trebuchet MS", Helvetica, sans-serif;
+        background: #0d111f;
+}
+p {
+		color: #b99e47;
+}
+p a {
+    color: #b99f47
+}
