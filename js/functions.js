@@ -74,89 +74,6 @@ var keyMap =
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
 
-$(document).ready(function () {
-	if(Cookies.get("css")) {
-		$("#theme").attr("href",Cookies.get("css"));
-	
-	};
-	if(Cookies.get("rank")) {
-		$("#userRank").val(Cookies.get("rank"));
-		
-		missions.gen();
-		enemy.gen();
-	};
-	if(Cookies.get("jutsu")) {
-		jutsuList = $.parseJSON(Cookies.get("jutsu"));
-	};
-	if(Cookies.get("customKeys")) {
-		keyMap = $.parseJSON(Cookies.get("customKeys"));
-	}
-	else
-	{
-		Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-	};
-	$('#layout').change(function() {
-		if ($("layout").val() == "selection") {
-			return;
-		}
-		else {
-			$("#theme").attr("href", $(this).val());
-			Cookies.set("css",$(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None', secure: true, sameSite: 'None'});
-			return false;
-		}
-	});
-	$('#userRank').change(function() {
-		enemy.gen();
-		missions.gen();
-		if ($("userRank").val() == "selection") {
-			return;
-		}
-		else {
-			Cookies.set("rank", $(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-			return false;
-		}
-	});
-	
-	var sparringCheckbox = document.getElementById("sparringCheckbox");
-	var pvpCheckbox = document.getElementById("pvpCheckbox");
-	var missionsCheckbox = document.getElementById("missionsCheckbox");
-	$('#sparringCheckbox').click(function () {
-		if(sparringCheckbox.checked) {
-			pvpCheckbox.checked = false;
-			missionsCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Scout}`);
-		}
-		else {
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
-		}
-	});
-	$('#pvpCheckbox').click(function () {
-		if(pvpCheckbox.checked) {
-			sparringCheckbox.checked = false;
-			missionsCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Pvp}`);
-		}
-		else {
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
-		}
-	});
-	$('#missionsCheckbox').click(function () {
-		if(missionsCheckbox.checked) {
-			sparringCheckbox.checked = false;
-			pvpCheckbox.checked = false;
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Mission}`);
-		}
-		else {
-			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
-		}
-	});
-	
-	$('.SubmissionButtons').keydown(function (event)
-	{
-		event.preventDefault();
-	});
-});
-
 function goAction(ev){ //Check key used and do labeled function.
 	var key = ev.code;
 	switch(true){
@@ -190,14 +107,11 @@ function goAction(ev){ //Check key used and do labeled function.
 			var action = keyMap.action[key];
 			if (action === "Fight")
 			{
-				$('#arenaFight select').submit();
+				enemy.arena();
 			}
 			else if (action === "RepeatTrain")
 			{
-				if (previousTraining == null) break;
-				var selectElement = $('select[name=' + previousTraining[0] + ']');
-				selectElement.selectedIndex = previousTraining[0];
-				selectElement.siblings('input[value=' + previousTraining[2] +']')[0].click()
+				$('#training form').submit();
 			}
 			else if (action === "RepeatMission")
 			{
@@ -213,13 +127,16 @@ var timer = {
 	travel: function() { //Add delay when traveling across the map.
 		setTimeout(function () {traveling = false;}, 60);
 	},
-	train: function(type) { //Handle alerting user for when training is complete.
+	train: function(trainType) { //Handle alerting user for when training is complete.
 		var baseTrainLength = 600000;
 		var clanBoost = 0.1;
-		var alerts = document.getElementById("alerts");
 		var boost = document.getElementById("boost");
 		var seal = document.getElementById("seal");
 		var times = [];
+		var durations = ["Short", "Long", "Extended"];
+		trainType = durations.indexOf(trainType);
+		if (trainType == -1) return false;
+
 		if(seal.checked) { //Type is short - 0, long - 1, extended - 2.
 			times = [baseTrainLength, (baseTrainLength * 4) * 1.5, Math.round((baseTrainLength * 24) * 1.5)];
 		}
@@ -228,7 +145,7 @@ var timer = {
 			times = [baseTrainLength, baseTrainLength * 4, baseTrainLength * 24];
 		}
 		
-		if(boost.checked && alerts.checked) { //Cut time and alert based on boost.
+		if(boost.checked) { //Cut time and alert based on boost.
 			//timer.clear();
 			$('#indicator').css("color","green");
 			timeoutID.push(setTimeout(function () {
@@ -236,12 +153,11 @@ var timer = {
 				alert ("Training has completed");
 				parent.document.title = "Shinobi Chonicles Hotkeys";
 				$('#indicator').css("color","red");
-				top.mainFrame.location.reload();
-			}, delay = (times[type] - (times[type] * clanBoost))));
+			}, delay = (times[trainType] - (times[trainType] * clanBoost))));
 			//console.log("delay: "+ delay + " " + "Type: " + type + " " + "TimeoutID: " + timeoutID);
 			return false;
 		}
-		else if(alerts.checked) { //Standard alert without a boost reduction.
+		else { //Standard alert without a boost reduction.
 			//timer.clear();
 			$('#indicator').css("color","green");
 			timeoutID.push(setTimeout(function () {
@@ -249,8 +165,7 @@ var timer = {
 				alert ("Training has completed");
 				parent.document.title = "Shinobi Chonicles Hotkeys";
 				$('#indicator').css("color","red");
-				top.mainFrame.location.reload();
-			}, times[type]));
+			}, times[trainType]));
 			//console.log(times[type] + " " + timeoutID);
 			return false;
 		}
@@ -367,23 +282,35 @@ var enemy = {
 	}
 	
 }
-var toggle = { //Toggle menu bars for skills, attributes, skin, and missions.
-	panel: function(element) {
-		var menu = ["trainSkills", "trainAttributes", "startMission", "arenaFight", "styleChange"];
-		for (i = 0; i < menu.length; i++) {
-			if (menu[i] == element) {
-				$("#" + element).toggle();
-			}
-			else {
-				document.getElementById(menu[i]).style.display = "none";
-			}
-		}
+function changeVisibility(evt)
+{
+	if (evt == undefined) return;
+
+	let element = $("#" + evt.target.dataset.id);
+
+	if (evt.target.dataset.id != "options" && element.siblings().length > 0)
+	{
+		element.siblings().css('visibility', 'hidden');
 	}
+	if (element.css('visibility') == "hidden")
+	{
+		element.css('visibility', 'visible');
+	}
+	else
+	{
+		element.css('visibility', 'hidden');
+	}
+	
 }
+
 function arenaJutsu(array) { // Using jutsu information from cookie array, fill out form information.
 	//var location = top.mainFrame.location.href;
+	var jutsuForm = $('#useJutsu');
 	if (array === undefined) return false;
-
+	if (jutsuForm.attr('action') == undefined)
+	{
+		jutsuForm.attr('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+	}
 	if((array.jutsuType == "bloodline_jutsu") || (array.jutsuType == "taijutsu")) {
 		$('#hand_seal_input').val("");
 		$('#jutsuType').val(array.jutsuType);
@@ -398,12 +325,12 @@ function arenaJutsu(array) { // Using jutsu information from cookie array, fill 
 			$('#weaponID').val(array.weaponID);
 		}
 		
-		$('#useJutsu').submit();
+		jutsuForm.submit();
 	}
 	else {
 		$('#hand_seal_input').val(array.jutsuSeals);
 		$('#jutsuType').val(array.jutsuType);
-		$('#useJutsu').submit();
+		jutsuForm.submit();
 	}
 }
 function addJutsu(type, name, value, weapon) { //Append jutsu to array
@@ -454,17 +381,17 @@ function consumeRamen(selection)// Eat tier of ramen.
 	
 	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
 }
-function recordTraining(training)
-{
-	//console.log(training, event.submitter.value);
-	if (training.length > 1) return false;
-	var trainType = training[0].name;
-	var trainValue = training[0].selectedIndex;
-	var trainDuration = event.submitter.value;
+// function recordTraining(training)
+// {
+// 	//console.log(training, event.submitter.value);
+// 	if (training.length > 1) return false;
+// 	var trainType = training[0].name;
+// 	var trainValue = training[0].selectedIndex;
+// 	var trainDuration = event.submitter.value;
 	
-	previousTraining = [trainType, trainValue, trainDuration];
-	//console.log(previousTraining);
-}
+// 	previousTraining = [trainType, trainValue, trainDuration];
+// 	//console.log(previousTraining);
+// }
 function remapKey(ev)
 {
 	var key = ev.target.dataset.key;
@@ -605,4 +532,16 @@ function reloadToolbar()
 {
 	location.reload();
 	top.frames['toolBar'].location.reload();
+}
+
+function train(evt)
+{
+	if ($(evt.target).attr('action') == undefined)
+	{	
+		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
+	}
+	if ($('#alerts').prop("checked") == true)
+	{
+		timer.train($(evt.target).children()[1].value);
+	}
 }

@@ -1,17 +1,44 @@
-<!doctype html>
-<html>
-	<head>
-		<meta http-equiv="content-type" content="text/html" charset="utf-8">
-		<title>Shinobi Chronicles Hotkeys</title>
-		<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
-	</head>
-	<frameset rows="65,*" frameborder="no" border="1" framespacing="0" id="frameSet">
-		<frame src="hotkeys.html" name="toolBar" scrolling="no"/>
-		<frame src="https://shinobichronicles.com/" name="mainFrame" id="mainFrame"/>
-	</frameset>
-	<noframes>
-		<body>
-			Your browser does not support frames, please upgrade to a more current one.
-		</body>
-	</noframes>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shinobi Chronicles Hotkeys</title>
+	<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+</head>
+<style type="text/css">
+	body {		
+		height: 100%;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		
+	}
+	.container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+	iframe
+	{
+		border: 0;
+	}
+	iframe[name=mainFrame]
+	{
+		flex: 1 1 auto;
+	}
+	iframe[name=toolBar]
+	{
+		height: 65px;
+	}
+</style>
+<body>
+	<div class="container">
+		<iframe src="hotkeys.html" name="toolBar"></iframe>
+		<iframe src="https://shinobichronicles.com/" name="mainFrame" id="mainFrame"></iframe>
+	</div>
+</body>
 </html>

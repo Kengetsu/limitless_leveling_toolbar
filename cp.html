@@ -100,7 +100,7 @@
 			<p>${key}</p>
 			<p>${action}</p>
 			<p>
-				<input type="text" onKeyUp='remapKey(event);' data-set="${title}" data-key="${action}" style="width: 3rem; height: 2rem;">
+				<input type="text" onKeyUp='remapKey(event);' data-set="${title}" data-key="${key}" style="width: 3rem; height: 2rem;"></input>
 			</p>
 			${key == "unmapped"? '' : `<p><button onClick="clearBinding(event.target.dataset.set,event.target.dataset.key,event.target.dataset.action, true)" data-set="${title}" data-key="${key}" data-action="${action}">Clear Mapping</button></p>`}
 		</div>`;

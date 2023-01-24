@@ -1,61 +1,51 @@
-/* CSS Document */
-
-@font-face {
-	font-family: kunstware;
-	src:url(../img/kunstware.ttf);
-	
-}
-h {
-	overflow:hidden;
-}
 body {
-		font-family: "Trebuchet MS", Helvetica, sans-serif;
-        background: url(../img/shadow_background.png) repeat;
-		overflow:hidden;
-		-moz-user-select:none;
-		-webkit-user-select:none;
-		user-select: none;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    background: url(../img/shadow_background.png) repeat;
+    overflow:hidden;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    user-select: none;
+    padding: 0 1rem 1rem 1rem;
+    margin: 0;
 }
-P {
-        margin-top: 13px;
-        margin-bottom: 0px;
-        font-size: 16px;
-		overflow:hidden;
+.container {
+    display: flex;
+    flex-wrap: wrap;
 }
-.trainBars {
-	position: fixed;
-	top: 1%;
-	left: 58%;
-	display:none;
-	max-width: 335px;
+.break {
+    flex-basis: 100%;
+    height: 0;
 }
-#styleChange {
-	position: fixed;
-	top: 34%;
-	left: 15%;
-	display:none;
+.options { 
+    margin-right: 1rem;
+    visibility: hidden;
 }
-#rankControl {
-	float:left;
-	margin-top:35px
+.titleSpan {
+    align-self: center;
+    margin: auto;
 }
-#timerStatus {
-	position: fixed; 
-	float:left; 
-	margin: 35px 0px 0px 10%;
+.barActions {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    margin-right: 6rem;
+    visibility: hidden;
 }
-#trainAdjust {
-	float:right; 
-	font-size:9px;
-	z-index:1;
+.barActions div {
+    position: absolute;
 }
-#watermark {
-	position:absolute;
-	bottom: 1%; 
-	right: 2%;
-	pointer-events: none;
+.panelToggles {
+    margin-right: 2rem;
 }
-#watermark p {
-	font-size:10px;
-	font-family:kunstware;
+.modifierSelection {
+    display: flex;
+    font-size: small;
+    justify-content: flex-end;
+    gap: 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+    .titleSpan {
+      visibility: collapse;
+    }
+  }
