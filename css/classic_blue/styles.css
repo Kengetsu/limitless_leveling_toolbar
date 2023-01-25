@@ -1,11 +1,28 @@
 @charset "utf-8";
 /* CSS Document */
-
+:root {
+	--theme-bg-color: #D0DAE0;
+	--theme-secondary-bg-color: #c8d2d7;
+	--theme-color: #005090;
+	--theme-secondary-color: #2080CA;
+	--theme-dark-color: black;
+	--theme-text-color: #E5E5E5;
+	--theme-active-color: #2160A0;
+}
 body {
-		color: #E5E5E5;
+		color: var(--theme-color);
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
         background: url(../../img/classic_blue_background.png) repeat;
 }
 p {
-		color: #E5E5E5;
+	color: var(--theme-color);
+}
+p a, a:visited {
+color: var(--theme-dark-color);
+}
+a:hover {
+color: var(--theme-active-color);
+}
+.titleSpan, label {
+	color: var(--theme-text-color);
 }

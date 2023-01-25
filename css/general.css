@@ -1,3 +1,12 @@
+:root {
+	--theme-bg-color: white;
+	--theme-secondary-bg-color: #EAEAEA;
+	--theme-color: black;
+	--theme-secondary-color: #E7584A;
+	--theme-dark-color: black;
+	--theme-text-color: black;
+	--theme-active-color: red;
+}
 body {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     background: url(../img/shadow_background.png) repeat;

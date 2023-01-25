@@ -1,14 +1,25 @@
 @charset "utf-8";
 /* CSS Document */
-
+:root {
+	--theme-bg-color: #0d111f;
+	--theme-secondary-bg-color: #070811;
+	--theme-color: #b99e47;
+	--theme-secondary-color: #b99f47;
+	--theme-dark-color: #413510;
+	--theme-text-color: #beb28a;
+	--theme-active-color: #d1a71c;
+}
 body {
-		color: #b99e47;
+		color: var(--theme-color);
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
         background: #0d111f;
 }
 p {
-		color: #b99e47;
+		color: var(--theme-color);
 }
-p a {
-    color: #b99f47
+p a, a:visited {
+    color: var(--theme-text-color);
+}
+a:hover {
+	color: var(--theme-active-color);
 }

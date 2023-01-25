@@ -1,11 +1,29 @@
 @charset "utf-8";
 /* CSS Document */
 @charset "utf-8";
+:root {
+	--theme-bg-color: #d2c9b3;
+	--theme-secondary-bg-color: #c8bfab;
+	--theme-color: black;
+	--theme-secondary-color: #A59B88;
+	--theme-dark-color: #413510;
+	--theme-text-color: #a29986;
+	--theme-active-color: #eee6d5;
+}
 body {
-		color: #A59B88;
+		color: var(--theme-color);
 		font-family: "Trebuchet MS", Helvetica, sans-serif;
         background: url(../../img/geisha_background.png) repeat;
 }
 p {
-		color: #A59B88;
+	color: var(--theme-color);
+}
+p a, a:visited {
+color: var(--theme-text-color);
+}
+a:hover {
+color: var(--theme-active-color);
+}
+.titleSpan, label {
+	color: var(--theme-text-color);
 }
