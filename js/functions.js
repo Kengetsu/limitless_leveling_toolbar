@@ -111,7 +111,7 @@ function goAction(ev){ //Check key used and do labeled function.
 			}
 			else if (action === "RepeatTrain")
 			{
-				$('#trainSubmit').click();
+				$('#trainingForm').submit();
 			}
 			else if (action === "RepeatMission")
 			{
