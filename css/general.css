@@ -39,7 +39,7 @@ a:hover {
 }
 .options { 
     margin-right: 1rem;
-    visibility: hidden;
+    visibility: collapse;
 }
 .titleSpan {
     align-self: center;
@@ -50,10 +50,10 @@ a:hover {
     justify-content: flex-end;
     flex-grow: 1;
     margin-right: 6rem;
-    visibility: hidden;
 }
 .barActions div {
     position: absolute;
+    visibility: collapse;
 }
 .panelToggles {
     margin-right: 2rem;
@@ -65,8 +65,34 @@ a:hover {
     gap: 1rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media screen and (max-width: 850px) {
     .titleSpan {
       visibility: collapse;
     }
-  }
+    #timerStatus {
+        visibility: collapse;
+    }
+}
+@media screen and (max-width: 500px) {
+    .titleSpan {
+      visibility: collapse;
+      display: none;
+    }
+    #timerStatus {
+        visibility: collapse;
+        display: none;
+    }
+    .options, .optionToggle {
+        visibility: collapse;
+        display: none;
+    }
+    .modifierSelection {
+        gap: revert;
+    }
+    .barActions {
+        justify-content: revert;
+    }
+    .barActions div {
+        bottom: 0px;
+    }
+}

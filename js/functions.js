@@ -290,15 +290,15 @@ function changeVisibility(evt)
 
 	if (evt.target.dataset.id != "options" && element.siblings().length > 0)
 	{
-		element.siblings().css('visibility', 'hidden');
+		element.siblings().css('visibility', 'collapse');
 	}
-	if (element.css('visibility') == "hidden")
+	if (element.css('visibility') == "collapse")
 	{
 		element.css('visibility', 'visible');
 	}
 	else
 	{
-		element.css('visibility', 'hidden');
+		element.css('visibility', 'collapse');
 	}
 	
 }
@@ -381,17 +381,6 @@ function consumeRamen(selection)// Eat tier of ramen.
 	
 	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
 }
-// function recordTraining(training)
-// {
-// 	//console.log(training, event.submitter.value);
-// 	if (training.length > 1) return false;
-// 	var trainType = training[0].name;
-// 	var trainValue = training[0].selectedIndex;
-// 	var trainDuration = event.submitter.value;
-	
-// 	previousTraining = [trainType, trainValue, trainDuration];
-// 	//console.log(previousTraining);
-// }
 function remapKey(ev)
 {
 	var key = ev.target.dataset.key;
