@@ -111,7 +111,7 @@ function goAction(ev){ //Check key used and do labeled function.
 			}
 			else if (action === "RepeatTrain")
 			{
-				$('#training form').submit();
+				$('#trainSubmit').click();
 			}
 			else if (action === "RepeatMission")
 			{
@@ -536,12 +536,14 @@ function reloadToolbar()
 
 function train(evt)
 {
+	$('#trainingType').prop('name', $("#trainingType").find(":selected").data('type'));
 	if ($(evt.target).attr('action') == undefined)
 	{	
 		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
 	}
 	if ($('#alerts').prop("checked") == true)
 	{
+		timer.clear();
 		timer.train($(evt.target).children()[1].value);
 	}
 }

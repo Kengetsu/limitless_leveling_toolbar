@@ -104,7 +104,7 @@
             <button onClick="timer.clear()">Reset Timer</button>
             <input type="checkbox" id="alerts"><span id="indicator" style="color:red;">Alert</span>
         </div>
-        <span class="titleSpan">Shinobi-Chronicles Hotkeys v0.2.0</span>
+        <span class="titleSpan">Shinobi-Chronicles Hotkeys v2</span>
         <div id="trainAdjust" class="modifierSelection">
             <div>
                 <input type="checkbox" id="seal">
@@ -133,19 +133,19 @@
         </div>
         <div class="barActions">
             <div id="training">
-                <form method="post" onsubmit="train(event)" target="mainFrame">
+                <form method="post" onsubmit="train(event)" target="mainFrame" id="trainingForm">
                     <select id="trainingType">
                         <optgroup label="Skills">
-                            <option value="ninjutsu">Ninjutsu Skill</option>
-                            <option value="taijutsu">Taijutsu Skill</option>
-                            <option value="genjutsu">Genjutsu Skill</option>
-                            <option value="bloodline">Bloodline Skill</option>
+                            <option value="ninjutsu" data-type="skill">Ninjutsu Skill</option>
+                            <option value="taijutsu" data-type="skill">Taijutsu Skill</option>
+                            <option value="genjutsu" data-type="skill">Genjutsu Skill</option>
+                            <option value="bloodline" data-type="skill">Bloodline Skill</option>
                         </optgroup>
                         <optgroup label="Attributes">
-                            <option value="cast_speed">Cast speed</option>
-                            <option value="speed">Speed</option>
-                            <option value="intelligence">Intelligence</option>
-                            <option value="willpower">Willpower</option>
+                            <option value="cast_speed" data-type="attributes">Cast speed</option>
+                            <option value="speed" data-type="attributes">Speed</option>
+                            <option value="intelligence" data-type="attributes">Intelligence</option>
+                            <option value="willpower" data-type="attributes">Willpower</option>
                         </optgroup>
                     </select>
                     <select id="trainingDuration">
@@ -153,7 +153,7 @@
                         <option value="Long">Long</option>
                         <option value="Extended">Extended</option>
                     </select>
-                    <input type="submit" value="Train" name="train_type" class="submissionButtons"></input>
+                    <input type="submit" value="Train" name="train_type" class="submissionButtons" id="trainSubmit"></input>
                 </form>
             </div>
             <div id="missions">

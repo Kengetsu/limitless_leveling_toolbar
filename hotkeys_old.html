@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type"content="text/html" charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+	<script src="./js/functions.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/general.css">
+	<link id="theme" rel="stylesheet" type="text/css">
+</head>
+<script>
+	$(document).ready(function () {
+	if(Cookies.get("css")) {
+		$("#theme").attr("href",Cookies.get("css"));
+	
+	};
+	if(Cookies.get("rank")) {
+		$("#userRank").val(Cookies.get("rank"));
+		
+		missions.gen();
+		enemy.gen();
+	};
+	if(Cookies.get("jutsu")) {
+		jutsuList = $.parseJSON(Cookies.get("jutsu"));
+	};
+	if(Cookies.get("customKeys")) {
+		keyMap = $.parseJSON(Cookies.get("customKeys"));
+	}
+	else
+	{
+		Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	};
+	$('#layout').change(function() {
+		if ($("layout").val() == "selection") {
+			return;
+		}
+		else {
+			$("#theme").attr("href", $(this).val());
+			Cookies.set("css",$(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None', secure: true, sameSite: 'None'});
+			return false;
+		}
+	});
+	$('#userRank').change(function() {
+		enemy.gen();
+		missions.gen();
+		if ($("userRank").val() == "selection") {
+			return;
+		}
+		else {
+			Cookies.set("rank", $(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+			return false;
+		}
+	});
+	
+	var sparringCheckbox = document.getElementById("sparringCheckbox");
+	var pvpCheckbox = document.getElementById("pvpCheckbox");
+	var missionsCheckbox = document.getElementById("missionsCheckbox");
+	$('#sparringCheckbox').click(function () {
+		if(sparringCheckbox.checked) {
+			pvpCheckbox.checked = false;
+			missionsCheckbox.checked = false;
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Scout}`);
+		}
+		else {
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+		}
+	});
+	$('#pvpCheckbox').click(function () {
+		if(pvpCheckbox.checked) {
+			sparringCheckbox.checked = false;
+			missionsCheckbox.checked = false;
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Pvp}`);
+		}
+		else {
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+		}
+	});
+	$('#missionsCheckbox').click(function () {
+		if(missionsCheckbox.checked) {
+			sparringCheckbox.checked = false;
+			pvpCheckbox.checked = false;
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Mission}`);
+		}
+		else {
+			$('#useJutsu').get(0).setAttribute('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+		}
+	});
+	
+	$('.SubmissionButtons').keydown(function (event)
+	{
+		event.preventDefault();
+	});
+});
+</script>
+<body onKeyUp="goAction(event)" scrolling="no">
+	<div id="timerStatus">
+		<button onClick="timer.clear()">Reset Timer</button>
+		<input type="checkbox" id="alerts"><span id="indicator" style="color:red;">Alert</span>
+	</div>
+	<div id="trainAdjust">
+		<input type="checkbox" id="seal">Forbidden Seal
+		<input type="checkbox" id="boost">Clan Boost
+		<input type="checkbox" id="sparringCheckbox">Spar
+		<input type="checkbox" id="pvpCheckbox">PVP
+		<input type="checkbox" id="missionsCheckbox">Missions
+	</div>
+	<div id="styleChange">
+		<select id="layout">
+			<option value="selection">Select a Theme</option>
+			<option value="./css/classic_blue/styles.css">Classic Blue</option>
+			<option value="./css/shadow_ribbon/styles.css">Shadow Ribbon</option>
+			<option value="./css/geisha/styles.css">Geisha</option>
+			<option value="./css/blue_scroll/styles.css">Blue Scroll</option>
+		</select>
+	</div>
+	<div id="trainSkills" class="trainBars">
+		<table align="center">
+			<tr>
+				<td width="30%">
+					<form method="post" action="https://shinobichronicles.com/?id=13" target="mainFrame" onSubmit="recordTraining($(this).children('select'))">
+						<select name="skill">
+							<option value="ninjutsu">Ninjutsu Skill</option>
+							<option value="taijutsu">Taijutsu Skill</option>
+							<option value="genjutsu">Genjutsu Skill</option>
+							<option value="bloodline">Bloodline Skill</option>
+						</select>
+						<input type="submit" value="Short" name="train_type" onClick="timer.clear();timer.train(0);" class="SubmissionButtons"></input>
+						<input type="submit" value="Long" name="train_type" onClick="timer.clear();timer.train(1)" class="SubmissionButtons"></input>
+						<input type="submit" value="Extended" name="train_type" onClick="timer.clear();timer.train(2)" class="SubmissionButtons"></input>
+					</form> 
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="trainAttributes" class="trainBars">
+		<table align="center">
+			<tr>
+				<td width="30%">
+					<form method="post" action="https://shinobichronicles.com/?id=13" target="mainFrame" onSubmit="recordTraining($(this).children('select'))">
+						<select name="attributes">
+							<option value="cast_speed">Cast speed</option>
+							<option value="speed">Speed</option>
+							<option value="intelligence">Intelligence</option>
+							<option value="willpower">Willpower</option>
+						</select>
+						<input type="submit" value="Short" name="train_type" onClick="timer.clear();timer.train(0);" class="SubmissionButtons"></input>
+						<input type="submit" value="Long" name="train_type" onClick="timer.clear();timer.train(1);" class="SubmissionButtons"></input>
+						<input type="submit" value="Extended" name="train_type" onClick="timer.clear();timer.train(2);" class="SubmissionButtons"></input>
+					</form> 
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="startMission" class="trainBars">
+		<table align="center">
+			<tr>
+				<td width="30%">
+					<form method="post" onSubmit="missions.set(); return false;">
+						<select id="selectMission" name="Missions">
+						</select>
+						<input type="submit" value="Start" class="SubmissionButtons"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="arenaFight" class="trainBars">
+		<table align="center">
+			<tr>
+				<td width="30%">
+					<form method="post" onSubmit="enemy.arena(); return false;">
+						<select id="enemyList" name="Enemy">
+						</select>
+						<input type="submit" value="Fight" class="SubmissionButtons"/>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="rankControl">
+		<select id="userRank">
+			<option value="selection">Select Your Rank</option>
+			<option value="akademi-sei">Akademi-Sei</option>
+			<option value="genin">Genin</option>
+			<option value="chuunin">Chuunin</option>
+			<option value="jonin">Jonin</option>
+		</select>
+	</div>
+	<div>
+		<table width="90%" height="10" border="0" cellpadding="0" align="center" style="display:block; position:relative;z-index:-1;">
+			<tbody style="width: 100%; position: absolute;">
+				<tr>
+					<td width="30%">
+						<button onClick="toggle.panel('styleChange')">Change Theme</button>
+					</td>
+					<td width="30%">
+						<p align="center">Shinobi-Chronicles Hotkeys v0.10</p>
+					</td>
+					<td width="10%">
+						<p align="center" style="padding-top:8px;">
+							<button onClick="toggle.panel('trainSkills');">Skills</button>
+						</p>
+					</td>
+					<td width="10%">
+						<p align="center" style="padding-top:8px;"><button onClick="toggle.panel('trainAttributes');">Attributes</button></p>
+					</td>
+					<td width="10%">
+						<p align="center" style="padding-top:8px;"><button onClick="toggle.panel('startMission');">Missions</button></p>
+					</td>
+					<td width="10%">
+						<p align="center" style="padding-top:8px;"><button onClick="toggle.panel('arenaFight');">Arena</button></p>
+					</td>
+					<td width="30%">
+						<p align="right"><a href="cp.html" target="mainFrame">Controls</a></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div style="display:none;">
+		<form id="useJutsu" target="mainFrame" action="https://shinobichronicles.com/?id=12" method="post">
+			<input id="hand_seal_input" name="hand_seals" value="" type="hidden">
+			<input id="jutsuType" name="jutsu_type" value="ninjutsu" type="hidden">
+			<input id="weaponID" name="weapon_id" value="" type="hidden">
+			<input id="jutsuID" name="jutsu_id" value="" type="hidden">
+			<input type="hidden" name="attack" value="Submit" class="SubmissionButtons">
+		</form>
+	</div>
+	<div id="watermark">
+		<p>Coded by <span id="watermarkSpan">K</span>engetsu</p>
+	</div>
+</body>
+</html>
