@@ -17,6 +17,18 @@ body {
     padding: 0 1rem 1rem 1rem;
     margin: 0;
 }
+p {
+    color: black;
+}
+a, a:visited {
+    color: var(--theme-text-color);
+}
+a:hover {
+    color: var(--theme-active-color);
+}
+.titleSpan, label {
+    color: var(--theme-text-color);
+}
 .container {
     display: flex;
     flex-wrap: wrap;

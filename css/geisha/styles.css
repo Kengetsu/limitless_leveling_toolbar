@@ -18,11 +18,11 @@ body {
 p {
 	color: var(--theme-color);
 }
-p a, a:visited {
-color: var(--theme-text-color);
+a, a:visited {
+	color: var(--theme-text-color);
 }
 a:hover {
-color: var(--theme-active-color);
+	color: var(--theme-active-color);
 }
 .titleSpan, label {
 	color: var(--theme-text-color);

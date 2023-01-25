@@ -10,12 +10,12 @@
 	--theme-active-color: #d1a71c;
 }
 body {
-		color: var(--theme-color);
-		font-family: "Trebuchet MS", Helvetica, sans-serif;
-        background: #0d111f;
+	color: var(--theme-color);
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	background: #0d111f;
 }
 p {
-		color: var(--theme-color);
+	color: var(--theme-color);
 }
 a, a:visited {
     color: var(--theme-text-color);

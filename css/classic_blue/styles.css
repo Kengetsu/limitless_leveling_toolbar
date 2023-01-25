@@ -17,11 +17,11 @@ body {
 p {
 	color: var(--theme-color);
 }
-p a, a:visited {
-color: var(--theme-dark-color);
+a, a:visited {
+	color: var(--theme-dark-color);
 }
 a:hover {
-color: var(--theme-active-color);
+	color: var(--theme-active-color);
 }
 .titleSpan, label {
 	color: var(--theme-text-color);
