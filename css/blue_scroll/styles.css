@@ -17,7 +17,7 @@ body {
 p {
 		color: var(--theme-color);
 }
-p a, a:visited {
+a, a:visited {
     color: var(--theme-text-color);
 }
 a:hover {
