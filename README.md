@@ -1,7 +1,7 @@
 # shinobi_chronicles_toolbar
 Old shinobi chronicles toolbar.
 
-Hotkeys Toolbar: https://kengetsu.com/snb/
+Hotkeys Toolbar: https://sc.kengetsu.com/
 
 Working in Firefox or Safari to use in Chrome/Edge/Brave follow steps below.
 
