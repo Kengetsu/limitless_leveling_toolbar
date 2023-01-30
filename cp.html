@@ -16,7 +16,15 @@
 
 	function drop(ev) {
 		ev.preventDefault();
-		var posId = parseInt(ev.dataTransfer.getData("text"));
+		var posId = null;
+		if (ev.dataTransfer.getData("text") != '')
+		{
+			posId = parseInt(ev.dataTransfer.getData("text"));
+		}
+		else
+		{
+			posId = parseInt(ev.toElement.parentElement.id);
+		}
 		var data = document.getElementById(posId);
 		var children = Array.from($('#listingJutsu').children());
 		var targetPos = children.indexOf(ev.target.parentNode);
