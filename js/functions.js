@@ -270,6 +270,8 @@ var enemy = {
 					select[select.length] = new Option("Enemy ANBU", "fight=17");
 					select[select.length] = new Option("Muscle-bound Jonin", "fight=21");
 					select[select.length] = new Option("ANBU Captain", "fight=18");
+					select[select.length] = new Option("Fumetsu Defector", "fight=22");
+					select[select.length] = new Option("Kibou Defector", "fight=23");
 					break;
 				default:
 					select.length = 0;
