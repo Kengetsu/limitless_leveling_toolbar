@@ -81,7 +81,24 @@
             {
                 $('#useJutsu').prop('action', `${URL_ROOT}?id=${pageMap.Arena}`);
             }
-        })
+        });
+
+        var raidIntervalID = null;
+		$("#raidCheckbox").on('change', function () {
+			if (this.checked)
+			{
+				$("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});        
+				raidIntervalID = setInterval(function () {
+					top.toolBar.focus();
+					console.log("Raiding!");
+				}, 150);    
+			}
+			else
+			{
+				$("label[for='raidCheckbox']").css({'color': '', 'background': '', 'border': '', 'font-weight': '', 'font-size': ''});
+				clearInterval(raidIntervalID);
+			}        
+		});
     });
     </script>
     <div class="container">
