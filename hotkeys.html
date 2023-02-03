@@ -35,6 +35,11 @@
         {
             Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
         };
+        if(Cookies.get("previousTraining")) {
+            let trainingSelection = $.parseJSON(Cookies.get("previousTraining"));
+            $("#trainingType").prop("value", trainingSelection[0]);
+	        $("#trainingDuration").prop("value", trainingSelection[1]);
+        }
         $('#layout').change(function() {
             if ($("layout").val() == "selection") {
                 return;
@@ -134,7 +139,7 @@
         <div class="barActions">
             <div id="training">
                 <form method="post" onsubmit="train(event)" target="mainFrame" id="trainingForm">
-                    <select id="trainingType">
+                    <select id="trainingType" onchange="trainChange()">
                         <optgroup label="Skills">
                             <option value="ninjutsu" data-type="skill">Ninjutsu Skill</option>
                             <option value="taijutsu" data-type="skill">Taijutsu Skill</option>
@@ -146,7 +151,7 @@
                             <option value="speed" data-type="attributes">Speed</option>
                         </optgroup>
                     </select>
-                    <select id="trainingDuration" name="train_type">
+                    <select id="trainingDuration" name="train_type" onchange="trainChange()">
                         <option value="Short">Short</option>
                         <option value="Long">Long</option>
                         <option value="Extended">Extended</option>

@@ -526,7 +526,7 @@ function reloadToolbar()
 }
 
 function train(evt)
-{
+{	
 	$('#trainingType').prop('name', $("#trainingType").find(":selected").data('type'));
 	if ($(evt.target).attr('action') == undefined)
 	{	
@@ -537,4 +537,11 @@ function train(evt)
 		timer.clear();
 		timer.train($(evt.target).children()[1].value);
 	}
+}
+function trainChange(evt)
+{
+	let trainingType = $("#trainingType").val();
+	let trainingVal = $("#trainingDuration").val();
+
+	Cookies.set('previousTraining', JSON.stringify([trainingType, trainingVal]), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 }
