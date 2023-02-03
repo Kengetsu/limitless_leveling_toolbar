@@ -4,9 +4,31 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>Shinobi Chronicles Hotkeys</title>
 	<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
 </head>
+<script>
+	$(document).ready(function () {
+		var raidIntervalID = null;
+		
+		document.getElementById('toolBar').contentWindow.$("#raidCheckbox").on('change', function () {
+			if (this.checked)
+			{
+				document.getElementById('toolBar').contentWindow.$("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});        
+				raidIntervalID = setInterval(function () {
+					document.getElementById('toolBar').contentWindow.focus();
+					console.log("Raiding!");
+				}, 150);    
+			}
+			else
+			{
+				document.getElementById('toolBar').contentWindow.$("label[for='raidCheckbox']").css({'color': '', 'background': '', 'border': '', 'font-weight': '', 'font-size': ''});
+				clearInterval(raidIntervalID);
+			}        
+		});
+});
+</script>
 <style type="text/css">
 	body {		
 		padding: 0;
@@ -39,8 +61,8 @@
 	}
 </style>
 <body>
-	<div class="container">
-		<iframe src="hotkeys.html" name="toolBar" class="toolBar"></iframe>
+	<div class="container" id="frameContainer">
+		<iframe src="hotkeys.html" name="toolBar" id="toolBar" class="toolBar"></iframe>
 		<iframe src="https://shinobichronicles.com/" name="mainFrame" id="mainFrame" class="mainFrame"></iframe>
 	</div>
 </body>
