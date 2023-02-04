@@ -1,7 +1,6 @@
 // JavaScript Document OLD
 var traveling = false; running = false; jutsuList = []; timeoutID = [];
-var previousTraining = null;
-var previousMission = null;
+var previousSelections = [];
 var pageMap =
 {
 	"Profile": 1,
@@ -115,8 +114,7 @@ function goAction(ev){ //Check key used and do labeled function.
 			}
 			else if (action === "RepeatMission")
 			{
-				if (previousMission == null) break;
-				missions.set(previousMission);
+				missions.set();
 			}
 			break;
 		default:
@@ -221,8 +219,6 @@ var missions = {
 		{
 			mission = document.getElementById("selectMission").value.split('&');
 		}
-		
-		previousMission = mission;
 		
 		if (mission[0] == 'clan')
 		{
@@ -542,6 +538,23 @@ function trainChange(evt)
 {
 	let trainingType = $("#trainingType").val();
 	let trainingVal = $("#trainingDuration").val();
-
-	Cookies.set('previousTraining', JSON.stringify([trainingType, trainingVal]), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	previousSelections[0] = [trainingType, trainingVal];
+	Cookies.set('previousSelections', JSON.stringify(previousSelections), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+}
+function selectionChange(evt)
+{
+	let element = evt.target;
+	if (element.id == 'selectMission')
+	{
+		previousSelections[1] = evt.target.value;
+	}
+	else if (element.id == 'enemyList')
+	{
+		previousSelections[2] = evt.target.value;
+	}
+	else
+	{
+		return false;
+	}
+	Cookies.set('previousSelections', JSON.stringify(previousSelections), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 }

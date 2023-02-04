@@ -36,10 +36,24 @@
             Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
         };
         if(Cookies.get("previousTraining")) {
-            let trainingSelection = $.parseJSON(Cookies.get("previousTraining"));
-            $("#trainingType").prop("value", trainingSelection[0]);
-	        $("#trainingDuration").prop("value", trainingSelection[1]);
+            Cookies.remove("previousTraining");
         }
+        if(Cookies.get("previousSelections")) {
+            previousSelections = $.parseJSON(Cookies.get("previousSelections"));
+            if (previousSelections[0] != undefined)
+            {
+                $("#trainingType").prop("value", previousSelections[0][0]);
+	            $("#trainingDuration").prop("value", previousSelections[0][1]);
+            }
+            if (previousSelections[1] != undefined)
+            {
+                $('#selectMission').prop("value", previousSelections[1]);
+            }
+            if (previousSelections[2] != undefined)
+            {
+                $('#enemyList').prop("value", previousSelections[2]);
+            }
+        };
         $('#layout').change(function() {
             if ($("layout").val() == "selection") {
                 return;
@@ -160,7 +174,7 @@
         <div class="barActions">
             <div id="training">
                 <form method="post" onsubmit="train(event)" target="mainFrame" id="trainingForm">
-                    <select id="trainingType" onchange="trainChange()">
+                    <select id="trainingType" onchange="trainChange(event)">
                         <optgroup label="Skills">
                             <option value="ninjutsu" data-type="skill">Ninjutsu Skill</option>
                             <option value="taijutsu" data-type="skill">Taijutsu Skill</option>
@@ -172,7 +186,7 @@
                             <option value="speed" data-type="attributes">Speed</option>
                         </optgroup>
                     </select>
-                    <select id="trainingDuration" name="train_type" onchange="trainChange()">
+                    <select id="trainingDuration" name="train_type" onchange="trainChange(event)">
                         <option value="Short">Short</option>
                         <option value="Long">Long</option>
                         <option value="Extended">Extended</option>
@@ -181,12 +195,12 @@
                 </form>
             </div>
             <div id="missions">
-                <select id="selectMission" name="Missions">
+                <select id="selectMission" name="Missions" onchange="selectionChange(event)">
                 </select>
                 <input type="submit" value="Start" class="SubmissionButtons" onclick="missions.set();"/>
             </div>
             <div id="arena">
-                <select id="enemyList" name="Enemy">
+                <select id="enemyList" name="Enemy" onchange="selectionChange(event)">
                 </select>
                 <input type="submit" value="Fight" class="SubmissionButtons" onclick="enemy.arena()"/>
             </div>
