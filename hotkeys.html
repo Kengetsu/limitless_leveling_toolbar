@@ -36,6 +36,7 @@
             Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
         };
         if(Cookies.get("previousTraining")) {
+            previousSelections[0] = $.parseJSON(Cookies.get("previousTraining"));
             Cookies.remove("previousTraining");
         }
         if(Cookies.get("previousSelections")) {
