@@ -560,7 +560,7 @@ function validateKeyMapping(currentMap)
 					changedKeys.push(key);
 				}
 			}
-			console.log(currentMap[set][key], defaultMap[set][key]);
+			//console.log(currentMap[set][key], defaultMap[set][key]);
 		}
 	}
 	if (changedKeys.length > 0)
