@@ -523,24 +523,50 @@ function selectionChange(evt)
 	}
 	Cookies.set('previousSelections', JSON.stringify(previousSelections), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 }
-function validateKeyMapping(keyMap)
+function validateKeyMapping(currentMap)
 {
 	var defaultMap = new KeyMapping();
-	var newMap = keyMap;
-	var changed = false;
+	var newMap = currentMap;
+	var changedKeys = [];
+
+	//Add any missing keys
 	for(let set in defaultMap)
 	{
 		for(let key in defaultMap[set])
 		{
-			if (key in keyMap[set]) continue;
-			if (keyMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
+			if (key in currentMap[set]) continue;
+			if (currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
+			//console.log(newMap[set][key], defaultMap[set][key]);
 			newMap[set][key] = defaultMap[set][key];
-			changed = true;		
+			changedKeys.push(key);
 		}
 	}
-	if (changed)
+	for(let set in currentMap)
 	{
-		Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+		for(let key in currentMap[set])
+		{
+			if (key == 'unmapped') continue;
+			if (typeof currentMap[set][key] == 'object')
+			{
+				if (currentMap[set][key].length == 1)
+				{
+					newMap[set][key] = currentMap[set][key][0];
+					changedKeys.push(key);
+				}
+				else
+				{
+					delete newMap[set][key];
+					newMap[set]['unmapped'].push(key);
+					changedKeys.push(key);
+				}
+			}
+			console.log(currentMap[set][key], defaultMap[set][key]);
+		}
+	}
+	if (changedKeys.length > 0)
+	{
+		alert(`Your key mapping has updated. The following keys were changed ${changedKeys.join(',')}`)
+		Cookies.set("customKeys", JSON.stringify(newMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
 	return newMap;
 }
