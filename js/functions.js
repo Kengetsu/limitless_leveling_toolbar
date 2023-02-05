@@ -1,6 +1,67 @@
 // JavaScript Document OLD
-var traveling = false; running = false; jutsuList = []; timeoutID = [];
+var traveling = false; 
+var running = false;
+var jutsuList = []; 
+var timeoutID = [];
 var previousSelections = [];
+var keyMap = null;
+class KeyMapping
+{
+	constructor()
+	{
+		this.travel = {
+			"ArrowLeft": "west",
+			"ArrowUp": "north",
+			"ArrowRight": "east",
+			"ArrowDown": "south",
+			"unmapped": [],
+			
+		},
+		this.jutsu = {
+			"Digit1": 0,
+			"Digit2": 1,
+			"Digit3": 2,
+			"Digit4": 3,
+			"Digit5": 4,
+			"Digit6": 5,
+			"Numpad1": 0,
+			"Numpad2": 1,
+			"Numpad3": 2,
+			"Numpad4": 3,
+			"Numpad5": 4,
+			"Numpad6": 5,
+			"unmapped": [],
+		},
+		this.ramen = {
+			"Digit7": 0,
+			"Digit8": 1,
+			"Digit9": 2,
+			"Numpad7": 0,
+			"Numpad8": 1,
+			"Numpad9": 2,
+			"unmapped": [],
+		},
+		this.page = {
+			"KeyQ": "Scout",
+			"KeyW": "Train",
+			"KeyE": "Travel",
+			"KeyA": "Arena",
+			"KeyS": "Ramen",
+			"KeyD": "Mission",
+			"KeyZ": "Special",
+			"KeyX": "Profile",
+			"KeyC": "Chat",
+			"unmapped": [],
+		},
+		this.action = {
+			"Space": "Fight",
+			"KeyR": "RepeatTrain",
+			"KeyF": "RepeatMission",
+			"KeyP": "RaidMode",
+			"unmapped": [],
+		}
+	}
+}
 var pageMap =
 {
 	"Profile": 1,
@@ -14,60 +75,6 @@ var pageMap =
 	"Clan": 20,
 	"Scout": 22,
 	"Ramen": 23,
-};
-
-var keyMap =
-{
-	travel: {
-		"ArrowLeft": "west",
-		"ArrowUp": "north",
-		"ArrowRight": "east",
-		"ArrowDown": "south",
-		"unmapped": [],
-		
-	},
-	jutsu: {
-		"Digit1": 0,
-		"Digit2": 1,
-		"Digit3": 2,
-		"Digit4": 3,
-		"Digit5": 4,
-		"Digit6": 5,
-		"Numpad1": 0,
-		"Numpad2": 1,
-		"Numpad3": 2,
-		"Numpad4": 3,
-		"Numpad5": 4,
-		"Numpad6": 5,
-		"unmapped": [],
-	},
-	ramen: {
-		"Digit7": 0,
-		"Digit8": 1,
-		"Digit9": 2,
-		"Numpad7": 0,
-		"Numpad8": 1,
-		"Numpad9": 2,
-		"unmapped": [],
-	},
-	page: {
-		"KeyQ": "Scout",
-		"KeyW": "Train",
-		"KeyE": "Travel",
-		"KeyA": "Arena",
-		"KeyS": "Ramen",
-		"KeyD": "Mission",
-		"KeyZ": "Special",
-		"KeyX": "Profile",
-		"KeyC": "Chat",
-		"unmapped": [],
-	},
-	action: {
-		"Space": "Fight",
-		"KeyR": "RepeatTrain",
-		"KeyF": "RepeatMission",
-		"unmapped": [],
-	},
 };
 
 var URL_ROOT = "https://shinobichronicles.com/";
@@ -115,6 +122,10 @@ function goAction(ev){ //Check key used and do labeled function.
 			else if (action === "RepeatMission")
 			{
 				missions.set();
+			}
+			else if (action == "RaidMode")
+			{
+				$("#raidCheckbox").click();
 			}
 			break;
 		default:
@@ -383,6 +394,7 @@ function remapKey(ev)
 {
 	var key = ev.target.dataset.key;
 	var set = ev.target.dataset.set;
+	var action = ev.target.dataset.action;
 	var newKey = ev.code;
 
 	ev.target.value = null;
@@ -390,7 +402,7 @@ function remapKey(ev)
 	console.log(key, set);
 	if (key in keyMap[set])
 	{
-		var accept = confirm(`Are you sure you want to map ${set} : ${keyMap[set][key]} to ${newKey}`);
+		var accept = confirm(`Are you sure you want to map ${set} : ${action} to ${newKey}`);
 
 		if (!accept)
 		{
@@ -407,18 +419,23 @@ function remapKey(ev)
 			clearBinding(...keyConflict);
 			
 		};
-		keyMap[set][newKey] = keyMap[set][key];
-		delete keyMap[set][key];
+		if (key == 'unmapped')
+		{
+			var index = keyMap[set][key].indexOf(action);
+			keyMap[set][newKey] = keyMap[set][key][index];
+			keyMap[set]["unmapped"].splice(index,1);
+		}
+		else
+		{
+			keyMap[set][newKey] = keyMap[set][key];
+			delete keyMap[set][key];
+		}
 	}
 	else
 	{
-		keyMap[set][newKey] = key;
-		var index = keyMap[set]["unmapped"].indexOf(key);
-		keyMap[set]["unmapped"].splice(index,1);
+		alert("There is something wrong with your key mapping, please try the restore default button then try again");
+		return;
 	}
-	
-	
-
 	Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	
 	reloadToolbar();
@@ -447,59 +464,7 @@ function clearBinding(keySet, key, action, reload = false)
 }
 function resetKeyMapping()
 {
-	keyMap =
-	{
-		travel: {
-			"ArrowLeft": "west",
-			"ArrowUp": "north",
-			"ArrowRight": "east",
-			"ArrowDown": "south",
-			"unmapped": [],
-			
-		},
-		jutsu: {
-			"Digit1": 0,
-			"Digit2": 1,
-			"Digit3": 2,
-			"Digit4": 3,
-			"Digit5": 4,
-			"Digit6": 5,
-			"Numpad1": 0,
-			"Numpad2": 1,
-			"Numpad3": 2,
-			"Numpad4": 3,
-			"Numpad5": 4,
-			"Numpad6": 5,
-			"unmapped": [],
-		},
-		ramen: {
-			"Digit7": 0,
-			"Digit8": 1,
-			"Digit9": 2,
-			"Numpad7": 0,
-			"Numpad8": 1,
-			"Numpad9": 2,
-			"unmapped": [],
-		},
-		page: {
-			"KeyQ": "Scout",
-			"KeyW": "Train",
-			"KeyE": "Travel",
-			"KeyA": "Arena",
-			"KeyS": "Ramen",
-			"KeyD": "Mission",
-			"KeyZ": "Special",
-			"KeyX": "Profile",
-			"KeyC": "Chat",
-			"unmapped": [],
-		},
-		action: {
-			"Space": "Fight",
-			"KeyR": "RepeatTrain",
-			"KeyF": "RepeatMission",
-			"unmapped": [],
-		},
-	};
+	keyMap = new KeyMapping();
 	Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	reloadToolbar();
 }
@@ -557,4 +522,25 @@ function selectionChange(evt)
 		return false;
 	}
 	Cookies.set('previousSelections', JSON.stringify(previousSelections), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+}
+function validateKeyMapping(keyMap)
+{
+	var defaultMap = new KeyMapping();
+	var newMap = keyMap;
+	var changed = false;
+	for(let set in defaultMap)
+	{
+		for(let key in defaultMap[set])
+		{
+			if (key in keyMap[set]) continue;
+			if (keyMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
+			newMap[set][key] = defaultMap[set][key];
+			changed = true;		
+		}
+	}
+	if (changed)
+	{
+		Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	}
+	return newMap;
 }

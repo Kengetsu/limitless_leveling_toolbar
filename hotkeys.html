@@ -29,10 +29,11 @@
             jutsuList = $.parseJSON(Cookies.get("jutsu"));
         };
         if(Cookies.get("customKeys")) {
-            keyMap = $.parseJSON(Cookies.get("customKeys"));
+            keyMap = validateKeyMapping($.parseJSON(Cookies.get("customKeys")));
         }
         else
         {
+            keyMap = new KeyMapping();
             Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
         };
         if(Cookies.get("previousTraining")) {
