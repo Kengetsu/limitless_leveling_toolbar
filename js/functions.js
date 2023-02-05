@@ -1,7 +1,8 @@
 // JavaScript Document OLD
 var traveling = false; 
 var running = false;
-var jutsuList = []; 
+var jutsuList = [];
+var trainingJutsuList = []; 
 var timeoutID = [];
 var previousSelections = [];
 var keyMap = null;
@@ -56,7 +57,9 @@ class KeyMapping
 		this.action = {
 			"Space": "Fight",
 			"KeyR": "RepeatTrain",
+			"KeyT": "CancelTrain",
 			"KeyF": "RepeatMission",
+			"KeyG": "CancelMission",
 			"KeyP": "RaidMode",
 			"unmapped": [],
 		}
@@ -111,21 +114,28 @@ function goAction(ev){ //Check key used and do labeled function.
 			break;
 		case key in keyMap.action:
 			var action = keyMap.action[key];
-			if (action === "Fight")
+			switch(action)
 			{
-				enemy.arena();
-			}
-			else if (action === "RepeatTrain")
-			{
-				$('#trainingForm').submit();
-			}
-			else if (action === "RepeatMission")
-			{
-				missions.set();
-			}
-			else if (action == "RaidMode")
-			{
-				$("#raidCheckbox").click();
+				case "Fight":
+					enemy.arena();
+					break;
+				case "RepeatTrain":
+					$('#trainingForm').submit();
+					break;
+				case "CancelTrain":
+					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Train}&cancel_training=1`;
+					break;
+				case "RepeatMission":
+					missions.set();
+					break;
+				case "CancelMission":
+					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&cancel_mission=1`;
+					break;
+				case "RaidMode":
+					$("#raidCheckbox").click();
+					break;
+				default:
+					break;
 			}
 			break;
 		default:
@@ -569,4 +579,66 @@ function validateKeyMapping(currentMap)
 		Cookies.set("customKeys", JSON.stringify(newMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
 	return newMap;
+}
+function populateTrainingJutsu(arr)
+{
+	for (let jutsu in arr)
+	{
+		$('#jutsuList').append($('<option>', {
+			value: arr[jutsu].id,
+			title: arr[jutsu].type,
+			text: arr[jutsu].name
+		}));
+	}
+	trainingJutsuList = arr;
+}
+function trainJutsu(evt)
+{
+	if ($(evt.target).attr('action') == undefined)
+	{	
+		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
+	}
+}
+async function getJutsuId(name)
+{
+	const request = new Request('./sc_jutsu.json');
+	const response = await fetch(request);
+	const jutsuLibrary = await response.json();
+	let filtered = jutsuLibrary.filter(jutsu => jutsu.name === name)
+	if (filtered.length == 0) return undefined;
+	return filtered[0].jutsu_id;
+}
+function clearTrainingJutsu(all = false) 
+{ // Clear jutsu on array index if passed int else clear all.
+	var id = event.target.dataset.id;
+	if(all)
+	{
+		trainingJutsuList.length = 0;
+		Cookies.set("trainingJutsu", JSON.stringify(trainingJutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	}
+	else
+	{
+		trainingJutsuList.splice(id, 1);
+		Cookies.set("trainingJutsu", JSON.stringify(trainingJutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	}
+	reloadToolbar();
+}
+function setTrainJutsu()
+{
+	let data = event.target.dataset;
+	let duplicate = trainingJutsuList.filter(jutsu => jutsu.id == data.id);
+	if(duplicate.length > 0) return;
+	if(trainingJutsuList.length == 6) { // Prompt to clear jutsu if array is holding 6 jutsu.
+		var accept = prompt("Max jutsu reached, clear list?", "yes/no")
+		accept = accept.toUpperCase();
+		if(accept == "YES") {
+			clearTrainingJutsu(true);
+		}
+		else {
+			return false;
+		}
+	}
+	trainingJutsuList.push({name: data.name, type: data.type, id: data.id});
+	Cookies.set("trainingJutsu", JSON.stringify(trainingJutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+	reloadToolbar();
 }

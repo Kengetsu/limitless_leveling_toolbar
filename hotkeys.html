@@ -11,6 +11,30 @@
     <link rel="stylesheet" type="text/css" href="./css/general.css">
 	<link id="theme" rel="stylesheet" type="text/css">
 </head>
+<script type="module">
+$(document).ready(async function() {
+    if(Cookies.get('trainingJutsu'))
+    {
+        let trainable = $.parseJSON(Cookies.get("trainingJutsu"));
+        populateTrainingJutsu(trainable);
+    }
+    else
+    {
+        if (jutsuList.length == 0) return;
+        var boundJutsu = jutsuList.filter((j) => j.jutsuType != "bloodline_jutsu");
+        var trainable = [];
+        for(const jutsu in boundJutsu)
+        {
+            let jutsuID = await getJutsuId(boundJutsu[jutsu].jutsuName);
+            if (jutsuID == undefined) continue;
+            trainable.push({name: boundJutsu[jutsu].jutsuName, type: boundJutsu[jutsu].jutsuType, id: jutsuID})
+        }
+        Cookies.set("trainingJutsu", JSON.stringify(trainable), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+        populateTrainingJutsu(trainable);
+        
+    }
+});
+</script>
 <body onKeyUp="goAction(event)" scrolling="no">
     <script>
         $(document).ready(function () {
@@ -206,11 +230,19 @@
                 </select>
                 <input type="submit" value="Fight" class="SubmissionButtons" onclick="enemy.arena()"/>
             </div>
+            <div id="jutsu">
+                <form method="post" onsubmit="trainJutsu(event)" target="mainFrame" id="jutsuTrainingForm">
+                    <select id="jutsuList" name="jutsu">
+                    </select>
+                    <input type="submit" value="Train" name="train_type"/>
+                </form>
+            </div>
         </div>
         <div class="panelToggles">
             <button data-id="training">Training</button>  
             <button data-id="missions">Missions</button>
             <button data-id="arena">Arena</button>
+            <button data-id="jutsu">Jutsu</button>
         </div>
         <div id="controlPanel">
             <a href="cp.html" target="mainFrame">Controls</a>
