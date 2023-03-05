@@ -80,6 +80,51 @@ var pageMap =
 	"Ramen": 23,
 };
 
+const aiMap = {
+	"akademi-sei": [
+		{name: "Annoying Crow", id:"1"},
+		{name:"Academy Bully", id:"2"},
+		{name:"Prodigy Student", id:"3"},
+	],
+	"genin": [
+		{name:"Academy Graduate", id:"4"},
+		{name:"Crafty Kunoichi", id:"13"},
+		{name:"Advanced Genin", id:"5"},
+		{name:"Weapon Fanatic", id:"6"},
+		{name:"Talented Genin", id:"10"},
+	],
+	"chuunin": [
+		{name:"Prodigious Gennin", id:"24"},
+		{name:"Insidious Serpent", id:"25"},
+		{name:"Furious Tiger", id:"7"},
+		{name:"Elite Contender", id:"11"},
+		{name:"Chuunin Specialist", id:"26"},
+		{name:"Jounin's Shadow Clone", id:"12"},
+		{name:"Elderly Shinobi", id:"27"},
+		{name:"Tiny Yokai", id:"28"},
+		{name:"Cunning Hypnotist", id:"29"},
+		{name:"Genin Trio", id:"8"},
+		{name:"Vengeful Rival", id:"33"},
+		{name:"Hired Assassin", id:"34"},
+		{name:"Bloodline Inheritor", id:"35"},
+		{name:"Twisted Killer", id:"36"},
+		{name:"Legendary Crow", id:"9"},
+	],
+	"jonin": [
+		{name:"Chuunin Expert", id:"14"},
+		{name:"Village Outlaw", id:"15"},
+		{name:"Rogue Samurai", id:"16"},
+		{name:"Enemy ANBU", id:"17"},
+		{name:"Muscle-bound Jonin", id:"21"},
+		{name:"Renegade Shinobi ", id:"30"},
+		{name:"Fumetsu Defector", id:"22"},
+		{name:"Kibou Defector", id:"23"},
+		{name:"Monstrous Yokai ", id:"31"},
+		{name:"Chuunin Assault Squad", id:"32"},
+		{name:"ANBU Captain", id:"18"},
+	],
+}
+
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
 
@@ -88,7 +133,7 @@ function goAction(ev){ //Check key used and do labeled function.
 	switch(true){
 		case key in keyMap.travel:
 			if(!traveling) {
-				top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
+				top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Travel}&travel=${keyMap.travel[key]}`;
 				traveling = true;
 				timer.travel();
 			};
@@ -105,11 +150,11 @@ function goAction(ev){ //Check key used and do labeled function.
 			var page = keyMap.page[key];
 			if(page == "Mission")
 			{
-				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}&continue=1`;
+				top.mainFrame.location=`${URL_ROOT}?id:${pageMap[page]}&continue=1`;
 			}
 			else
 			{
-				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}`;
+				top.mainFrame.location=`${URL_ROOT}?id:${pageMap[page]}`;
 			}			
 			break;
 		case key in keyMap.action:
@@ -123,13 +168,13 @@ function goAction(ev){ //Check key used and do labeled function.
 					$('#trainingForm').submit();
 					break;
 				case "CancelTrain":
-					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Train}&cancel_training=1`;
+					top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Train}&cancel_training=1`;
 					break;
 				case "RepeatMission":
 					missions.set();
 					break;
 				case "CancelMission":
-					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&cancel_mission=1`;
+					top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Mission}&cancel_mission=1`;
 					break;
 				case "RaidMode":
 					$("#raidCheckbox").click();
@@ -243,11 +288,11 @@ var missions = {
 		
 		if (mission[0] == 'clan')
 		{
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Clan}&${mission[1]}`;
+			top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Clan}&${mission[1]}`;
 		}
 		else
 		{
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&${mission[0]}`;
+			top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Mission}&${mission[0]}`;
 		}
 		
 	}
@@ -255,49 +300,23 @@ var missions = {
 var enemy = {
 	gen: function() { // Generate list of enemy based on rank selected.
 		var rank = document.getElementById("userRank").value;
-		var select = document.getElementById("enemyList").options;
-		switch(rank) {
-			case "akademi-sei":
-					select.length = 0; 
-					select[select.length] = new Option("Annoying Crow", "fight=1");
-					select[select.length] = new Option("Academy Bully", "fight=2");
-					select[select.length] = new Option("Prodigy Student", "fight=3");
-					break;
-			case "genin":
-					select.length = 0; 
-					select[select.length] = new Option("Academy Graduate", "fight=4");
-					select[select.length] = new Option("Crafty Kunoichi", "fight=13");
-					select[select.length] = new Option("Advanced Genin", "fight=5");
-					select[select.length] = new Option("Weapon Fanatic", "fight=6");
-					select[select.length] = new Option("Talented Genin", "fight=10");
-					break;
-			case "chuunin":
-					select.length = 0;
-					select[select.length] = new Option("Furious Tiger", "fight=7");
-					select[select.length] = new Option("Elite Contender", "fight=11");
-					select[select.length] = new Option("Jonin Shadow Clone", "fight=12");
-					select[select.length] = new Option("Genin Trio", "fight=8");
-					select[select.length] = new Option("Novice Chuunin", "fight=9");
-					break;
-			case "jonin":
-					select.length = 0;
-					select[select.length] = new Option("Chuunin Expert", "fight=14");
-					select[select.length] = new Option("Village Outlaw", "fight=15");
-					select[select.length] = new Option("Rogue Samurai", "fight=16");
-					select[select.length] = new Option("Enemy ANBU", "fight=17");
-					select[select.length] = new Option("Muscle-bound Jonin", "fight=21");
-					select[select.length] = new Option("ANBU Captain", "fight=18");
-					select[select.length] = new Option("Fumetsu Defector", "fight=22");
-					select[select.length] = new Option("Kibou Defector", "fight=23");
-					break;
-				default:
-					select.length = 0;
-					break;
+		var select = $("#enemyList");
+
+		select.empty();
+
+		if (rank == null || rank == '') return;
+
+		for (let ai in aiMap[rank.toLowerCase()])
+		{
+			let ai_option = `<option value="fight=${aiMap[rank][ai].id}">${aiMap[rank][ai].name}</option>`;
+			select.append(ai_option);
 		}
+
+
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
-		top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Arena}&${fight}`;
+		top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Arena}&${fight}`;
 	}
 	
 }
@@ -328,7 +347,7 @@ function arenaJutsu(array) { // Using jutsu information from cookie array, fill 
 	if (array === undefined) return false;
 	if (jutsuForm.attr('action') == undefined)
 	{
-		jutsuForm.attr('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+		jutsuForm.attr('action', `${URL_ROOT}?id:${pageMap.Arena}`);
 	}
 	if((array.jutsuType == "bloodline_jutsu") || (array.jutsuType == "taijutsu")) {
 		$('#hand_seal_input').val("");
@@ -393,12 +412,12 @@ function clearJutsu() { // Clear jutsu on array index if passed int else clear a
 }
 function consumeRamen(selection)// Eat tier of ramen.
 {
-	// Page Url= ?id=23&heal=vegetable
+	// Page Url= ?id:23&heal=vegetable
 	
 	if (FOOD_OPTIONS[selection] == undefined) return false;
 	var food = FOOD_OPTIONS[selection];
 	
-	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
+	top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Ramen}&heal=${food}`;
 }
 function remapKey(ev)
 {
@@ -501,7 +520,7 @@ function train(evt)
 	$('#trainingType').prop('name', $("#trainingType").find(":selected").data('type'));
 	if ($(evt.target).attr('action') == undefined)
 	{	
-		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
+		$(evt.target).attr('action', `${URL_ROOT}?id:${pageMap.Train}`);
 	}
 	if ($('#alerts').prop("checked") == true)
 	{
@@ -596,7 +615,7 @@ function trainJutsu(evt)
 {
 	if ($(evt.target).attr('action') == undefined)
 	{	
-		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
+		$(evt.target).attr('action', `${URL_ROOT}?id:${pageMap.Train}`);
 	}
 }
 async function getJutsuId(name)
