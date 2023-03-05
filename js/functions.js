@@ -133,7 +133,7 @@ function goAction(ev){ //Check key used and do labeled function.
 	switch(true){
 		case key in keyMap.travel:
 			if(!traveling) {
-				top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Travel}&travel=${keyMap.travel[key]}`;
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
 				traveling = true;
 				timer.travel();
 			};
@@ -150,11 +150,11 @@ function goAction(ev){ //Check key used and do labeled function.
 			var page = keyMap.page[key];
 			if(page == "Mission")
 			{
-				top.mainFrame.location=`${URL_ROOT}?id:${pageMap[page]}&continue=1`;
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}&continue=1`;
 			}
 			else
 			{
-				top.mainFrame.location=`${URL_ROOT}?id:${pageMap[page]}`;
+				top.mainFrame.location=`${URL_ROOT}?id=${pageMap[page]}`;
 			}			
 			break;
 		case key in keyMap.action:
@@ -168,13 +168,13 @@ function goAction(ev){ //Check key used and do labeled function.
 					$('#trainingForm').submit();
 					break;
 				case "CancelTrain":
-					top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Train}&cancel_training=1`;
+					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Train}&cancel_training=1`;
 					break;
 				case "RepeatMission":
 					missions.set();
 					break;
 				case "CancelMission":
-					top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Mission}&cancel_mission=1`;
+					top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&cancel_mission=1`;
 					break;
 				case "RaidMode":
 					$("#raidCheckbox").click();
@@ -288,11 +288,11 @@ var missions = {
 		
 		if (mission[0] == 'clan')
 		{
-			top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Clan}&${mission[1]}`;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Clan}&${mission[1]}`;
 		}
 		else
 		{
-			top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Mission}&${mission[0]}`;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&${mission[0]}`;
 		}
 		
 	}
@@ -316,7 +316,7 @@ var enemy = {
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
-		top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Arena}&${fight}`;
+		top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Arena}&${fight}`;
 	}
 	
 }
@@ -347,7 +347,7 @@ function arenaJutsu(array) { // Using jutsu information from cookie array, fill 
 	if (array === undefined) return false;
 	if (jutsuForm.attr('action') == undefined)
 	{
-		jutsuForm.attr('action', `${URL_ROOT}?id:${pageMap.Arena}`);
+		jutsuForm.attr('action', `${URL_ROOT}?id=${pageMap.Arena}`);
 	}
 	if((array.jutsuType == "bloodline_jutsu") || (array.jutsuType == "taijutsu")) {
 		$('#hand_seal_input').val("");
@@ -412,12 +412,12 @@ function clearJutsu() { // Clear jutsu on array index if passed int else clear a
 }
 function consumeRamen(selection)// Eat tier of ramen.
 {
-	// Page Url= ?id:23&heal=vegetable
+	// Page Url= ?id=23&heal=vegetable
 	
 	if (FOOD_OPTIONS[selection] == undefined) return false;
 	var food = FOOD_OPTIONS[selection];
 	
-	top.mainFrame.location=`${URL_ROOT}?id:${pageMap.Ramen}&heal=${food}`;
+	top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Ramen}&heal=${food}`;
 }
 function remapKey(ev)
 {
@@ -520,7 +520,7 @@ function train(evt)
 	$('#trainingType').prop('name', $("#trainingType").find(":selected").data('type'));
 	if ($(evt.target).attr('action') == undefined)
 	{	
-		$(evt.target).attr('action', `${URL_ROOT}?id:${pageMap.Train}`);
+		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
 	}
 	if ($('#alerts').prop("checked") == true)
 	{
@@ -615,7 +615,7 @@ function trainJutsu(evt)
 {
 	if ($(evt.target).attr('action') == undefined)
 	{	
-		$(evt.target).attr('action', `${URL_ROOT}?id:${pageMap.Train}`);
+		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
 	}
 }
 async function getJutsuId(name)
