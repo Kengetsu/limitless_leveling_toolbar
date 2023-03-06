@@ -80,50 +80,80 @@ var pageMap =
 	"Ramen": 23,
 };
 
-const aiMap = {
-	"akademi-sei": [
-		{name: "Annoying Crow", id:"1"},
-		{name:"Academy Bully", id:"2"},
-		{name:"Prodigy Student", id:"3"},
-	],
-	"genin": [
-		{name:"Academy Graduate", id:"4"},
-		{name:"Crafty Kunoichi", id:"13"},
-		{name:"Advanced Genin", id:"5"},
-		{name:"Weapon Fanatic", id:"6"},
-		{name:"Talented Genin", id:"10"},
-	],
-	"chuunin": [
-		{name:"Prodigious Gennin", id:"24"},
-		{name:"Insidious Serpent", id:"25"},
-		{name:"Furious Tiger", id:"7"},
-		{name:"Elite Contender", id:"11"},
-		{name:"Chuunin Specialist", id:"26"},
-		{name:"Jounin's Shadow Clone", id:"12"},
-		{name:"Elderly Shinobi", id:"27"},
-		{name:"Tiny Yokai", id:"28"},
-		{name:"Cunning Hypnotist", id:"29"},
-		{name:"Genin Trio", id:"8"},
-		{name:"Vengeful Rival", id:"33"},
-		{name:"Hired Assassin", id:"34"},
-		{name:"Bloodline Inheritor", id:"35"},
-		{name:"Twisted Killer", id:"36"},
-		{name:"Legendary Crow", id:"9"},
-	],
-	"jonin": [
-		{name:"Chuunin Expert", id:"14"},
-		{name:"Village Outlaw", id:"15"},
-		{name:"Rogue Samurai", id:"16"},
-		{name:"Enemy ANBU", id:"17"},
-		{name:"Muscle-bound Jonin", id:"21"},
-		{name:"Renegade Shinobi ", id:"30"},
-		{name:"Fumetsu Defector", id:"22"},
-		{name:"Kibou Defector", id:"23"},
-		{name:"Monstrous Yokai ", id:"31"},
-		{name:"Chuunin Assault Squad", id:"32"},
-		{name:"ANBU Captain", id:"18"},
-	],
-}
+const RankOptionsMap = {
+	"akademi-sei": {
+		ai: [
+			{name: "Annoying Crow", id:"1"},
+			{name:"Academy Bully", id:"2"},
+			{name:"Prodigy Student", id:"3"},
+		],
+		missions: [
+		],
+	},
+	"genin": {
+		ai: [
+			{name:"Academy Graduate", id:"4"},
+			{name:"Crafty Kunoichi", id:"13"},
+			{name:"Advanced Genin", id:"5"},
+			{name:"Weapon Fanatic", id:"6"},
+			{name:"Talented Genin", id:"10"},
+		],
+		missions: [
+			{name: "Special Request", id: "start_mission=1"},
+			{name: "Deliver Food", id: "start_mission=2"},
+			{name: "Retrieve the pet Llama!", id: "start_mission=3"},
+		],
+	},
+	"chuunin": {
+		ai: [
+			{name:"Prodigious Gennin", id:"24"},
+			{name:"Insidious Serpent", id:"25"},
+			{name:"Furious Tiger", id:"7"},
+			{name:"Elite Contender", id:"11"},
+			{name:"Chuunin Specialist", id:"26"},
+			{name:"Jounin's Shadow Clone", id:"12"},
+			{name:"Elderly Shinobi", id:"27"},
+			{name:"Tiny Yokai", id:"28"},
+			{name:"Cunning Hypnotist", id:"29"},
+			{name:"Genin Trio", id:"8"},
+			{name:"Vengeful Rival", id:"33"},
+			{name:"Hired Assassin", id:"34"},
+			{name:"Bloodline Inheritor", id:"35"},
+			{name:"Twisted Killer", id:"36"},
+			{name:"Legendary Crow", id:"9"},
+		],
+		missions: [
+			{name: "Form Team & Scout Area", id: "start_mission=4"},
+			{name: "Patrol Village Primeter", id: "start_mission=6"},
+			{name: "Tactical Espionage", id: "start_mission=7"},
+			{name: "Fight Club", id: "start_mission=9"},
+			{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+		],
+	},
+	"jonin": {
+		ai: [
+			{name:"Chuunin Expert", id:"14"},
+			{name:"Village Outlaw", id:"15"},
+			{name:"Rogue Samurai", id:"16"},
+			{name:"Enemy ANBU", id:"17"},
+			{name:"Muscle-bound Jonin", id:"21"},
+			{name:"Renegade Shinobi ", id:"30"},
+			{name:"Fumetsu Defector", id:"22"},
+			{name:"Kibou Defector", id:"23"},
+			{name:"Monstrous Yokai ", id:"31"},
+			{name:"Chuunin Assault Squad", id:"32"},
+			{name:"ANBU Captain", id:"18"},
+		],
+		missions: [
+			{name: "Form Team & Scout Area", id: "start_mission=4"},
+			{name: "Patrol Village Primeter", id: "start_mission=6"},
+			{name: "Tactical Espionage", id: "start_mission=7"},
+			{name: "Fight Club", id: "start_mission=9"},
+			{name: "ANBU Ambush", id: "start_mission=11"},
+			{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+		],
+	}
+};
 
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
@@ -243,43 +273,25 @@ var timer = {
 		$('#indicator').css("color","red");
 	}
 }
+const populateRankData = (options, ele, optionPrefix='') =>
+{
+	ele.empty();
+
+	if (options == null || options == '') return;
+
+	for (let item in options)
+	{
+		let new_option = `<option value="${optionPrefix + options[item].id}">${options[item].name}</option>`;
+		ele.append(new_option);
+	}
+};
 var missions = {
 	gen: function() { //Generates mission list based on what rank is selected.
 		var rank = document.getElementById("userRank").value;
-		var select = document.getElementById("selectMission").options;
-		switch(rank) {
-			case "genin":
-				select.length = 0;
-				select[select.length] = new Option("Special Request", "start_mission=1");
-				select[select.length] = new Option("Deliver Food", "start_mission=2");
-				select[select.length] = new Option("Retrieve the pet Llama!", "start_mission=3");
-				return false;
-				break;
-			case "chuunin":
-				select.length = 0;
-				select[select.length] = new Option("Form Team & Scout Area", "start_mission=4");
-				select[select.length] = new Option("Patrol Village Primeter", "start_mission=6");
-				select[select.length] = new Option("Tactical Espionage", "start_mission=7");
-				select[select.length] = new Option("Fight Club", "start_mission=9");
-				select[select.length] = new Option("Study Clan Heritage", "clan&start_mission=8");
-				return false;
-				break;
-			case "jonin":
-				select.length = 0;
-				select[select.length] = new Option("Form Team & Scout Area", "start_mission=4");
-				select[select.length] = new Option("Patrol Village Primeter", "start_mission=6");
-				select[select.length] = new Option("Tactical Espionage", "start_mission=7");
-				select[select.length] = new Option("Fight Club", "start_mission=9");
-				select[select.length] = new Option("ANBU Ambush", "start_mission=11");
-				select[select.length] = new Option("Study Clan Heritage", "clan&start_mission=8");
-				return false;
-				break;
-			default:
-				select.length = 0;
-				document.getElementById("startMission").style.display = "none";
-				return false;
-				break;
-		};},
+		var select = $("#selectMission");
+		
+		populateRankData(RankOptionsMap[rank.toLowerCase()].missions, select);
+	},
 	set: function(mission = null) { //Start selected mission.
 		if (mission == null)
 		{
@@ -302,17 +314,7 @@ var enemy = {
 		var rank = document.getElementById("userRank").value;
 		var select = $("#enemyList");
 
-		select.empty();
-
-		if (rank == null || rank == '') return;
-
-		for (let ai in aiMap[rank.toLowerCase()])
-		{
-			let ai_option = `<option value="fight=${aiMap[rank][ai].id}">${aiMap[rank][ai].name}</option>`;
-			select.append(ai_option);
-		}
-
-
+		populateRankData(RankOptionsMap[rank.toLowerCase()].ai, select, 'fight=');
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
