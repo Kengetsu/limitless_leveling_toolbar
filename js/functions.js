@@ -97,6 +97,8 @@ const RankOptionsMap = {
 			{name:"Advanced Genin", id:"5"},
 			{name:"Weapon Fanatic", id:"6"},
 			{name:"Talented Genin", id:"10"},
+			{name:"Prodigious Genin", id:"24"},
+			{name:"Insidious Serpent", id:"25"},
 		],
 		missions: [
 			{name: "Special Request", id: "start_mission=1"},
@@ -162,11 +164,7 @@ function goAction(ev){ //Check key used and do labeled function.
 	var key = ev.code;
 	switch(true){
 		case key in keyMap.travel:
-			if(!traveling) {
-				top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
-				traveling = true;
-				timer.travel();
-			};
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
 			break;
 		case key in keyMap.jutsu:
 			var jutsu = jutsuList[keyMap.jutsu[key]]
