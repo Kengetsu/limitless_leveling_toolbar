@@ -115,8 +115,9 @@
 			${key == "unmapped"? '' : `<p><button onClick="clearBinding(event.target.dataset.set,event.target.dataset.key,event.target.dataset.action, true)" data-set="${title}" data-key="${key}" data-action="${action}">Clear Mapping</button></p>`}
 		</div>`;
 	}
-	function populateTrainingJutsu()
+	function populateTrainingJutsuList()
 	{
+		$('#jutsuTrainingList').empty();
 		if(Cookies.get("trainingJutsu") == undefined) return false;
 		trainingJutsuList = $.parseJSON(Cookies.get("trainingJutsu"));
 		for (const jutsu in trainingJutsuList)
@@ -173,10 +174,11 @@ $(document).ready(async function() {
 		$('#weaponList').append("<tr>" +  "<td>" + weaponLibrary[weapon]['item_id'] + "</td><td>" + weaponLibrary[weapon]['name'] + "</td><td>" + weaponLibrary[weapon]['rank'] + "</td><td>" + weaponLibrary[weapon]['effect'] + "</td></tr>");
 	}
 
-	$('#addButton').click(function() { //When clicked calls addJutsu with input values.
+	$('#addButton').click(function(evt) { //When clicked calls addJutsu with input values.
+		evt.preventDefault();
 		addJutsu($('#useType').val(),$('#jutsuName').val(),$('#sealNumbers').val(),$('#weaponID').val());
 		//location.reload();
-		populateTrainingJutsu();
+		populateJutsu();
 		top.frames['toolBar'].location.reload();
 	});
 	$('#clearButton').click(function (e) {
@@ -256,7 +258,7 @@ $(document).ready(async function() {
 	};
 	if(Cookies.get("trainingJutsu"))
 	{
-		populateTrainingJutsu();
+		populateTrainingJutsuList();
 	}
 	
 });

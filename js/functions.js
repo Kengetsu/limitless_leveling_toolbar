@@ -413,7 +413,8 @@ function clearJutsu() { // Clear jutsu on array index if passed int else clear a
 		jutsuList.length = 0;
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
-	reloadToolbar();
+	populateJutsu();
+	top.frames['toolBar'].location.reload();
 }
 function consumeRamen(selection)// Eat tier of ramen.
 {
@@ -625,7 +626,8 @@ function validateKeyMapping(currentMap)
 	return newMap;
 }
 function populateTrainingJutsu(arr)
-{
+{ //This populates the training jutsu dropdown.
+	$('#jutsuList').empty();
 	for (let jutsu in arr)
 	{
 		$('#jutsuList').append($('<option>', {
@@ -653,7 +655,7 @@ async function getJutsuId(name)
 	return filtered[0].jutsu_id;
 }
 function clearTrainingJutsu(all = false) 
-{ // Clear jutsu on array index if passed int else clear all.
+{ // Clear jutsu on array index if passed int else clear all. This is used for the CP page.
 	var id = event.target.dataset.id;
 	if(all)
 	{
@@ -665,10 +667,11 @@ function clearTrainingJutsu(all = false)
 		trainingJutsuList.splice(id, 1);
 		Cookies.set("trainingJutsu", JSON.stringify(trainingJutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
-	reloadToolbar();
+	top.frames['toolBar'].location.reload();
+	populateTrainingJutsuList();
 }
 function setTrainJutsu()
-{
+{ // Sets new jutsu in the training list on CP.
 	let data = event.target.dataset;
 	let duplicate = trainingJutsuList.filter(jutsu => jutsu.id == data.id);
 	if(duplicate.length > 0) return;
@@ -684,5 +687,6 @@ function setTrainJutsu()
 	}
 	trainingJutsuList.push({name: data.name, type: data.type, id: data.id});
 	Cookies.set("trainingJutsu", JSON.stringify(trainingJutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-	reloadToolbar();
+	top.frames['toolBar'].location.reload();
+	populateTrainingJutsuList();
 }
