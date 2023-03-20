@@ -175,7 +175,8 @@ $(document).ready(async function() {
 
 	$('#addButton').click(function() { //When clicked calls addJutsu with input values.
 		addJutsu($('#useType').val(),$('#jutsuName').val(),$('#sealNumbers').val(),$('#weaponID').val());
-		location.reload();
+		//location.reload();
+		populateTrainingJutsu();
 		top.frames['toolBar'].location.reload();
 	});
 	$('#clearButton').click(function (e) {

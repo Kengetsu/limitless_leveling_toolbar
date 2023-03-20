@@ -65,7 +65,7 @@ class KeyMapping
 		}
 	}
 }
-var pageMap =
+const pageMap =
 {
 	"Profile": 1,
 	"Chat": 7,
@@ -164,7 +164,12 @@ function goAction(ev){ //Check key used and do labeled function.
 	var key = ev.code;
 	switch(true){
 		case key in keyMap.travel:
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
+			//top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}`;
+			setTimeout((evt) => {
+				console.log('mainFrame focused!');
+				top.mainFrame.focus();
+			}, 150);
 			break;
 		case key in keyMap.jutsu:
 			var jutsu = jutsuList[keyMap.jutsu[key]]
@@ -557,24 +562,15 @@ function validateKeyMapping(currentMap)
 	var defaultMap = new KeyMapping();
 	var newMap = currentMap;
 	var changedKeys = [];
+	var defaultActionList = {};
+	var userActionList = {};
 
-	//Add any missing keys
-	for(let set in defaultMap)
-	{
-		for(let key in defaultMap[set])
-		{
-			if (key in currentMap[set]) continue;
-			if (currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
-			//console.log(newMap[set][key], defaultMap[set][key]);
-			newMap[set][key] = defaultMap[set][key];
-			changedKeys.push(key);
-		}
-	}
 	for(let set in currentMap)
 	{
 		for(let key in currentMap[set])
-		{
+		{		
 			if (key == 'unmapped') continue;
+			userActionList[currentMap[set][key]] = [key, set];
 			if (typeof currentMap[set][key] == 'object')
 			{
 				if (currentMap[set][key].length == 1)
@@ -591,6 +587,35 @@ function validateKeyMapping(currentMap)
 			}
 			//console.log(currentMap[set][key], defaultMap[set][key]);
 		}
+	}
+
+	//Add any missing keys
+	for(let set in defaultMap)
+	{
+		for(let key in defaultMap[set])
+		{
+			if (key != 'unmapped')
+			{
+				defaultActionList[defaultMap[set][key]] = [key, set];
+			}
+			if (key in currentMap[set]) continue;
+			if (defaultMap[set][key] in userActionList) continue;
+			if (currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
+			//console.log(newMap[set][key], defaultMap[set][key]);
+			newMap[set][key] = defaultMap[set][key];
+			changedKeys.push(key);
+		}
+	}
+	
+	//console.log(defaultActionList, userActionList);
+	for (let action in userActionList)
+	{
+		if(action in defaultActionList) continue;
+		//console.log(userActionList[action]);
+		delete newMap[userActionList[action][1]][userActionList[action][0]];
+		changedKeys.push(userActionList[action][0]);
+		// if(userActionList[action][1] == 'unmapped') continue;
+		// console.log(action, userActionList[action], defaultActionList[action] == undefined)
 	}
 	if (changedKeys.length > 0)
 	{
