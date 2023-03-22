@@ -169,7 +169,7 @@ function goAction(ev){ //Check key used and do labeled function.
 			setTimeout((evt) => {
 				console.log('mainFrame focused!');
 				top.mainFrame.focus();
-			}, 150);
+			}, 80);
 			break;
 		case key in keyMap.jutsu:
 			var jutsu = jutsuList[keyMap.jutsu[key]]
