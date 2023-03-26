@@ -34,8 +34,16 @@ $(document).ready(async function() {
         
     }
 });
+$(document.body).on('keydown', function (ev) {
+    if (ev.code in keyMap.travel)
+    {
+        keysPressed[ev.code] = true;
+    }
+}).keyup(function (ev) {
+    goAction(ev);
+});
 </script>
-<body onKeyUp="goAction(event)" scrolling="no">
+<body scrolling="no">
     <script>
         $(document).ready(function () {
         if(Cookies.get("css")) {

@@ -159,17 +159,41 @@ const RankOptionsMap = {
 
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
+var keysPressed = {};
 
 function goAction(ev){ //Check key used and do labeled function.
 	var key = ev.code;
 	switch(true){
 		case key in keyMap.travel:
-			//top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}`;
-			setTimeout((evt) => {
-				console.log('mainFrame focused!');
-				top.mainFrame.focus();
-			}, 80);
+			let directions = [];
+			if (Object.keys(keysPressed).length == 0) break;
+			for(let direction in keysPressed)
+			{
+				directions.push(keyMap.travel[direction]);
+				delete keysPressed[direction];
+			}
+			if (directions.includes("north") && directions.includes("east"))
+			{
+			    pressed_direction = 'northeast';
+			}
+			else if (directions.includes("north") && directions.includes("west"))
+			{
+			    pressed_direction = 'northwest';
+			}
+			else if (directions.includes("south") && directions.includes("east"))
+			{
+			    pressed_direction = 'southeast';
+			}
+			else if (directions.includes("south") && directions.includes("west"))
+			{
+			    pressed_direction = 'southwest';
+			}
+			else
+			{
+			    pressed_direction = keyMap.travel[ev.code];
+			}
+
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${pressed_direction}`;	
 			break;
 		case key in keyMap.jutsu:
 			var jutsu = jutsuList[keyMap.jutsu[key]]
@@ -217,7 +241,8 @@ function goAction(ev){ //Check key used and do labeled function.
 			}
 			break;
 		default:
-			break;	
+			break;
+
 	}
 }
 var timer = {
