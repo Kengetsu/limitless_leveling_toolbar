@@ -164,8 +164,8 @@ function goAction(ev){ //Check key used and do labeled function.
 	var key = ev.code;
 	switch(true){
 		case key in keyMap.travel:
-			//top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}`;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${keyMap.travel[key]}`;
+			//top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}`;
 			setTimeout((evt) => {
 				console.log('mainFrame focused!');
 				top.mainFrame.focus();
