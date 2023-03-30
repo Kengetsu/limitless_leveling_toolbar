@@ -63,6 +63,13 @@ a:hover {
     font-size: small;
     justify-content: flex-end;
     gap: 1rem;
+    height: min-content;
+}
+.modifierSelectionGroup {
+    display: flex;
+    gap: 1rem;
+    background: var(--theme-secondary-bg-color);
+    border: 1px dashed var(--theme-color);
 }
 
 @media screen and (max-width: 850px) {
