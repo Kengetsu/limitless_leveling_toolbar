@@ -48,107 +48,107 @@ $(document.body).on('keydown', function (ev) {
 <body scrolling="no">
     <script>
         $(document).ready(function () {
-        if(Cookies.get("css")) {
-            $("#layout").val(Cookies.get("css"));
-            $("#theme").prop("href",Cookies.get("css"));
-        
-        };
-        if(Cookies.get("rank")) {
-            $("#userRank").val(Cookies.get("rank"));
+            if(Cookies.get("css")) {
+                $("#layout").val(Cookies.get("css"));
+                $("#theme").prop("href",Cookies.get("css"));
             
-            missions.gen();
-            enemy.gen();
-        };
-        if(Cookies.get("jutsu")) {
-            jutsuList = $.parseJSON(Cookies.get("jutsu"));
-        };
-        if(Cookies.get("customKeys")) {
-            keyMap = validateKeyMapping($.parseJSON(Cookies.get("customKeys")));
-        }
-        else
-        {
-            keyMap = new KeyMapping();
-            Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-        };
-        if(Cookies.get("previousTraining")) {
-            previousSelections[0] = $.parseJSON(Cookies.get("previousTraining"));
-            Cookies.remove("previousTraining");
-        }
-        if(Cookies.get("previousSelections")) {
-            previousSelections = $.parseJSON(Cookies.get("previousSelections"));
-            if (previousSelections[0] != undefined)
-            {
-                $("#trainingType").prop("value", previousSelections[0][0]);
-	            $("#trainingDuration").prop("value", previousSelections[0][1]);
-            }
-            if (previousSelections[1] != undefined)
-            {
-                $('#selectMission').prop("value", previousSelections[1]);
-            }
-            if (previousSelections[2] != undefined)
-            {
-                $('#enemyList').prop("value", previousSelections[2]);
-            }
-        };
-        $('#layout').change(function() {
-            if ($("layout").val() == "selection") {
-                return;
-            }
-            else {
-                $("#theme").prop("href", $(this).val());
-                Cookies.set("css",$(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None', secure: true, sameSite: 'None'});
-                return false;
-            }
-        });
-        $('#userRank').change(function() {
-            enemy.gen();
-            missions.gen();
-            if ($("userRank").val() == "selection") {
-                return;
-            }
-            else {
-                Cookies.set("rank", $(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None'});
-                return false;
-            }
-        });
-        
-        $('.SubmissionButtons').keydown(function (event)
-        {
-            event.preventDefault();
-        });
-    
-        //New Code
-        $('.panelToggles button').on('click', function () {
-            changeVisibility(event);
-        });
-        $('.combatModifier').on('click', function () {
-            $(`.combatModifier`).not(this).prop("checked", false);
-            if (this.checked == true)
-            {
-                $('#useJutsu').prop('action', `${URL_ROOT}?id=${pageMap[this.dataset.id]}`);
+            };
+            if(Cookies.get("rank")) {
+                $("#userRank").val(Cookies.get("rank"));
+                
+                missions.gen();
+                enemy.gen();
+            };
+            if(Cookies.get("jutsu")) {
+                jutsuList = $.parseJSON(Cookies.get("jutsu"));
+            };
+            if(Cookies.get("customKeys")) {
+                keyMap = validateKeyMapping($.parseJSON(Cookies.get("customKeys")));
             }
             else
             {
-                $('#useJutsu').prop('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+                keyMap = new KeyMapping();
+                Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+            };
+            if(Cookies.get("previousTraining")) {
+                previousSelections[0] = $.parseJSON(Cookies.get("previousTraining"));
+                Cookies.remove("previousTraining");
             }
-        });
+            if(Cookies.get("previousSelections")) {
+                previousSelections = $.parseJSON(Cookies.get("previousSelections"));
+                if (previousSelections[0] != undefined)
+                {
+                    $("#trainingType").prop("value", previousSelections[0][0]);
+                    $("#trainingDuration").prop("value", previousSelections[0][1]);
+                }
+                if (previousSelections[1] != undefined)
+                {
+                    $('#selectMission').prop("value", previousSelections[1]);
+                }
+                if (previousSelections[2] != undefined)
+                {
+                    $('#enemyList').prop("value", previousSelections[2]);
+                }
+            };
+            $('#layout').change(function() {
+                if ($("layout").val() == "selection") {
+                    return;
+                }
+                else {
+                    $("#theme").prop("href", $(this).val());
+                    Cookies.set("css",$(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None', secure: true, sameSite: 'None'});
+                    return false;
+                }
+            });
+            $('#userRank').change(function() {
+                enemy.gen();
+                missions.gen();
+                if ($("userRank").val() == "selection") {
+                    return;
+                }
+                else {
+                    Cookies.set("rank", $(this).val(), {expires: 365, path: '/', secure: true, sameSite: 'None'});
+                    return false;
+                }
+            });
+            
+            $('.SubmissionButtons').keydown(function (event)
+            {
+                event.preventDefault();
+            });
+        
+            //New Code
+            $('.panelToggles button').on('click', function () {
+                changeVisibility(event);
+            });
+            $('.combatModifier').on('click', function () {
+                $(`.combatModifier`).not(this).prop("checked", false);
+                if (this.checked == true)
+                {
+                    $('#useJutsu').prop('action', `${URL_ROOT}?id=${pageMap[this.dataset.id]}`);
+                }
+                else
+                {
+                    $('#useJutsu').prop('action', `${URL_ROOT}?id=${pageMap.Arena}`);
+                }
+            });
 
-        var raidIntervalID = null;
-		$("#raidCheckbox").on('change', function () {
-			if (this.checked)
-			{
-				$("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});        
-				raidIntervalID = setInterval(function () {
-					top.toolBar.focus();
-					console.log("Raiding!");
-				}, 150);    
-			}
-			else
-			{
-				$("label[for='raidCheckbox']").css({'color': '', 'background': '', 'border': '', 'font-weight': '', 'font-size': ''});
-				clearInterval(raidIntervalID);
-			}        
-		});
+            var raidIntervalID = null;
+            $("#raidCheckbox").on('change', function () {
+                if (this.checked)
+                {
+                    $("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});        
+                    raidIntervalID = setInterval(function () {
+                        top.toolBar.focus();
+                        console.log("Raiding!");
+                    }, 150);    
+                }
+                else
+                {
+                    $("label[for='raidCheckbox']").css({'color': '', 'background': '', 'border': '', 'font-weight': '', 'font-size': ''});
+                    clearInterval(raidIntervalID);
+                }        
+            });
     });
     </script>
     <div class="container">
@@ -178,25 +178,29 @@ $(document.body).on('keydown', function (ev) {
         </div>
         <span class="titleSpan">Shinobi-Chronicles Hotkeys v2</span>
         <div id="trainAdjust" class="modifierSelection">
-            <div>
-                <input type="checkbox" id="seal">
-                <label for="seal">Forbidden Seal</label>
+            <div class="modifierSelectionGroup" title="Alert Timer Modifiers">
+                <div>
+                    <input type="checkbox" id="seal">
+                    <label for="seal">Forbidden Seal</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="boost">
+                    <label for="boost">Clan Boost</label>
+                </div>
             </div>
-            <div>
-                <input type="checkbox" id="boost">
-                <label for="boost">Clan Boost</label>
-            </div>
-            <div>
-                <input type="checkbox" data-id="Scout" id="sparringCheckbox" class="combatModifier">
-                <label for="sparringCheckbox">Spar</label>
-            </div>
-           <div>
-            <input type="checkbox" data-id="Pvp" id="pvpCheckbox" class="combatModifier">
-            <label for="pvpCheckbox">PVP</label>
-           </div>
-            <div>
-                <input type="checkbox" data-id="Mission" id="missionsCheckbox" class="combatModifier">
-                <label for="missionsCheckbox">Missions</label>
+            <div class="modifierSelectionGroup" title="Jutsu Hotkey Modifiers">
+                <div>
+                    <input type="checkbox" data-id="Scout" id="sparringCheckbox" class="combatModifier">
+                    <label for="sparringCheckbox">Spar</label>
+                </div>
+                <div>
+                    <input type="checkbox" data-id="Pvp" id="pvpCheckbox" class="combatModifier">
+                    <label for="pvpCheckbox">PVP</label>
+                </div>
+                <div>
+                    <input type="checkbox" data-id="Mission" id="missionsCheckbox" class="combatModifier">
+                    <label for="missionsCheckbox">Missions</label>
+                </div>
             </div>
             <div>
                 <input type="checkbox" data-id="Raid" id="raidCheckbox">
