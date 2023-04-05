@@ -78,6 +78,7 @@ const pageMap =
 	"Clan": 20,
 	"Scout": 22,
 	"Ramen": 23,
+	"Team": 24,
 };
 
 const RankOptionsMap = {
@@ -153,6 +154,7 @@ const RankOptionsMap = {
 			{name: "Fight Club", id: "start_mission=9"},
 			{name: "ANBU Ambush", id: "start_mission=11"},
 			{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+			{name: "Teambuilding Exercise", id: "team&start_mission=5"},
 		],
 	}
 };
@@ -329,6 +331,10 @@ var missions = {
 		if (mission[0] == 'clan')
 		{
 			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Clan}&${mission[1]}`;
+		}
+		else if (mission[0] == 'team')
+		{
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Team}&${mission[1]}`;
 		}
 		else
 		{
