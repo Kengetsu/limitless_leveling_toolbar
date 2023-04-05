@@ -8,6 +8,7 @@
 	--theme-dark-color: black;
 	--theme-text-color: black;
 	--theme-active-color: red;
+	--theme-color-preference: light;
 }
 body {
 		color: black;

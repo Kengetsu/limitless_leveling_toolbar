@@ -8,6 +8,7 @@
 	--theme-dark-color: #413510;
 	--theme-text-color: #beb28a;
 	--theme-active-color: #d1a71c;
+	--theme-color-preference: dark;
 }
 body {
 	color: var(--theme-color);

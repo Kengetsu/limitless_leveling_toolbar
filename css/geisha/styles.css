@@ -9,6 +9,7 @@
 	--theme-dark-color: #413510;
 	--theme-text-color: #a29986;
 	--theme-active-color: #eee6d5;
+	--theme-color-preference: light;
 }
 body {
 		color: var(--theme-color);
