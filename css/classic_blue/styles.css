@@ -27,3 +27,6 @@ a:hover {
 .titleSpan, label {
 	color: var(--theme-text-color);
 }
+.modifierSelectionGroup label {
+	color: var(--theme-active-color);
+}
