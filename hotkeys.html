@@ -236,6 +236,10 @@ $(document.body).on('keydown', function (ev) {
             </div>
             <div id="missions">
                 <select id="selectMission" name="Missions" onchange="selectionChange(event)">
+                    <optgroup label="Normal">
+                    </optgroup>
+                    <optgroup label="Special">
+                    </optgroup>
                 </select>
                 <input type="submit" value="Start" class="SubmissionButtons" onclick="missions.set();"/>
             </div>

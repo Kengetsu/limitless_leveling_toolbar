@@ -159,6 +159,13 @@ const RankOptionsMap = {
 	}
 };
 
+const SpecialMissionDifficulty = [
+	{name: "Easy", id: "special&start=easy"},
+	{name: "Normal", id: "special&start=normal"},
+	{name: "Hard", id: "special&start=hard"},
+	{name: "Nightmare", id: "special&start=nightmare"},
+];
+
 var URL_ROOT = "https://shinobichronicles.com/";
 var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
 var keysPressed = {};
@@ -262,11 +269,11 @@ var timer = {
 		if (trainType == -1) return false;
 
 		if(seal.checked) { //Type is short - 0, long - 1, extended - 2.
-			times = [baseTrainLength, (baseTrainLength * 4) * 1.5, Math.round((baseTrainLength * 24) * 1.5)];
+			times = [baseTrainLength, (baseTrainLength * 4) * 1.5, Math.round((baseTrainLength * 30) * 1.5)];
 		}
 		else
 		{
-			times = [baseTrainLength, baseTrainLength * 4, baseTrainLength * 24];
+			times = [baseTrainLength, baseTrainLength * 4, baseTrainLength * 30];
 		}
 		
 		if(boost.checked) { //Cut time and alert based on boost.
@@ -318,9 +325,12 @@ const populateRankData = (options, ele, optionPrefix='') =>
 var missions = {
 	gen: function() { //Generates mission list based on what rank is selected.
 		var rank = document.getElementById("userRank").value;
-		var select = $("#selectMission");
+		//var select = $("#selectMission");
+		var selectNormal = $("#selectMission optgroup[label='Normal']");
+		var selectSpecial = $("#selectMission optgroup[label='Special']");
 		
-		populateRankData(RankOptionsMap[rank.toLowerCase()].missions, select);
+		populateRankData(RankOptionsMap[rank.toLowerCase()].missions, selectNormal);
+		populateRankData(SpecialMissionDifficulty, selectSpecial);
 	},
 	set: function(mission = null) { //Start selected mission.
 		if (mission == null)
@@ -335,6 +345,22 @@ var missions = {
 		else if (mission[0] == 'team')
 		{
 			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Team}&${mission[1]}`;
+		}
+		else if (mission[0] == 'special')
+		{
+			var alerts = $('#alerts').prop('checked');
+			if(alerts)
+			{
+				$('#indicator').css("color","green");
+				timeoutID.push(setTimeout(function () {
+					var text = "Special Mission Has Completed";
+					parent.document.title =  text;
+					alert (text);
+					parent.document.title = "Shinobi Chonicles Hotkeys";
+					$('#indicator').css("color","red");
+				}, 300000));
+			}
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Special}&${mission[1]}`;
 		}
 		else
 		{
