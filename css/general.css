@@ -88,10 +88,7 @@ a:hover {
     }
     .regenText {
       display: none;
-    }
-    #timerStatus {
-        visibility: collapse;
-	display: none;
+      margin-right: auto;
     }
 }
 @media screen and (max-width: 500px) {
@@ -101,6 +98,7 @@ a:hover {
     }
     .regenText {
       display: none;
+      margin-right: auto;
     }
     #timerStatus {
         visibility: collapse;
