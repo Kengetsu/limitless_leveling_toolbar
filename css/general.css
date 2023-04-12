@@ -88,6 +88,8 @@ a:hover {
     }
     .regenText {
       display: none;
+    }
+    .regenContainer {
       margin-right: auto;
     }
 }
@@ -98,6 +100,8 @@ a:hover {
     }
     .regenText {
       display: none;
+    }
+    .regenContainer {
       margin-right: auto;
     }
     #timerStatus {
@@ -126,4 +130,11 @@ a:hover {
 }
 .regen_circle_face {
     fill: var(--theme-text-color);
+}
+.regenContainer {
+    display: flex;
+    padding-left: 2rem;
+    isolation: isolate; 
+    align-items: center; 
+    gap: 0.25rem;
 }
