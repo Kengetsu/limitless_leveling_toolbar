@@ -81,9 +81,12 @@ a:hover {
     font-size: small;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1150px) {
     .titleSpan {
       visibility: collapse;
+      display: none;
+    }
+    .regenText {
       display: none;
     }
     #timerStatus {
@@ -94,6 +97,9 @@ a:hover {
 @media screen and (max-width: 500px) {
     .titleSpan {
       visibility: collapse;
+      display: none;
+    }
+    .regenText {
       display: none;
     }
     #timerStatus {
