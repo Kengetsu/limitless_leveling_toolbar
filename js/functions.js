@@ -395,14 +395,17 @@ function changeVisibility(evt)
 	if (evt.target.dataset.id != "options" && element.siblings().length > 0)
 	{
 		element.siblings().css('visibility', 'collapse');
+		element.siblings().css('display', 'none');
 	}
 	if (element.css('visibility') == "collapse")
 	{
 		element.css('visibility', 'visible');
+		element.css('display', 'block');
 	}
 	else
 	{
 		element.css('visibility', 'collapse');
+		element.css('display', 'block');
 	}
 	
 }
