@@ -17,7 +17,7 @@ body {
         background: url(../../img/geisha_background.png) repeat;
 }
 p {
-	color: var(--theme-color);
+	color: var(--theme-text-color);
 }
 a, a:visited {
 	color: var(--theme-text-color);
@@ -30,4 +30,7 @@ a:hover {
 }
 .modifierSelectionGroup label {
 	color: var(--theme-dark-color);
+}
+.keyEntry p {
+	color: var(--theme-color);
 }
