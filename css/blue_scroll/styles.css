@@ -16,11 +16,14 @@ body {
 	background: #0d111f;
 }
 p {
-	color: var(--theme-color);
+	color: var(--theme-text-color);
 }
 a, a:visited {
     color: var(--theme-text-color);
 }
 a:hover {
 	color: var(--theme-active-color);
+}
+.keyEntry p {
+	color: var(--theme-color);
 }

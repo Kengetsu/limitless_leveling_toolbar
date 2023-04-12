@@ -73,6 +73,11 @@ a:hover {
     background: var(--theme-secondary-bg-color);
     border: 1px dashed var(--theme-color);
 }
+.timerStatus {
+    background: var(--theme-secondary-bg-color);
+    border: 1px dashed var(--theme-color);
+    height: min-content;
+}
 
 @media screen and (max-width: 850px) {
     .titleSpan {
