@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script defer src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 	<script src="./js/functions.js"></script>
     <title>SC Toolbar</title>
     <link rel="stylesheet" type="text/css" href="./css/general.css">
@@ -149,6 +149,52 @@ $(document.body).on('keydown', function (ev) {
                     clearInterval(raidIntervalID);
                 }        
             });
+        
+            // Regen Timer Clock
+            var face = document.querySelector('#RegenCounter');
+            var circle = document.querySelector('#regen_circle');
+            var radius = circle.r.baseVal.value;
+            var circumference = radius * 2 * Math.PI;
+            var requestAnimationFrame = (function() {
+            return window.requestAnimationFrame       || 
+                    window.webkitRequestAnimationFrame || 
+                    window.mozRequestAnimationFrame    || 
+                    window.oRequestAnimationFrame      || 
+                    window.msRequestAnimationFrame     || 
+                    function( callback ){
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+            }());
+
+            tick();
+
+            function tick() {
+
+            var now = new Date();
+            var timeRemaining = 60 - now.getSeconds();
+            //console.log(timeRemaining);
+            if (timeRemaining < 10)
+            {
+                face.textContent = "0" + timeRemaining;
+            }
+            else
+            {
+                face.textContent = timeRemaining;
+            }
+            
+            setProgress((timeRemaining / 60) * 100);
+            
+            requestAnimationFrame(tick);
+            
+            }
+
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = `${circumference}`;
+
+            function setProgress(percent) {
+                const offset = circumference - percent / 100 * circumference;
+                circle.style.strokeDashoffset = offset;
+            }
     });
     </script>
     <div class="container">
@@ -173,8 +219,37 @@ $(document.body).on('keydown', function (ev) {
             </div>
         </div>
         <div id="timerStatus">
-            <button onClick="timer.clear()">Reset Timer</button>
-            <input type="checkbox" id="alerts"><span id="indicator" style="color:red;">Alert</span>
+            <input type="checkbox" id="train_alerts" onClick="timer.clear(event)"/>
+            <label for="train_alerts" style="color:red;">Training Alert</label>
+            <input type="checkbox" id="special_alerts" onClick="timer.clear(event)">
+            <label for="special_alerts" style="color:red;">Special Mission Alert</label>        
+        </div>
+        <div style="display: flex; padding-left: 2rem;isolation: isolate; align-items: center; gap: 0.25rem;">
+            <p>Next Regen</p>
+            <svg
+                class="progress-ring"
+                width="30"
+                height="30"
+                style="align-self: center;">
+                <circle
+                class="background_circle"
+                stroke="white"
+                stroke-width="4"
+                fill="transparent"
+                r="13"
+                cx="15"
+                cy="15"/>
+                <circle
+                    class="progress-ring__circle"
+                    id="regen_circle"
+                    stroke="green"
+                    stroke-width="4"
+                    fill="transparent"
+                    r="13"
+                    cx="15"
+                    cy="15"/>
+                <text x="6" y="20" id="RegenCounter" class="regen_circle_face">00</text>
+            </svg>
         </div>
         <span class="titleSpan">Shinobi-Chronicles Hotkeys v2</span>
         <div id="trainAdjust" class="modifierSelection">

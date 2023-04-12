@@ -275,39 +275,41 @@ var timer = {
 		{
 			times = [baseTrainLength, baseTrainLength * 4, baseTrainLength * 30];
 		}
-		
-		if(boost.checked) { //Cut time and alert based on boost.
-			//timer.clear();
-			$('#indicator').css("color","green");
-			timeoutID.push(setTimeout(function () {
-				parent.document.title = "Training Has Completed"; 
-				alert ("Training has completed");
-				parent.document.title = "Shinobi Chonicles Hotkeys";
-				$('#indicator').css("color","red");
-			}, delay = (times[trainType] - (times[trainType] * clanBoost))));
-			//console.log("delay: "+ delay + " " + "Type: " + type + " " + "TimeoutID: " + timeoutID);
-			return false;
-		}
-		else { //Standard alert without a boost reduction.
-			//timer.clear();
-			$('#indicator').css("color","green");
-			timeoutID.push(setTimeout(function () {
-				parent.document.title = "Training Has Completed"; 
-				alert ("Training has completed");
-				parent.document.title = "Shinobi Chonicles Hotkeys";
-				$('#indicator').css("color","red");
-			}, times[trainType]));
-			//console.log(times[type] + " " + timeoutID);
-			return false;
-		}
+
+		var delay = (boost.checked) ? (times[trainType] - (times[trainType] * clanBoost)) : times[trainType];
+		var label = $("label[for='train_alerts']");
+		label.css("color","green");
+		var timeoutID = (setTimeout(function () {
+			parent.document.title = "Training Has Completed"; 
+			alertPlayer("Training has completed");
+			parent.document.title = "Shinobi Chonicles Hotkeys";
+			label.css("color","red");
+			label.removeAttr('data-timeoutid');
+		}, delay));
+		label.attr('data-timeoutid', timeoutID);
+		return false;
 	},
-	clear: function () { // Clear all timers for training.
+	clear: function (e) { // Clear all timers for training.
 		//console.log("Reset function initial timeoutid: " + timeoutID);
-		for(key in timeoutID) {
-			clearTimeout(timeoutID[key]);
-		}
-		//console.log(timeoutID);
-		$('#indicator').css("color","red");
+		// for(key in timeoutID) {
+		// 	clearTimeout(timeoutID[key]);
+		// }
+		if (("Notification" in window) && Notification.permission !== "granted" && Notification.permission !== "denied") {
+			// We need to ask the user for permission
+			Notification.requestPermission().then((permission) => {
+			  // If the user accepts, let's create a notification
+			  if (permission === "granted") {
+				const notification = new Notification('Notifications enabled.');
+				// …
+			  }
+			});
+		  }
+		if (e.target.checked == true) return;
+		if (e.target.dataset.id == undefined) return;
+		var timeoutID = e.target.dataset.id;
+		console.log(e.target,timeoutID, e.target.labels);
+		clearTimeout(timeoutID);
+		$(e.target.labels).css("color","red");
 	}
 }
 const populateRankData = (options, ele, optionPrefix='') =>
@@ -348,17 +350,21 @@ var missions = {
 		}
 		else if (mission[0] == 'special')
 		{
-			var alerts = $('#alerts').prop('checked');
+			var alerts = $('#special_alerts').prop('checked');
 			if(alerts)
 			{
-				$('#indicator').css("color","green");
-				timeoutID.push(setTimeout(function () {
+				var label = $("label[for='special_alerts']");
+				label.css("color","green");
+
+				var timeoutID = (setTimeout(function () {
 					var text = "Special Mission Has Completed";
 					parent.document.title =  text;
-					alert (text);
+					alertPlayer(text);
 					parent.document.title = "Shinobi Chonicles Hotkeys";
-					$('#indicator').css("color","red");
+					label.css("color","red");
+					label.removeAttr('data-timeoutid');
 				}, 300000));
+				label.attr('data-timeoutid', timeoutID);
 			}
 			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Special}&${mission[1]}`;
 		}
@@ -585,9 +591,8 @@ function train(evt)
 	{	
 		$(evt.target).attr('action', `${URL_ROOT}?id=${pageMap.Train}`);
 	}
-	if ($('#alerts').prop("checked") == true)
+	if ($('#train_alerts').prop("checked") == true)
 	{
-		timer.clear();
 		timer.train($(evt.target).children()[1].value);
 	}
 }
@@ -747,3 +752,16 @@ function setTrainJutsu()
 	top.frames['toolBar'].location.reload();
 	populateTrainingJutsuList();
 }
+
+function alertPlayer(msg) {
+	if (!("Notification" in window)) {
+	  // Check if the browser supports notifications
+	  alert(msg);
+	} else if (Notification.permission === "granted") {
+	  // Check whether notification permissions have already been granted;
+	  // if so, create a notification
+	  const notification = new Notification(msg);
+	  // …
+	}
+  }
+  
