@@ -109,8 +109,6 @@ const RankOptionsMap = {
 	},
 	"chuunin": {
 		ai: [
-			{name: "Prodigious Gennin", id: "24"},
-			{name: "Insidious Serpent", id: "25"},
 			{name: "Furious Tiger", id: "7"},
 			{name: "Elite Contender", id: "11"},
 			{name: "Chuunin Specialist", id: "26"},
