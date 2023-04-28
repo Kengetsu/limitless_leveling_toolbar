@@ -64,7 +64,7 @@
 			jutsuSeals = jutsu["hand_seals"];
 		}
 				
-		$('#useType').val(jutsuType);
+		$('#useType').val(jutsuType).change();
 		$('#jutsuName').val(jutsuName);
 		$('#sealNumbers').val(jutsuSeals);
 	}
@@ -197,24 +197,40 @@ $(document).ready(async function() {
 		location.reload();
 		top.frames['toolBar'].location.reload();
 	});
-	$('#jutsuSearchType').change(function () {
+	$('#jutsuSearchType, #useType').change(function () {
+		let useType = $('#useType');
+		let jutsuSearchType = $('#jutsuSearchType');
 		let jutsuSearch = $('#jutsuSearch tr');
 		jutsuSearch.splice(0,1);
 		
 		jutsuSearch.children().parent().css("display", "table-row");
+		if(this.value == 'bloodline_jutsu')
+		{
+			jutsuSearchType.val('');
+			return;
+		}
+		jutsuSearchType.val(this.value);
+		
 		if (this.value == '') return;
 		jutsuSearch.filter((index) => {
 			return (jutsuSearch[index].children[2].innerText == this.value.toLowerCase()) == false;
 		}).css("display", "none");
 	});
 	
-	$('#jutsuSearchName').keyup(function () {
+	$('#jutsuSearchName,#jutsuName').keyup(function () {
 		let searchText = this.value;
+		let jutsuSearchName = $('#jutsuSearchName');
+		let jutsuName = $('jutsuName');
 		let jutsuSearch = $('#jutsuSearch tr');
 		jutsuSearch.splice(0,1);
 		
 		jutsuSearch.children().parent().css("display", "table-row");
-		
+		if (jutsuSearchType == 'bloodline_jutsu')
+		{
+			return;
+		}
+		jutsuSearchName.val(this.value);
+		jutsuName.val(this.val);
 		jutsuSearch.filter((index) => {
 			return jutsuSearch[index].children[1].innerText.toLowerCase().startsWith(searchText.toLowerCase()) == false;
 		}).css("display", "none");
