@@ -176,17 +176,21 @@ $(document).ready(async function() {
 
 	$('#addButton').click(function(evt) { //When clicked calls addJutsu with input values.
 		evt.preventDefault();
-		addJutsu($('#useType').val(),$('#jutsuName').val(),$('#sealNumbers').val(),$('#weaponID').val());
+		let jutsuID = ($('#sealNumbers').val() == '' ) ? $('#sealNumbers_Bloodline').val() : $('#sealNumbers').val();
+		console.log(jutsuID);
+		addJutsu($('#useType').val(),$('#jutsuName').val(),jutsuID,$('#weaponID').val());
 		//location.reload();
 		populateJutsu();
+		$('#clearButton').click();
 		top.frames['toolBar'].location.reload();
 	});
 	$('#clearButton').click(function (e) {
 		e.preventDefault();
 		$('#useType').val('');
 		$('#jutsuName').val('');
-		$('#sealNumbers').val('');
-		$('#weaponID').val('')
+		$('#sealNumbers').val('').hide();
+		$('#sealNumbers_Bloodline').val('').hide();
+		$('#weaponID').val('').hide();
 	});
 	$('#clearAllButton').click(function() { //When clicked calls clearJutsu function emptying array.
 		clearJutsu();
@@ -244,6 +248,34 @@ $(document).ready(async function() {
 		}
 		
 		
+	});
+	$('#useType').on('change', function (evt) {
+		let selectedType = evt.target.value;
+
+		let jutsuIDField = $('#sealNumbers');
+		let jutsuBloodlineIDField = $('#sealNumbers_Bloodline');
+		let weaponIDField = $('#weaponID');
+
+		jutsuIDField.val('').hide();
+		jutsuBloodlineIDField.val('').hide();
+		weaponIDField.val('').hide();
+
+		if (selectedType == '') return;
+		else if (selectedType == 'taijutsu')
+		{
+			jutsuIDField.show();
+			weaponIDField.show();
+		}
+		else if (selectedType == 'bloodline_jutsu')
+		{
+			jutsuBloodlineIDField.show();
+			weaponIDField.show();
+		}
+		else
+		{
+			jutsuIDField.show();
+		}
+		console.log(selectedType);
 	});
 
 	if(Cookies.get("jutsu")) { // If cookie already exists pulls information into array.	
@@ -329,17 +361,21 @@ a {
 .keyEntry:nth-child(odd){
 	background-color: var(--theme-secondary-bg-color);
 }
+.jutsuInputField {
+	display: none;
+}
 </style>
 </head>
 
 <body>
+<br/>
 <a href="https://shinobichronicles.com/" target="mainFrame"> Return to SC</a>
 <br/>
 <span>You can re-arrage the jutsu order by dragging and dropping the rows.</span>
 <br/>
-<span> For bloodline jutsu seal is: 0 - Genin, 1 - Chuunin, 2 - Jonin</span> 
-<br />
 <span> For Taijutsu use Jutsu ID, check link in jutsu page. Use a jutsu id of 3 if you want a standard strike can be used in combination with a weapon id.</span>
+<br/>
+<br/>
 <table ondragend="dragEnd(event)">
 	<thead>
 		<tr>
@@ -363,8 +399,13 @@ a {
 			<option value="bloodline_jutsu">Bloodline</option>
 		</select>
 		<input type="text" value="" placeholder="name" id="jutsuName">
-		<input type="text" value="" placeholder="Jutsu Seals or ID" id="sealNumbers">
-		<input type="text" value="" placeholder="weapon id" id="weaponID">
+		<input type="text" value="" placeholder="Jutsu Seals or ID" id="sealNumbers" class="jutsuInputField">
+		<select id="sealNumbers_Bloodline" class="jutsuInputField">
+			<option value="0">Genin</option>
+			<option value="1">Chuunin</option>
+			<option value="2">Jonin</option>
+		</select>
+		<input type="text" value="" placeholder="weapon id" id="weaponID" class="jutsuInputField">
 		<button id="addButton">Submit</button>
 		<button id="clearButton">Clear Input</button>
 		<button id="clearAllButton">Clear All</button>
