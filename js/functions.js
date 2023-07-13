@@ -519,7 +519,7 @@ function remapKey(ev)
 		var keyConflict = checkKey(newKey);
 		if(keyConflict) 
 		{
-			if (!confirm(`Key is already bound to ${keyConflict[2]}, are you sure you want to clear the binding for ${keyConflict[2]}`))
+			if (!confirm(`Key is already bound to ${keyConflict[0]} : ${keyConflict[2]}, are you sure you want to clear the binding for ${keyConflict[2]}`))
 			{
 				return false;
 			}
