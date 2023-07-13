@@ -6,6 +6,9 @@ var trainingJutsuList = [];
 var timeoutID = [];
 var previousSelections = [];
 var keyMap = null;
+
+const MAX_JUTSU_SLOTS = 7;
+
 class KeyMapping
 {
 	constructor()
@@ -18,6 +21,10 @@ class KeyMapping
 			"unmapped": [],
 			
 		},
+		this.gear = {
+			"KeyJ": 0,
+			"KeyK": 1,
+		},
 		this.jutsu = {
 			"Digit1": 0,
 			"Digit2": 1,
@@ -25,21 +32,13 @@ class KeyMapping
 			"Digit4": 3,
 			"Digit5": 4,
 			"Digit6": 5,
-			"Numpad1": 0,
-			"Numpad2": 1,
-			"Numpad3": 2,
-			"Numpad4": 3,
-			"Numpad5": 4,
-			"Numpad6": 5,
+			"Digit7": 6,
 			"unmapped": [],
 		},
 		this.ramen = {
-			"Digit7": 0,
-			"Digit8": 1,
-			"Digit9": 2,
-			"Numpad7": 0,
-			"Numpad8": 1,
-			"Numpad9": 2,
+			"KeyU": 0,
+			"KeyI": 1,
+			"KeyO": 2,
 			"unmapped": [],
 		},
 		this.page = {
@@ -68,6 +67,7 @@ class KeyMapping
 const pageMap =
 {
 	"Profile": 1,
+	"Gear": 5,
 	"Chat": 7,
 	"Travel": 11,
 	"Arena": 12,
@@ -165,7 +165,11 @@ const SpecialMissionDifficulty = [
 ];
 
 var URL_ROOT = "https://shinobichronicles.com/";
-var FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
+const FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
+const HEALING_ITEMS = [
+	{name: "Healing Salve", id: "4"},
+	{name: "Wound Disinfectant Spray", id: "14"},
+]
 var keysPressed = {};
 
 function goAction(ev){ //Check key used and do labeled function.
@@ -201,6 +205,10 @@ function goAction(ev){ //Check key used and do labeled function.
 			}
 
 			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Travel}&travel=${pressed_direction}`;	
+			break;
+		case key in keyMap.gear:
+			let itemID = HEALING_ITEMS[keyMap.gear[key]].id;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Gear}&use_item=${itemID}`;
 			break;
 		case key in keyMap.jutsu:
 			var jutsu = jutsuList[keyMap.jutsu[key]]
@@ -441,7 +449,7 @@ function arenaJutsu(array) { // Using jutsu information from cookie array, fill 
 	}
 }
 function addJutsu(type, name, value, weapon) { //Append jutsu to array
-	if(jutsuList.length == 6) { // Prompt to clear jutsu if array is holding 6 jutsu.
+	if(jutsuList.length == MAX_JUTSU_SLOTS) { // Prompt to clear jutsu if array is holding ${MAX_JUTSU_SLOTS} jutsu.
 		var accept = prompt("Max jutsu reached, clear list?", "yes/no")
 		accept = accept.toUpperCase();
 		if(accept == "YES") {
@@ -451,7 +459,7 @@ function addJutsu(type, name, value, weapon) { //Append jutsu to array
 			return false;
 		}
 	}
-	if(jutsuList.length < 6) {
+	if(jutsuList.length < MAX_JUTSU_SLOTS) {
 		jutsuList.push({ jutsuType : type , jutsuName : name , jutsuSeals : value, weaponID : weapon });
 		Cookies.set("jutsu", JSON.stringify(jutsuList), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	}
@@ -567,14 +575,14 @@ function resetKeyMapping()
 	Cookies.set("customKeys", JSON.stringify(keyMap), {expires: 365, path: '/', secure: true, sameSite: 'None'});
 	reloadToolbar();
 }
-function checkKey(key)
+function checkKey(key, mapping = keyMap)
 {
-	for (let set in keyMap)
+	for (let set in mapping)
 	{
-		if (key in keyMap[set])
+		if (key in mapping[set])
 		{
 			if (key == "unmapped") continue;
-			return [set, key, keyMap[set][key]];
+			return [set, key, mapping[set][key]];
 		}
 	}
 	return false;
@@ -658,15 +666,32 @@ function validateKeyMapping(currentMap)
 	{
 		for(let key in defaultMap[set])
 		{
+			if(currentMap[set] == undefined)
+			{
+				currentMap[set] = defaultMap[set];
+				newMap[set] = defaultMap[set];
+				for (newSetKey in newMap[set])
+				{
+					changedKeys.push(newSetKey);
+				}
+				
+			}
 			if (key != 'unmapped')
 			{
 				defaultActionList[defaultMap[set][key]] = [key, set];
 			}
 			if (key in currentMap[set]) continue;
 			if (defaultMap[set][key] in userActionList) continue;
-			if (currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
+			if (currentMap[set]['unmapped'] != undefined && currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
 			//console.log(newMap[set][key], defaultMap[set][key]);
-			newMap[set][key] = defaultMap[set][key];
+			if(checkKey(key, currentMap))
+			{
+				newMap[set]['unmapped'].push(defaultMap[set][key]);
+			}
+			else
+			{
+				newMap[set][key] = defaultMap[set][key];
+			}
 			changedKeys.push(key);
 		}
 	}
@@ -675,7 +700,7 @@ function validateKeyMapping(currentMap)
 	for (let action in userActionList)
 	{
 		if(action in defaultActionList) continue;
-		//console.log(userActionList[action]);
+		console.log(userActionList[action]);
 		delete newMap[userActionList[action][1]][userActionList[action][0]];
 		changedKeys.push(userActionList[action][0]);
 		// if(userActionList[action][1] == 'unmapped') continue;
@@ -738,7 +763,7 @@ function setTrainJutsu()
 	let data = event.target.dataset;
 	let duplicate = trainingJutsuList.filter(jutsu => jutsu.id == data.id);
 	if(duplicate.length > 0) return;
-	if(trainingJutsuList.length == 6) { // Prompt to clear jutsu if array is holding 6 jutsu.
+	if(trainingJutsuList.length == MAX_JUTSU_SLOTS) { // Prompt to clear jutsu if array is holding 6 jutsu.
 		var accept = prompt("Max jutsu reached, clear list?", "yes/no")
 		accept = accept.toUpperCase();
 		if(accept == "YES") {

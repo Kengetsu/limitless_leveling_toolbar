@@ -105,10 +105,30 @@
 	}
 	function createKeyElement(title, key, action)
 	{
+		let displayName = null;
+		if(title == 'jutsu') 
+		{ 
+			if (jutsuList[action] == undefined)
+			{
+				displayName = `Slot ${action + 1}`;
+			}
+			else 
+			{
+				displayName = jutsuList[action].jutsuName;
+			}
+		}
+		else if(title == 'ramen') {
+			 displayName = FOOD_OPTIONS[action];
+		}
+		else if(title == 'gear')
+		{
+			displayName = HEALING_ITEMS[action].name;
+		}
+
 		return `
 		<div class="keyEntry">
 			<p>${key}</p>
-			<p>${action}</p>
+			<p>${(displayName != null) ? displayName : action}</p>
 			<p>
 				<input type="text" onKeyUp='remapKey(event);' data-set="${title}" data-key="${key}" data-action="${action}" style="width: 3rem; height: 2rem;"></input>
 			</p>
@@ -345,20 +365,23 @@ a {
 .keyTable {
 	display: grid;
 	grid-template-areas: 
-	"travel jutsu page" 
-	"action jutsu page" 
-	"ramen jutsu page";
+	"travel jutsu page gear" 
+	"action jutsu page none" 
+	"ramen jutsu page none";
 	width: 40rem;
+	grid-gap: 1rem;
 }
 .keyCategory {
 	display: grid;
-	border: 1px solid black;
-	text-align: center;
+	/* border: 1px solid black; */
+	text-align: center;	
+	grid-auto-rows: max-content;
 }
 .keyCategory span{
 	font-weight: bold;
 	color: var(--theme-dark-color);
 	background-color: var(--theme-secondary-color);
+	max-height: 2rem;
 }
 .keyEntry {
 	display: grid;
