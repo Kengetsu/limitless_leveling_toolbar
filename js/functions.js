@@ -316,7 +316,7 @@ var timer = {
 		if (e.target.checked == true) return;
 		if (e.target.dataset.id == undefined) return;
 		var timeoutID = e.target.dataset.id;
-		console.log(e.target,timeoutID, e.target.labels);
+		// console.log(e.target,timeoutID, e.target.labels);
 		clearTimeout(timeoutID);
 		$(e.target.labels).css("color","red");
 	}
@@ -341,15 +341,15 @@ var missions = {
 		var selectSpecial = $("#selectMission optgroup[label='Special']");
 
 		let missionRanks = ["D", "C", "B", "A"];
-		let missionsAvaliable = [];
+		let missionsAvailable = [];
 		// {name: "Form Team & Scout Area", id: "start_mission=4"}
 		
 		for (let i = 0; i < rank; i++)
 		{
-			missionsAvaliable.push({name: missionRanks[i] + ' Rank', id: "start_mission=1&rank=" + (i + 1)});
+			missionsAvailable.push({name: missionRanks[i] + ' Rank', id: "start_mission=1&rank=" + (i + 1)});
 		}
-		console.log(rank, missionsAvaliable);
-		populateRankData(missionsAvaliable, selectNormal);
+		// console.log(rank, missionsAvailable);
+		populateRankData(missionsAvailable, selectNormal);
 		populateRankData(SpecialMissionDifficulty, selectSpecial);
 	},
 	set: function(mission = null) { //Start selected mission.
@@ -518,7 +518,7 @@ function remapKey(ev)
 
 	ev.target.value = null;
 
-	console.log(key, set);
+	// console.log(key, set);
 	if (key in keyMap[set])
 	{
 		var accept = confirm(`Are you sure you want to map ${set} : ${action} to ${newKey}`);
@@ -712,7 +712,7 @@ function validateKeyMapping(currentMap)
 	for (let action in userActionList)
 	{
 		if(action in defaultActionList) continue;
-		console.log(userActionList[action]);
+		// console.log(userActionList[action]);
 		delete newMap[userActionList[action][1]][userActionList[action][0]];
 		changedKeys.push(userActionList[action][0]);
 		// if(userActionList[action][1] == 'unmapped') continue;
