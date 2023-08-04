@@ -80,18 +80,19 @@ const pageMap =
 	"Ramen": 23,
 	"Team": 24,
 };
-
 const RankOptionsMap = {
 	"akademi-sei": {
+		id: 1,
 		ai: [
 			{name: "Annoying Crow", id: "1"},
 			{name: "Academy Bully", id: "2"},
 			{name: "Prodigy Student", id: "3"},
 		],
-		missions: [
-		],
+		// missions: [
+		// ],
 	},
 	"genin": {
+		id: 2,
 		ai: [
 			{name: "Academy Graduate", id: "4"},
 			{name: "Crafty Kunoichi", id: "13"},
@@ -101,13 +102,14 @@ const RankOptionsMap = {
 			{name: "Prodigious Genin", id: "24"},
 			{name: "Insidious Serpent", id: "25"},
 		],
-		missions: [
-			{name: "Special Request", id: "start_mission=1"},
-			{name: "Deliver Food", id: "start_mission=2"},
-			{name: "Retrieve the pet Llama!", id: "start_mission=3"},
-		],
+		// missions: [
+		// 	// {name: "Special Request", id: "start_mission=1"},
+		// 	// {name: "Deliver Food", id: "start_mission=2"},
+		// 	// {name: "Retrieve the pet Llama!", id: "start_mission=3"},
+		// ],
 	},
 	"chuunin": {
+		id: 3,
 		ai: [
 			{name: "Furious Tiger", id: "7"},
 			{name: "Elite Contender", id: "11"},
@@ -123,15 +125,16 @@ const RankOptionsMap = {
 			{name: "Twisted Killer", id: "36"},
 			{name: "Legendary Crow", id: "9"},
 		],
-		missions: [
-			{name: "Form Team & Scout Area", id: "start_mission=4"},
-			{name: "Patrol Village Primeter", id: "start_mission=6"},
-			{name: "Tactical Espionage", id: "start_mission=7"},
-			{name: "Fight Club", id: "start_mission=9"},
-			{name: "Study Clan Heritage", id: "clan&start_mission=8"},
-		],
+		// missions: [
+		// 	{name: "Form Team & Scout Area", id: "start_mission=4"},
+		// 	{name: "Patrol Village Primeter", id: "start_mission=6"},
+		// 	{name: "Tactical Espionage", id: "start_mission=7"},
+		// 	{name: "Fight Club", id: "start_mission=9"},
+		// 	{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+		// ],
 	},
 	"jonin": {
+		id: 4,
 		ai: [
 			{name: "Chuunin Expert", id: "14"},
 			{name: "Village Outlaw", id: "15"},
@@ -145,15 +148,15 @@ const RankOptionsMap = {
 			{name: "Chuunin Assault Squad", id: "32"},
 			{name: "ANBU Captain", id: "18"},
 		],
-		missions: [
-			{name: "Form Team & Scout Area", id: "start_mission=4"},
-			{name: "Patrol Village Primeter", id: "start_mission=6"},
-			{name: "Tactical Espionage", id: "start_mission=7"},
-			{name: "Fight Club", id: "start_mission=9"},
-			{name: "ANBU Ambush", id: "start_mission=11"},
-			{name: "Study Clan Heritage", id: "clan&start_mission=8"},
-			{name: "Teambuilding Exercise", id: "team&start_mission=5"},
-		],
+		// missions: [
+		// 	{name: "Form Team & Scout Area", id: "start_mission=4"},
+		// 	{name: "Patrol Village Primeter", id: "start_mission=6"},
+		// 	{name: "Tactical Espionage", id: "start_mission=7"},
+		// 	{name: "Fight Club", id: "start_mission=9"},
+		// 	{name: "ANBU Ambush", id: "start_mission=11"},
+		// 	{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+		// 	// {name: "Teambuilding Exercise", id: "team&start_mission=5"},
+		// ],
 	}
 };
 
@@ -332,12 +335,21 @@ const populateRankData = (options, ele, optionPrefix='') =>
 };
 var missions = {
 	gen: function() { //Generates mission list based on what rank is selected.
-		var rank = document.getElementById("userRank").value;
+		var rank = RankOptionsMap[document.getElementById("userRank").value].id;
 		//var select = $("#selectMission");
 		var selectNormal = $("#selectMission optgroup[label='Normal']");
 		var selectSpecial = $("#selectMission optgroup[label='Special']");
+
+		let missionRanks = ["D", "C", "B", "A"];
+		let missionsAvaliable = [];
+		// {name: "Form Team & Scout Area", id: "start_mission=4"}
 		
-		populateRankData(RankOptionsMap[rank.toLowerCase()].missions, selectNormal);
+		for (let i = 0; i < rank; i++)
+		{
+			missionsAvaliable.push({name: missionRanks[i] + ' Rank', id: "start_mission=1&rank=" + (i + 1)});
+		}
+		console.log(rank, missionsAvaliable);
+		populateRankData(missionsAvaliable, selectNormal);
 		populateRankData(SpecialMissionDifficulty, selectSpecial);
 	},
 	set: function(mission = null) { //Start selected mission.
@@ -376,7 +388,7 @@ var missions = {
 		}
 		else
 		{
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&${mission[0]}`;
+			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Mission}&${mission[0]}&${mission[1]}`;
 		}
 		
 	}
