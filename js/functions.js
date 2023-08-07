@@ -147,6 +147,7 @@ const RankOptionsMap = {
 			{name: "Monstrous Yokai ", id: "31"},
 			{name: "Chuunin Assault Squad", id: "32"},
 			{name: "ANBU Captain", id: "18"},
+			{name: "Jonin Trio", id: "130"},
 		],
 		// missions: [
 		// 	{name: "Form Team & Scout Area", id: "start_mission=4"},
