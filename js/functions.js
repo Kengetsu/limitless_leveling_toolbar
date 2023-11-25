@@ -522,7 +522,11 @@ function remapKey(ev)
 		};
 		if (key == 'unmapped')
 		{
-			var index = keyMap[set][key].indexOf(parseInt(action));
+			if (isNaN(action) === false)
+			{
+				action = parseInt(action);
+			}
+			var index = keyMap[set][key].indexOf(action);
 			if (index === -1)
 			{
 				alert("Something happened! We were unable to bind key.");
@@ -552,6 +556,10 @@ function clearBinding(keySet, key, action, reload = false)
 	delete keyMap[keySet][key];
 	if("unmapped" in keyMap[keySet])
 	{
+		if (isNaN(action) === false)
+		{
+			action = parseInt(action);
+		}
 		if (keyMap[keySet]["unmapped"].indexOf(action) === -1)
 		{
 			keyMap[keySet]["unmapped"].push(action);
