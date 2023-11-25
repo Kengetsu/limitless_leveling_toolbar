@@ -7,7 +7,7 @@ var timeoutID = [];
 var previousSelections = [];
 var keyMap = null;
 
-const MAX_JUTSU_SLOTS = 7;
+const MAX_JUTSU_SLOTS = 9;
 
 class KeyMapping
 {
