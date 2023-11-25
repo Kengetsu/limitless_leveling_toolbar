@@ -24,6 +24,7 @@ class KeyMapping
 		this.gear = {
 			"KeyJ": 0,
 			"KeyK": 1,
+			"KeyL": 2,
 		},
 		this.jutsu = {
 			"Digit1": 0,
@@ -173,6 +174,7 @@ const FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
 const HEALING_ITEMS = [
 	{name: "Healing Salve", id: "4"},
 	{name: "Wound Disinfectant Spray", id: "14"},
+	{name: "Healing Scroll", id: "131"},
 ]
 var keysPressed = {};
 
@@ -647,15 +649,12 @@ function validateKeyMapping(currentMap)
 	var defaultMap = new KeyMapping();
 	var newMap = currentMap;
 	var changedKeys = [];
-	var defaultActionList = {};
-	var userActionList = {};
 
 	for(let set in currentMap)
 	{
 		for(let key in currentMap[set])
 		{		
 			if (key == 'unmapped') continue;
-			userActionList[currentMap[set][key]] = [key, set];
 			if (typeof currentMap[set][key] == 'object')
 			{
 				if (currentMap[set][key].length == 1)
@@ -689,12 +688,9 @@ function validateKeyMapping(currentMap)
 				}
 				
 			}
-			if (key != 'unmapped')
-			{
-				defaultActionList[defaultMap[set][key]] = [key, set];
-			}
+			
 			if (key in currentMap[set]) continue;
-			if (defaultMap[set][key] in userActionList) continue;
+			if (defaultMap[set][key] in Object.values(currentMap[set])) continue;
 			if (currentMap[set]['unmapped'] != undefined && currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
 			//console.log(newMap[set][key], defaultMap[set][key]);
 			if(checkKey(key, currentMap))
@@ -709,16 +705,16 @@ function validateKeyMapping(currentMap)
 		}
 	}
 	
-	//console.log(defaultActionList, userActionList);
-	for (let action in userActionList)
-	{
-		if(action in defaultActionList) continue;
-		// console.log(userActionList[action]);
-		delete newMap[userActionList[action][1]][userActionList[action][0]];
-		changedKeys.push(userActionList[action][0]);
-		// if(userActionList[action][1] == 'unmapped') continue;
-		// console.log(action, userActionList[action], defaultActionList[action] == undefined)
-	}
+	// console.log(Object.keys(defaultMap), Object.keys(currentMap));
+	// for (let set in Object.keys(currentMap))
+	// {
+	// 	if(action in Object.keys(defaultMap)) continue;
+	// 	// console.log(userActionList[action]);
+	// 	delete newMap[userActionList[action][1]][userActionList[action][0]];
+	// 	changedKeys.push(userActionList[action][0]);
+	// 	// if(userActionList[action][1] == 'unmapped') continue;
+	// 	// console.log(action, userActionList[action], defaultActionList[action] == undefined)
+	// }
 	if (changedKeys.length > 0)
 	{
 		alert(`Your key mapping has updated. The following keys were changed ${changedKeys.join(',')}`)

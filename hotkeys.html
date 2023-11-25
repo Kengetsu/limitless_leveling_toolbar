@@ -63,7 +63,8 @@ $(document.body).on('keydown', function (ev) {
                 jutsuList = $.parseJSON(Cookies.get("jutsu"));
             };
             if(Cookies.get("customKeys")) {
-                keyMap = validateKeyMapping($.parseJSON(Cookies.get("customKeys")));
+                let customKeyMap = $.parseJSON(Cookies.get("customKeys"));
+                keyMap = validateKeyMapping(customKeyMap);
             }
             else
             {
