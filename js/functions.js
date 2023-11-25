@@ -34,6 +34,8 @@ class KeyMapping
 			"Digit5": 4,
 			"Digit6": 5,
 			"Digit7": 6,
+			"Digit8": 7,
+			"Digit9": 8,
 			"unmapped": [],
 		},
 		this.ramen = {
