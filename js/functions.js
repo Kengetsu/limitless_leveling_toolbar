@@ -522,7 +522,11 @@ function remapKey(ev)
 		};
 		if (key == 'unmapped')
 		{
-			var index = keyMap[set][key].indexOf(action);
+			var index = keyMap[set][key].indexOf(parseInt(action));
+			if (index === -1)
+			{
+				alert("Something happened! We were unable to bind key.");
+			}
 			keyMap[set][newKey] = keyMap[set][key][index];
 			keyMap[set]["unmapped"].splice(index,1);
 		}
