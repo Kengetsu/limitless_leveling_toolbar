@@ -692,7 +692,7 @@ function validateKeyMapping(currentMap)
 			}
 			
 			if (key in currentMap[set]) continue;
-			if (defaultMap[set][key] in Object.values(currentMap[set])) continue;
+			if (Object.values(currentMap[set]).includes(defaultMap[set][key])) continue;
 			if (currentMap[set]['unmapped'] != undefined && currentMap[set]['unmapped'].indexOf(defaultMap[set][key]) != -1) continue;
 			//console.log(newMap[set][key], defaultMap[set][key]);
 			if(checkKey(key, currentMap))
