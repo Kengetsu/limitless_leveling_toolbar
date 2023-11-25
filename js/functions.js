@@ -526,6 +526,7 @@ function remapKey(ev)
 			if (index === -1)
 			{
 				alert("Something happened! We were unable to bind key.");
+				return;
 			}
 			keyMap[set][newKey] = keyMap[set][key][index];
 			keyMap[set]["unmapped"].splice(index,1);
