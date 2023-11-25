@@ -87,9 +87,9 @@ const RankOptionsMap = {
 	"akademi-sei": {
 		id: 1,
 		ai: [
-			{name: "Annoying Crow", id: "1"},
-			{name: "Academy Bully", id: "2"},
-			{name: "Prodigy Student", id: "3"},
+			{name: "Annoying Crow (1)", id: "1"},
+			{name: "Academy Bully (5)", id: "2"},
+			{name: "Prodigy Student (10)", id: "3"},
 		],
 	},
 	"genin": {
