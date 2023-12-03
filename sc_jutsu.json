@@ -318,7 +318,7 @@
     "jutsu_id": 43,
     "name": "Tracheal Smash",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1009",
+    "hand_seals": "",
     "rank": 3
   },
   {
@@ -354,13 +354,6 @@
     "name": "Feasting Blade",
     "jutsu_type": "genjutsu",
     "hand_seals": "10-12-6-3-7",
-    "rank": 3
-  },
-  {
-    "jutsu_id": 49,
-    "name": "Calmed Awareness",
-    "jutsu_type": "genjutsu",
-    "hand_seals": "9-1",
     "rank": 3
   },
   {
@@ -423,14 +416,14 @@
     "jutsu_id": 58,
     "name": "Ki of the Swift Rabbit",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1015",
+    "hand_seals": "",
     "rank": 3
   },
   {
     "jutsu_id": 59,
     "name": "Hachimon: Kai",
     "jutsu_type": "taijutsu",
-    "hand_seals": "4-11",
+    "hand_seals": "",
     "rank": 3
   },
   {
@@ -446,6 +439,13 @@
     "jutsu_type": "genjutsu",
     "hand_seals": "1-8",
     "rank": 3
+  },
+  {
+    "jutsu_id": 49,
+    "name": "Sensory Overload",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "9-1-6-2",
+    "rank": 4
   },
   {
     "jutsu_id": 62,
@@ -598,7 +598,7 @@
     "jutsu_id": 83,
     "name": "Butcher&#039;s Lure",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-42",
+    "hand_seals": "",
     "rank": 4
   },
   {
@@ -631,9 +631,16 @@
   },
   {
     "jutsu_id": 89,
-    "name": "Cast speed no jutsu",
+    "name": "Accelerated Seals",
     "jutsu_type": "ninjutsu",
     "hand_seals": "2-7-3-12",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 93,
+    "name": "Nerve Catastrophe",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "4-8-11-3-2-5",
     "rank": 4
   }
 ]
