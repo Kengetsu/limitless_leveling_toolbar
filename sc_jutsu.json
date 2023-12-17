@@ -3,14 +3,7 @@
     "jutsu_id": 1,
     "name": "Spinning Stars",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1433",
-    "rank": 1
-  },
-  {
-    "jutsu_id": 2,
-    "name": "Synergized Channeling",
-    "jutsu_type": "ninjutsu",
-    "hand_seals": "12-8-1",
+    "hand_seals": "",
     "rank": 1
   },
   {
@@ -28,31 +21,10 @@
     "rank": 1
   },
   {
-    "jutsu_id": 6,
-    "name": "Chakra Torrent",
-    "jutsu_type": "ninjutsu",
-    "hand_seals": "10-7",
-    "rank": 1
-  },
-  {
-    "jutsu_id": 8,
-    "name": "Kiddy Combo",
-    "jutsu_type": "taijutsu",
-    "hand_seals": "165",
-    "rank": 1
-  },
-  {
     "jutsu_id": 9,
     "name": "Deceiving Environment",
     "jutsu_type": "genjutsu",
     "hand_seals": "6-4-3-7",
-    "rank": 1
-  },
-  {
-    "jutsu_id": 10,
-    "name": "Multiple Clone Panic",
-    "jutsu_type": "genjutsu",
-    "hand_seals": "6-2-5-3",
     "rank": 1
   },
   {
@@ -63,17 +35,10 @@
     "rank": 1
   },
   {
-    "jutsu_id": 13,
-    "name": "Unexpected Sting",
-    "jutsu_type": "taijutsu",
-    "hand_seals": "100",
-    "rank": 1
-  },
-  {
     "jutsu_id": 14,
     "name": "Reeling Blow",
     "jutsu_type": "taijutsu",
-    "hand_seals": "101",
+    "hand_seals": "",
     "rank": 1
   },
   {
@@ -98,13 +63,6 @@
     "rank": 2
   },
   {
-    "jutsu_id": 11,
-    "name": "Genjutsu Release",
-    "jutsu_type": "genjutsu",
-    "hand_seals": "9-6",
-    "rank": 2
-  },
-  {
     "jutsu_id": 15,
     "name": "Augmented Shuriken",
     "jutsu_type": "ninjutsu",
@@ -115,7 +73,7 @@
     "jutsu_id": 16,
     "name": "Ascending Hawk Strike",
     "jutsu_type": "taijutsu",
-    "hand_seals": "102",
+    "hand_seals": "",
     "rank": 2
   },
   {
@@ -136,14 +94,14 @@
     "jutsu_id": 19,
     "name": "Projectile Barrage",
     "jutsu_type": "taijutsu",
-    "hand_seals": "104",
+    "hand_seals": "",
     "rank": 2
   },
   {
     "jutsu_id": 20,
     "name": "Rhythmic Assault",
     "jutsu_type": "taijutsu",
-    "hand_seals": "105",
+    "hand_seals": "",
     "rank": 2
   },
   {
@@ -164,14 +122,7 @@
     "jutsu_id": 23,
     "name": "Wired Weaponry",
     "jutsu_type": "taijutsu",
-    "hand_seals": "138",
-    "rank": 2
-  },
-  {
-    "jutsu_id": 24,
-    "name": "Energy Flare",
-    "jutsu_type": "ninjutsu",
-    "hand_seals": "7-1-4",
+    "hand_seals": "",
     "rank": 2
   },
   {
@@ -192,7 +143,7 @@
     "jutsu_id": 28,
     "name": "Aerial Hammer",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1112",
+    "hand_seals": "",
     "rank": 2
   },
   {
@@ -288,7 +239,7 @@
   },
   {
     "jutsu_id": 39,
-    "name": "Electrical Clones",
+    "name": "Alternating Current",
     "jutsu_type": "ninjutsu",
     "hand_seals": "4-8-11-3-2",
     "rank": 3
@@ -308,13 +259,6 @@
     "rank": 3
   },
   {
-    "jutsu_id": 42,
-    "name": "Graceful Flying Falcon",
-    "jutsu_type": "taijutsu",
-    "hand_seals": "1008",
-    "rank": 3
-  },
-  {
     "jutsu_id": 43,
     "name": "Tracheal Smash",
     "jutsu_type": "taijutsu",
@@ -325,7 +269,7 @@
     "jutsu_id": 44,
     "name": "Somersault Spring",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1010",
+    "hand_seals": "",
     "rank": 3
   },
   {
@@ -333,13 +277,6 @@
     "name": "Inverted World",
     "jutsu_type": "genjutsu",
     "hand_seals": "11-2-12-1-8",
-    "rank": 3
-  },
-  {
-    "jutsu_id": 46,
-    "name": "Consuming Blizzard",
-    "jutsu_type": "genjutsu",
-    "hand_seals": "3-1-5-11",
     "rank": 3
   },
   {
@@ -360,21 +297,21 @@
     "jutsu_id": 50,
     "name": "Triple Shadow Spiral",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1011",
+    "hand_seals": "",
     "rank": 3
   },
   {
     "jutsu_id": 51,
     "name": "Distorted Systems",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1012",
+    "hand_seals": "",
     "rank": 3
   },
   {
     "jutsu_id": 52,
     "name": "Inverted Swallow",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1013",
+    "hand_seals": "",
     "rank": 3
   },
   {
@@ -392,13 +329,6 @@
     "rank": 3
   },
   {
-    "jutsu_id": 55,
-    "name": "Piercing Soundwave",
-    "jutsu_type": "genjutsu",
-    "hand_seals": "5-7-4-8",
-    "rank": 3
-  },
-  {
     "jutsu_id": 56,
     "name": "Shuriken Storm Illusion",
     "jutsu_type": "genjutsu",
@@ -409,19 +339,12 @@
     "jutsu_id": 57,
     "name": "Tears of the Dragon",
     "jutsu_type": "taijutsu",
-    "hand_seals": "1014",
-    "rank": 3
-  },
-  {
-    "jutsu_id": 58,
-    "name": "Ki of the Swift Rabbit",
-    "jutsu_type": "taijutsu",
     "hand_seals": "",
     "rank": 3
   },
   {
     "jutsu_id": 59,
-    "name": "Hachimon: Kai",
+    "name": "Hachimon Kai",
     "jutsu_type": "taijutsu",
     "hand_seals": "",
     "rank": 3
@@ -441,6 +364,76 @@
     "rank": 3
   },
   {
+    "jutsu_id": 201,
+    "name": "Wildfire Combo",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 202,
+    "name": "Vortex Throw",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 203,
+    "name": "Sonic Thrust",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 204,
+    "name": "Titan Fist",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 205,
+    "name": "Pressure Palm",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 206,
+    "name": "Charred Visions",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "3-6-7-4",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 207,
+    "name": "Silent Whispers",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "7-9-3-6",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 208,
+    "name": "Phantom Limb",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "8-2-3-1",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 209,
+    "name": "Fated Hollow",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "6-10-8-3",
+    "rank": 3
+  },
+  {
+    "jutsu_id": 210,
+    "name": "Hypnotic Rain",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "12-7-9-5",
+    "rank": 3
+  },
+  {
     "jutsu_id": 49,
     "name": "Sensory Overload",
     "jutsu_type": "genjutsu",
@@ -449,9 +442,9 @@
   },
   {
     "jutsu_id": 62,
-    "name": "Gaia&#039;s Armory",
+    "name": "Roar of the Mountain King",
     "jutsu_type": "ninjutsu",
-    "hand_seals": "10-2-9-4-11-1",
+    "hand_seals": "10-12-9-4-1",
     "rank": 4
   },
   {
@@ -472,7 +465,7 @@
     "jutsu_id": 65,
     "name": "Wrath of the Sea King",
     "jutsu_type": "ninjutsu",
-    "hand_seals": "7-3-9-2-11-12",
+    "hand_seals": "7-3-9-2-10-12",
     "rank": 4
   },
   {
@@ -486,7 +479,7 @@
     "jutsu_id": 67,
     "name": "Rage of the Sky King",
     "jutsu_type": "ninjutsu",
-    "hand_seals": "5-4-8-12-2-1",
+    "hand_seals": "5-4-8-12-1-2",
     "rank": 4
   },
   {
@@ -500,7 +493,7 @@
     "jutsu_id": 69,
     "name": "Fury of the Storm King",
     "jutsu_type": "ninjutsu",
-    "hand_seals": "11-7-12-9-1",
+    "hand_seals": "11-7-12-8-1",
     "rank": 4
   },
   {
@@ -521,14 +514,14 @@
     "jutsu_id": 72,
     "name": "Twin Dragon Kick",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-7",
+    "hand_seals": "",
     "rank": 4
   },
   {
     "jutsu_id": 73,
     "name": "Seven Circle Strikes",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-85",
+    "hand_seals": "",
     "rank": 4
   },
   {
@@ -556,7 +549,7 @@
     "jutsu_id": 77,
     "name": "Earthbreaker Assault",
     "jutsu_type": "taijutsu",
-    "hand_seals": "127-100",
+    "hand_seals": "",
     "rank": 4
   },
   {
@@ -584,14 +577,14 @@
     "jutsu_id": 81,
     "name": "Afterimage Flash",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-28",
+    "hand_seals": "",
     "rank": 4
   },
   {
     "jutsu_id": 82,
     "name": "Phantom Palm",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-41",
+    "hand_seals": "",
     "rank": 4
   },
   {
@@ -605,7 +598,7 @@
     "jutsu_id": 84,
     "name": "Endless Barrage",
     "jutsu_type": "taijutsu",
-    "hand_seals": "100-19",
+    "hand_seals": "",
     "rank": 4
   },
   {
@@ -623,24 +616,108 @@
     "rank": 4
   },
   {
-    "jutsu_id": 88,
-    "name": "Untouchable",
+    "jutsu_id": 93,
+    "name": "Lightning Clones",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "4-8-11-3-2-5",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 94,
+    "name": "Fire Seal Release",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "12-10-5-6-2-9",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 95,
+    "name": "Water Seal Release",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "7-3-9-2-11-12",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 96,
+    "name": "Earth Seal Release",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "10-2-9-4-11-1",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 97,
+    "name": "Wind Seal Release",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "5-4-8-12-2-1",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 98,
+    "name": "Lightning Seal Release",
+    "jutsu_type": "ninjutsu",
+    "hand_seals": "11-7-12-9-1",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 99,
+    "name": "Hellfire Crash",
     "jutsu_type": "taijutsu",
     "hand_seals": "",
     "rank": 4
   },
   {
-    "jutsu_id": 89,
-    "name": "Accelerated Seals",
-    "jutsu_type": "ninjutsu",
-    "hand_seals": "2-7-3-12",
+    "jutsu_id": 100,
+    "name": "Galeforce Impact",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
     "rank": 4
   },
   {
-    "jutsu_id": 93,
-    "name": "Nerve Catastrophe",
-    "jutsu_type": "ninjutsu",
-    "hand_seals": "4-8-11-3-2-5",
+    "jutsu_id": 101,
+    "name": "Flash Impalement",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 102,
+    "name": "Crashing Wave Reversal",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 103,
+    "name": "Shatterstorm",
+    "jutsu_type": "taijutsu",
+    "hand_seals": "",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 106,
+    "name": "Flame Labyrinth",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "7-8-9-10-1",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 107,
+    "name": "Seismic Distortion",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "7-8-9-10-2",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 108,
+    "name": "The Wailing Eye",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "7-8-9-10-3",
+    "rank": 4
+  },
+  {
+    "jutsu_id": 109,
+    "name": "Delusion of Grandeur",
+    "jutsu_type": "genjutsu",
+    "hand_seals": "7-3-12-1-2",
     "rank": 4
   }
 ]
