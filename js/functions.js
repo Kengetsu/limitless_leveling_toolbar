@@ -147,6 +147,10 @@ const SpecialMissionDifficulty = [
 	{name: "Hard", id: "special&start=hard"},
 	{name: "Nightmare", id: "special&start=nightmare"},
 ];
+const ClanTeamMissionList = [
+	{name: "Study Clan Heritage", id: "clan&start_mission=8"},
+	{name: "Teambuilding Exercise", id: "team&start_mission=5"}
+];
 
 var URL_ROOT = "https://shinobichronicles.com/";
 const FOOD_OPTIONS = ["vegetable", "pork", "deluxe"];
@@ -321,6 +325,7 @@ var missions = {
 		//var select = $("#selectMission");
 		var selectNormal = $("#selectMission optgroup[label='Normal']");
 		var selectSpecial = $("#selectMission optgroup[label='Special']");
+		var selectClanTeam = $("#selectMission optgroup[label='Clan/Team']");
 
 		let missionRanks = ["D", "C", "B", "A"];
 		let missionsAvailable = [];
@@ -333,6 +338,7 @@ var missions = {
 		// console.log(rank, missionsAvailable);
 		populateRankData(missionsAvailable, selectNormal);
 		populateRankData(SpecialMissionDifficulty, selectSpecial);
+		populateRankData(ClanTeamMissionList, selectClanTeam);
 	},
 	set: function(mission = null) { //Start selected mission.
 		if (mission == null)
@@ -624,11 +630,12 @@ function selectionChange(evt)
 	let element = evt.target;
 	if (element.id == 'selectMission')
 	{
-		previousSelections[1] = evt.target.value;
+		let missionType = document.querySelector('#' + element.id + ' option:checked').closest('optgroup').label;
+		previousSelections[1] = [missionType, element.value];
 	}
 	else if (element.id == 'enemyList')
 	{
-		previousSelections[2] = evt.target.value;
+		previousSelections[2] = element.value;
 	}
 	else
 	{

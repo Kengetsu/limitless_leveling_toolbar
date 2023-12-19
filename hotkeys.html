@@ -84,7 +84,7 @@ $(document.body).on('keydown', function (ev) {
                 }
                 if (previousSelections[1] != undefined)
                 {
-                    $('#selectMission').prop("value", previousSelections[1]);
+                    $('#selectMission').prop("value", previousSelections[1][1]);
                 }
                 if (previousSelections[2] != undefined)
                 {
@@ -312,9 +312,11 @@ $(document.body).on('keydown', function (ev) {
             </div>
             <div id="missions">
                 <select id="selectMission" name="Missions" onchange="selectionChange(event)">
-                    <optgroup label="Normal">
+                    <optgroup label="Normal" data-type="Normal">
                     </optgroup>
-                    <optgroup label="Special">
+                    <optgroup label="Special" data-type="Special">
+                    </optgroup>
+                    <optgroup label="Clan/Team" data-type="Clan/Team">
                     </optgroup>
                 </select>
                 <input type="submit" value="Start" class="SubmissionButtons" onclick="missions.set();"/>
