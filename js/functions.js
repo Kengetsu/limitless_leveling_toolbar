@@ -149,7 +149,7 @@ const SpecialMissionDifficulty = [
 ];
 const ClanTeamMissionList = [
 	{name: "Study Clan Heritage", id: "clan&start_mission=8"},
-	{name: "Teambuilding Exercise", id: "team&start_mission=5"}
+	{name: "Teambuilding Exercise", id: "team&5"}
 ];
 
 var URL_ROOT = "https://shinobichronicles.com/";
@@ -352,7 +352,12 @@ var missions = {
 		}
 		else if (mission[0] == 'team')
 		{
-			top.mainFrame.location=`${URL_ROOT}?id=${pageMap.Team}&${mission[1]}`;
+			if ($('#teamMission').attr('action') == undefined)
+			{	
+				$('#teamMission').attr('action', `${URL_ROOT}?id=${pageMap.Team}`);
+			}
+			$('#teamMission select option').prop('value', mission[1]);
+			$('#teamMission').submit();
 		}
 		else if (mission[0] == 'special')
 		{

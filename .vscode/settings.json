@@ -1,3 +1,25 @@
 {
-    "liveServer.settings.port": 5658
+    "liveServer.settings.port": 5658,
+    "cSpell.ignoreWords": [
+        "ANBU",
+        "Chonicles",
+        "Chuunin",
+        "Fumetsu",
+        "Genin",
+        "JUTSU",
+        "Jonin",
+        "Jounin's",
+        "Kibou",
+        "Kunoichi",
+        "Shinobi",
+        "Teambuilding",
+        "Yokai",
+        "akademi",
+        "chuunin",
+        "genin",
+        "jonin",
+        "seleced",
+        "taijutsu",
+        "timeoutid"
+    ]
 }
