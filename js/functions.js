@@ -83,69 +83,74 @@ const pageMap =
 	"Ramen": 23,
 	"Team": 24,
 };
-const RankOptionsMap = {
-	"akademi-sei": {
-		id: 1,
-		ai: [
-			{name: "Annoying Crow (1)", id: "1"},
-			{name: "Academy Bully (5)", id: "2"},
-			{name: "Prodigy Student (10)", id: "3"},
-		],
-	},
-	"genin": {
-		id: 2,
-		ai: [
-			{name: "Academy Graduate (12)", id: "4"},
-			{name: "Crafty Kunoichi (14)", id: "13"},
-			{name: "Advanced Genin (16)", id: "5"},
-			{name: "Weapon Fanatic (18)", id: "6"},
-			{name: "Talented Genin (20)", id: "10"},
-			{name: "Prodigious Genin (23)", id: "24"},
-			{name: "Elite Contender (25)", id: "11"},
-		],
-	},
-	"chuunin": {
-		id: 3,
-		ai: [
-			{name: "Furious Tiger (26)", id: "7"},
-			{name: "Insidious Serpent (28)", id: "25"},
-			{name: "Chuunin Specialist (30)", id: "26"},
-			{name: "Jounin's Shadow Clone (32)", id: "12"},
-			{name: "Elderly Shinobi (34)", id: "27"},
-			{name: "Tiny Yokai (36)", id: "28"},
-			{name: "Cunning Hypnotist (38)", id: "29"},
-			{name: "Genin Trio Leader (40)", id: "8"},
-			{name: "Vengeful Rival (42)", id: "33"},
-			{name: "Hired Assassin (44)", id: "34"},
-			{name: "Bloodline Inheritor (46)", id: "35"},
-			{name: "Twisted Killer (48)", id: "36"},
-			{name: "Chuunin Expert (50)", id: "14"},
-			{name: "Legendary Crow (55)", id: "9"},
-		],
-	},
-	"jonin": {
-		id: 4,
-		ai: [
-			{name: "Village Outlaw (55)", id: "15"},
-			{name: "Rogue Samurai (60)", id: "16"},
-			{name: "Enemy ANBU (65)", id: "17"},
-			{name: "Muscle-bound Jonin (70)", id: "21"},
-			{name: "Renegade Shinobi (75)", id: "30"},
-			{name: "Fumetsu Defector (80)", id: "22"},
-			{name: "Kibou Defector (85)", id: "23"},
-			{name: "Monstrous Yokai (90)", id: "31"},
-			{name: "Chuunin Assault Squad (95)", id: "32"},
-			{name: "ANBU Captain (100)", id: "18"},
-			{name: "Jonin Trio (105)", id: "130"},
-		],
-	}
-};
-
+// const RankOptionsMap = {
+// 	"akademi-sei": {
+// 		id: 1,
+// 		ai: [
+// 			{name: "Annoying Crow (1)", id: "1"},
+// 			{name: "Academy Bully (5)", id: "2"},
+// 			{name: "Prodigy Student (10)", id: "3"},
+// 		],
+// 	},
+// 	"genin": {
+// 		id: 2,
+// 		ai: [
+// 			{name: "Academy Graduate (12)", id: "4"},
+// 			{name: "Crafty Kunoichi (14)", id: "13"},
+// 			{name: "Advanced Genin (16)", id: "5"},
+// 			{name: "Weapon Fanatic (18)", id: "6"},
+// 			{name: "Talented Genin (20)", id: "10"},
+// 			{name: "Prodigious Genin (23)", id: "24"},
+// 			{name: "Elite Contender (25)", id: "11"},
+// 		],
+// 	},
+// 	"chuunin": {
+// 		id: 3,
+// 		ai: [
+// 			{name: "Furious Tiger (26)", id: "7"},
+// 			{name: "Insidious Serpent (28)", id: "25"},
+// 			{name: "Chuunin Specialist (30)", id: "26"},
+// 			{name: "Jounin's Shadow Clone (32)", id: "12"},
+// 			{name: "Elderly Shinobi (34)", id: "27"},
+// 			{name: "Tiny Yokai (36)", id: "28"},
+// 			{name: "Cunning Hypnotist (38)", id: "29"},
+// 			{name: "Genin Trio Leader (40)", id: "8"},
+// 			{name: "Vengeful Rival (42)", id: "33"},
+// 			{name: "Hired Assassin (44)", id: "34"},
+// 			{name: "Bloodline Inheritor (46)", id: "35"},
+// 			{name: "Twisted Killer (48)", id: "36"},
+// 			{name: "Chuunin Expert (50)", id: "14"},
+// 			{name: "Legendary Crow (55)", id: "9"},
+// 		],
+// 	},
+// 	"jonin": {
+// 		id: 4,
+// 		ai: [
+// 			{name: "Village Outlaw (55)", id: "15"},
+// 			{name: "Rogue Samurai (60)", id: "16"},
+// 			{name: "Enemy ANBU (65)", id: "17"},
+// 			{name: "Muscle-bound Jonin (70)", id: "21"},
+// 			{name: "Renegade Shinobi (75)", id: "30"},
+// 			{name: "Fumetsu Defector (80)", id: "22"},
+// 			{name: "Kibou Defector (85)", id: "23"},
+// 			{name: "Monstrous Yokai (90)", id: "31"},
+// 			{name: "Chuunin Assault Squad (95)", id: "32"},
+// 			{name: "ANBU Captain (100)", id: "18"},
+// 			{name: "Jonin Trio (105)", id: "130"},
+// 		],
+// 	}
+// };
+	
 const SpecialMissionDifficulty = [
 	{name: "Easy", id: "special&start=easy"},
 	{name: "Normal", id: "special&start=normal"},
 	{name: "Hard", id: "special&start=hard"},
 	{name: "Nightmare", id: "special&start=nightmare"},
+];
+const ArenaDifficulty = [
+	{name: "Practice", id:"easy"},
+	{name: "Spar", id:"normal"},
+	{name: "Challenge", id:"hard"},
 ];
 const ClanTeamMissionList = [
 	{name: "Study Clan Heritage", id: "clan&start_mission=8"},
@@ -390,8 +395,8 @@ var enemy = {
 	gen: function() { // Generate list of enemy based on rank selected.
 		var rank = document.getElementById("userRank").value;
 		var select = $("#enemyList");
-
-		populateRankData(RankOptionsMap[rank.toLowerCase()].ai, select, 'fight=');
+		
+		populateRankData(ArenaDifficulty, select, 'difficulty=');
 	},
 	arena: function() { //Start fight based on seleced enemy.
 		var fight = document.getElementById("enemyList").value;
