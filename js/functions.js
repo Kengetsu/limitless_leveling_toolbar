@@ -140,7 +140,12 @@ const RankOptionsMap = {
 		// ],
 	}
 };
-	
+const FactionMissionDifficulty = [
+	{name: "Easy", id: "mission_type=faction&start_mission=151"},
+	{name: "Normal", id: "mission_type=faction&start_mission=152"},
+	{name: "Hard", id: "mission_type=faction&start_mission=153"},
+	{name: "Nightmare", id: "mission_type=faction&start_mission=154"},
+];	
 const SpecialMissionDifficulty = [
 	{name: "Easy", id: "special&start=easy"},
 	{name: "Normal", id: "special&start=normal"},
@@ -330,6 +335,7 @@ var missions = {
 		//var select = $("#selectMission");
 		var selectNormal = $("#selectMission optgroup[label='Normal']");
 		var selectSpecial = $("#selectMission optgroup[label='Special']");
+		var selectFaction = $("#selectMission optgroup[label='Faction']");
 		var selectClanTeam = $("#selectMission optgroup[label='Clan/Team']");
 
 		let missionRanks = ["D", "C", "B", "A"];
@@ -343,6 +349,7 @@ var missions = {
 		// console.log(rank, missionsAvailable);
 		populateRankData(missionsAvailable, selectNormal);
 		populateRankData(SpecialMissionDifficulty, selectSpecial);
+		populateRankData(FactionMissionDifficulty, selectFaction);
 		populateRankData(ClanTeamMissionList, selectClanTeam);
 	},
 	set: function(mission = null) { //Start selected mission.
