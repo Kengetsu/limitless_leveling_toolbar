@@ -31,7 +31,7 @@
 		newPos = targetPos;
 		if(targetPos>children.indexOf(data))
 		{
-			
+
 			ev.target.parentNode.after(data);
 		}
 		else
@@ -54,7 +54,7 @@
 		let jutsuName = jutsu["name"];
 		let jutsuType = jutsu["jutsu_type"];
 		let jutsuSeals;
-		
+
 		if (jutsuType == 'taijutsu')
 		{
 			jutsuSeals = jutsuID;
@@ -63,7 +63,7 @@
 		{
 			jutsuSeals = jutsu["hand_seals"];
 		}
-				
+
 		$('#useType').val(jutsuType).change();
 		$('#jutsuName').val(jutsuName);
 		$('#sealNumbers').val(jutsuSeals);
@@ -97,7 +97,7 @@
 				else
 				{
 					keyElement += createKeyElement(keySet, key, keyMap[keySet][key]);
-				}			
+				}
 			}
 			keyElement += '</div>';
 		}
@@ -106,13 +106,13 @@
 	function createKeyElement(title, key, action)
 	{
 		let displayName = null;
-		if(title == 'jutsu') 
-		{ 
+		if(title == 'jutsu')
+		{
 			if (jutsuList[action] == undefined)
 			{
 				displayName = `Slot ${action + 1}`;
 			}
-			else 
+			else
 			{
 				displayName = jutsuList[action].jutsuName;
 			}
@@ -146,18 +146,18 @@
 			$('#jutsuTrainingList').append(element);
 		}
 	}
-	
+
 </script>
 <script type="module">
 $(document).ready(async function() {
 	const request = new Request('./sc_jutsu.json');
 	const response = await fetch(request);
 	const jutsuLibrary = await response.json();
-	
+
 	const request2 = new Request('./sc_weapons.json');
 	const response2 = await fetch(request2);
 	const weaponLibrary = await response2.json();
-	
+
 	for (let jutsu in jutsuLibrary)
 	{
 		let jutsuID = jutsuLibrary[jutsu]["jutsu_id"];
@@ -188,7 +188,7 @@ $(document).ready(async function() {
 			</td>
 		</tr>`);
 	}
-	
+
 	for (let weapon in weaponLibrary)
 	{
 		$('#weaponList').append("<tr>" +  "<td>" + weaponLibrary[weapon]['item_id'] + "</td><td>" + weaponLibrary[weapon]['name'] + "</td><td>" + weaponLibrary[weapon]['rank'] + "</td><td>" + weaponLibrary[weapon]['effect'] + "</td></tr>");
@@ -222,7 +222,7 @@ $(document).ready(async function() {
 		let jutsuSearchType = $('#jutsuSearchType');
 		let jutsuSearch = $('#jutsuSearch tr');
 		jutsuSearch.splice(0,1);
-		
+
 		jutsuSearch.children().parent().css("display", "table-row");
 		if(this.value == 'bloodline_jutsu')
 		{
@@ -230,20 +230,20 @@ $(document).ready(async function() {
 			return;
 		}
 		jutsuSearchType.val(this.value);
-		
+
 		if (this.value == '') return;
 		jutsuSearch.filter((index) => {
 			return (jutsuSearch[index].children[2].innerText == this.value.toLowerCase()) == false;
 		}).css("display", "none");
 	});
-	
+
 	$('#jutsuSearchName,#jutsuName').keyup(function () {
 		let searchText = this.value;
 		let jutsuSearchName = $('#jutsuSearchName');
 		let jutsuName = $('jutsuName');
 		let jutsuSearch = $('#jutsuSearch tr');
 		jutsuSearch.splice(0,1);
-		
+
 		jutsuSearch.children().parent().css("display", "table-row");
 		if (jutsuSearchType == 'bloodline_jutsu')
 		{
@@ -255,7 +255,7 @@ $(document).ready(async function() {
 			return jutsuSearch[index].children[1].innerText.toLowerCase().startsWith(searchText.toLowerCase()) == false;
 		}).css("display", "none");
 	});
-	
+
 	$('[name=hideButton]').click(function () {
 		let tableDivs = [$('#jutsuSearch').parent(), $('#weaponList').parent(), $("#keysTable")];
 		let selectedDiv = tableDivs[this.value];
@@ -265,7 +265,7 @@ $(document).ready(async function() {
 			if (div == this.value) continue;
 			tableDivs[div].css('display', 'none');
 		}
-		
+
 		//console.log(selectedDiv.css('display') != 'none');
 		if (selectedDiv.css('display') == 'none')
 		{
@@ -282,8 +282,8 @@ $(document).ready(async function() {
 		{
 			selectedDiv.css('display', 'none');
 		}
-		
-		
+
+
 	});
 	$('#useType').on('change', function (evt) {
 		let selectedType = evt.target.value;
@@ -314,21 +314,21 @@ $(document).ready(async function() {
 		console.log(selectedType);
 	});
 
-	if(Cookies.get("jutsu")) { // If cookie already exists pulls information into array.	
+	if(Cookies.get("jutsu")) { // If cookie already exists pulls information into array.
 		populateJutsu();
 	};
-	if(Cookies.get("customKeys")) { // If cookie already exists pulls information into array.	
+	if(Cookies.get("customKeys")) { // If cookie already exists pulls information into array.
 		populateKeys();
 	};
 	if(Cookies.get("css")) {
             $("#layout").val(Cookies.get("css"));
-            $("#theme").prop("href",Cookies.get("css"));     
+            $("#theme").prop("href",Cookies.get("css"));
 	};
 	if(Cookies.get("trainingJutsu"))
 	{
 		populateTrainingJutsuList();
 	}
-	
+
 });
 </script>
 <style>
@@ -364,9 +364,9 @@ a {
 
 .keyTable {
 	display: grid;
-	grid-template-areas: 
-	"travel jutsu page gear" 
-	"action jutsu page none" 
+	grid-template-areas:
+	"travel jutsu page gear"
+	"action jutsu page none"
 	"ramen jutsu page none";
 	width: 40rem;
 	grid-gap: 1rem;
@@ -374,7 +374,7 @@ a {
 .keyCategory {
 	display: grid;
 	/* border: 1px solid black; */
-	text-align: center;	
+	text-align: center;
 	grid-auto-rows: max-content;
 }
 .keyCategory span{
@@ -408,7 +408,7 @@ a {
 
 <body>
 <br/>
-<a href="https://shinobichronicles.com/" target="mainFrame"> Return to SC</a>
+<a href="https://limitless-leveling.com/" target="mainFrame"> Return to SC</a>
 <br/>
 <span>You can re-arrage the jutsu order by dragging and dropping the rows.</span>
 <br/>
@@ -465,7 +465,7 @@ a {
 			</tr>
 		</thead>
 		<tbody id="jutsuTrainingList">
-		</tbody> 
+		</tbody>
 	</table>
 	<button onClick="clearTrainingJutsu(true)">Clear All</button>
 </div>

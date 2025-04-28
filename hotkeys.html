@@ -31,7 +31,7 @@ $(document).ready(async function() {
         }
         Cookies.set("trainingJutsu", JSON.stringify(trainable), {expires: 365, path: '/', secure: true, sameSite: 'None'});
         populateTrainingJutsu(trainable);
-        
+
     }
 });
 $(document.body).on('keydown', function (ev) {
@@ -51,11 +51,11 @@ $(document.body).on('keydown', function (ev) {
             if(Cookies.get("css")) {
                 $("#layout").val(Cookies.get("css"));
                 $("#theme").prop("href",Cookies.get("css"));
-            
+
             };
             if(Cookies.get("rank")) {
                 $("#userRank").val(Cookies.get("rank"));
-                
+
                 missions.gen();
                 enemy.gen();
             };
@@ -112,12 +112,12 @@ $(document.body).on('keydown', function (ev) {
                     return false;
                 }
             });
-            
+
             $('.SubmissionButtons').keydown(function (event)
             {
                 event.preventDefault();
             });
-        
+
             //New Code
             $('.panelToggles button').on('click', function () {
                 changeVisibility(event);
@@ -138,30 +138,30 @@ $(document.body).on('keydown', function (ev) {
             $("#raidCheckbox").on('change', function () {
                 if (this.checked)
                 {
-                    $("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});        
+                    $("label[for='raidCheckbox']").css({'color': 'green', 'background': 'white', 'border': '1px solid red', 'font-weight': 'bold', 'font-size': '2rem'});
                     raidIntervalID = setInterval(function () {
                         top.toolBar.focus();
                         console.log("Raiding!");
-                    }, 150);    
+                    }, 150);
                 }
                 else
                 {
                     $("label[for='raidCheckbox']").css({'color': '', 'background': '', 'border': '', 'font-weight': '', 'font-size': ''});
                     clearInterval(raidIntervalID);
-                }        
+                }
             });
-        
+
             // Regen Timer Clock
             var face = document.querySelector('#RegenCounter');
             var circle = document.querySelector('#regen_circle');
             var radius = circle.r.baseVal.value;
             var circumference = radius * 2 * Math.PI;
             var requestAnimationFrame = (function() {
-            return window.requestAnimationFrame       || 
-                    window.webkitRequestAnimationFrame || 
-                    window.mozRequestAnimationFrame    || 
-                    window.oRequestAnimationFrame      || 
-                    window.msRequestAnimationFrame     || 
+            return window.requestAnimationFrame       ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame    ||
+                    window.oRequestAnimationFrame      ||
+                    window.msRequestAnimationFrame     ||
                     function( callback ){
                         window.setTimeout(callback, 1000 / 60);
                     };
@@ -182,11 +182,11 @@ $(document.body).on('keydown', function (ev) {
             {
                 face.textContent = timeRemaining;
             }
-            
+
             setProgress((timeRemaining / 60) * 100);
-            
+
             requestAnimationFrame(tick);
-            
+
             }
 
             circle.style.strokeDasharray = `${circumference} ${circumference}`;
@@ -223,7 +223,7 @@ $(document.body).on('keydown', function (ev) {
             <input type="checkbox" id="train_alerts" onClick="timer.clear(event)"/>
             <label for="train_alerts" style="color:red;">Training Alert</label>
             <input type="checkbox" id="special_alerts" onClick="timer.clear(event)">
-            <label for="special_alerts" style="color:red;">Special Mission Alert</label>        
+            <label for="special_alerts" style="color:red;">Special Mission Alert</label>
         </div>
         <div class="regenContainer">
             <p class="regenText">Next Regen</p>
@@ -252,7 +252,7 @@ $(document.body).on('keydown', function (ev) {
                 <text x="6" y="20" id="RegenCounter" class="regen_circle_face">00</text>
             </svg>
         </div>
-        <span class="titleSpan">Shinobi-Chronicles Hotkeys v2</span>
+        <span class="titleSpan">Limitless-Leveling Hotkeys v1</span>
         <div id="trainAdjust" class="modifierSelection">
             <div class="modifierSelectionGroup" title="Alert Timer Modifiers">
                 <div>
@@ -281,7 +281,7 @@ $(document.body).on('keydown', function (ev) {
             <div>
                 <input type="checkbox" data-id="Raid" id="raidCheckbox">
                 <label for="raidCheckbox">Raid</label>
-            </div>           
+            </div>
         </div>
         <div class="break"></div>
         <div class="optionToggle">
@@ -337,7 +337,7 @@ $(document.body).on('keydown', function (ev) {
             </div>
         </div>
         <div class="panelToggles">
-            <button data-id="training">Training</button>  
+            <button data-id="training">Training</button>
             <button data-id="missions">Missions</button>
             <button data-id="arena">Arena</button>
             <button data-id="jutsu">Jutsu</button>
